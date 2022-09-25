@@ -19,7 +19,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 		</div>
 		<div class="form-group">
 			<label for="middlename" class="control-label">Middle Name</label>
-			<input type="text" name="middlename" id="middlename" class="form-control form-control-sm rounded-0" value="<?php echo isset($middlename) ? $middlename : ''; ?>"  placeholder="optional"/>
+			<input type="text" name="middlename" id="middlename" class="form-control form-control-sm rounded-0" value="<?php echo isset($middlename) ? $middlename : ''; ?>"  placeholder="(Optional)"/>
 		</div>
 		<div class="form-group">
 			<label for="lastname" class="control-label">Last Name</label>

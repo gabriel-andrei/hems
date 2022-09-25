@@ -87,7 +87,7 @@ if(isset($_GET['id'])){
                                 <col width="30%">
                             </colgroup>
                             <thead>
-                                <tr class="bg-gradient-blue">
+                                <tr class="bg-gradient-blue text-center">
                                     <th class="text-center">Service</th>
                                     <th class="text-center">Price</th>
                                 </tr>
@@ -100,15 +100,15 @@ if(isset($_GET['id'])){
                                     $service_amount += $row['price'];
                                 ?>
                                 <tr>
-                                    <td><?= $row['service'] ?></td>
-                                    <td class="text-right service_price"><?= format_num($row['price']) ?></td>
+                                    <td class="text-center"><?= $row['service'] ?></td>
+                                    <td class="text-center service_price"><?= format_num($row['price']) ?></td>
                                 </tr>
                                 <?php endwhile; ?>
                             </tbody>
                             <tfoot>
                                 <tr class="bg-gradient-secondary">
                                     <th class="text-center">Total</th>
-                                    <th class="text-right" id="service_total"><?= isset($service_amount) ? format_num($service_amount): 0 ?></th>
+                                    <th class="text-center" id="service_total"><?= isset($service_amount) ? format_num($service_amount): 0 ?></th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -142,17 +142,17 @@ if(isset($_GET['id'])){
                                     $product_total += ($row['price'] * $row['qty']);
                             ?>
                                 <tr>
-                                    <td><?= $row['product'] ?></td>
-                                    <td class="text-right"><?= $row['qty'] ?></td>
-                                    <td class="text-right product_price"><?= $row['price'] ?></td>
-                                    <td class="text-right product_total"><?= format_num($row['price'] * $row['qty']) ?></td>
+                                    <td class="text-center"><?= $row['product'] ?></td>
+                                    <td class="text-center"><?= $row['qty'] ?></td>
+                                    <td class="text-center product_price"><?= $row['price'] ?></td>
+                                    <td class="text-center product_total"><?= format_num($row['price'] * $row['qty']) ?></td>
                                 </tr>
                             <?php endwhile; ?>
                             </tbody>
                             <tfoot>
                                 <tr class="bg-gradient-secondary">
                                     <th colspan="3" class="text-center">Total</th>
-                                    <th class="text-right" id="product_total"><?= isset($product_total) ? format_num($product_total): 0 ?></th>
+                                    <th class="text-center" id="product_total"><?= isset($product_total) ? format_num($product_total): 0 ?></th>
                                 </tr>
                             </tfoot>
                         </table>

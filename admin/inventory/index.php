@@ -29,10 +29,8 @@
 					<col width="15%">
 					<col width="10%">
 					<col width="5%">
-
 					<col width="10%">
 					<col width="10%">
-
 					<col width="15%">
 				</colgroup>
 				<thead>

@@ -225,7 +225,7 @@ if(isset($_GET['id'])){
                     </form>
                 </div>
             </div>
-            <div class="card-footer py-2 text-center">
+            <div class="card-footer py-2 text-right">
                 <button class="btn btn-primary rounded-0" form="transaction-form">Save Transaction</button>
                 <?php if(!isset($id)): ?>
                 <a class="btn btn-default border rounded-0" href="./?page=transactions">Cancel</a>
