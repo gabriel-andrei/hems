@@ -54,13 +54,30 @@ if(isset($_GET['id'])){
                                 </div>
                             </div>
                         </div>
-                        <hr>
                         <div class="row">
-                            <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+
+                                <div class="form-group mb-3">
+                                    <label for="email" class="control-label">Engine Model</label>
+                                    <input type="email" name="email" id="email" class="form-control form-control-sm rounded-0" value="" required="required">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+
+                                <div class="form-group mb-3">
+                                    <label for="email" class="control-label">Job Order #</label>
+                                    <input type="email" name="email" id="email" class="form-control form-control-sm rounded-0" value="" required="required">
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        
+                        <div class="row">
+                            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
                                 <fieldset>
                                     <legend>Services</legend>
                                     <div class="row align-items-end">
-                                        <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+                                        <div class="col">
                                             <div class="form-group mb-0">
                                                 <label for="service_sel" class="control-label">Select Service</label>
                                                 <select id="service_sel" class="form-control form-control-sm rounded">
@@ -74,22 +91,40 @@ if(isset($_GET['id'])){
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                                        <div class="col">
+                                            <div class="form-group mb-0">
+                                                <label for="service_sel" class="control-label"> </label>
+                                                <select id="service_sel" class="form-control form-control-sm rounded-0">
+                                                    <option value="" disabled selected></option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group mb-0">
+                                                <label for="service_sel" class="control-label"> </label>
+                                                <select id="service_sel" class="form-control form-control-sm rounded-0">
+                                                    <option value="" disabled selected></option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col">
                                             <button class="btn btn-default bg-gradient-blue btn-sm rounded-0" type="button" id="add_service"><i class="fa fa-plus"></i> Add</button>
                                         </div>
                                     </div>
                                     <div class="clear-fix mb-2"></div>
                                     <table class="table table-striped table-bordered" id="service-list">
                                         <colgroup>
+                                            <col width="70%">
+                                            <col width="20%">                 
                                             <col width="10%">
-                                            <col width="60%">
-                                            <col width="30%">
                                         </colgroup>
                                         <thead>
                                             <tr class="bg-gradient-blue">
-                                                <th class="text-center"></th>
                                                 <th class="text-center">Service</th>
                                                 <th class="text-center">Price</th>
+                                                <th class="text-center"></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -100,30 +135,33 @@ if(isset($_GET['id'])){
                                             while($row = $ts_qry->fetch_assoc()):
                                                 $service_amount += $row['price'];
                                             ?>
-                                            <tr>
-                                                <td class="text-center">
-                                                    <button class="btn btn-outline-danger btn-sm rounded-0 rem-service" type="button"><i class="fa fa-times"></i></button>
-                                                </td>
-                                                <td>
-                                                    <input type="hidden" name="service_id[]" value="<?= $row['service_id'] ?>">
-                                                    <input type="hidden" name="service_price[]" value="<?= $row['price'] ?>">
-                                                    <span class="service_name"><?= $row['service'] ?></span>
-                                                </td>
+                                            <tr>  
+                                                    <td>           
+                                                        <input type="hidden" name="service_id[]" value="<?= $row['service_id'] ?>">
+                                                        <input type="hidden" name="service_price[]" value="<?= $row['price'] ?>">
+                                                        <span class="service_name"><?= $row['service'] ?></span>   
+                                                    </td>
                                                 <td class="text-center service_price"><?= format_num($row['price']) ?></td>
+                                                <td class="text-center">
+                                                    <button class="btn btn-outline-danger btn-sm rounded-0 rem-service" type="button"><i class="fa fa-trash"></i></button>
+                                                </td>        
                                             </tr>
                                             <?php endwhile; ?>
                                             <?php endif; ?>
                                         </tbody>
                                         <tfoot>
                                             <tr class="bg-gradient-secondary">
-                                                <th colspan="2" class="text-center">Total</th>
+                                                <th colspan="" class="text-center">Total</th>
                                                 <th class="text-center" id="service_total"><?= isset($service_amount) ? format_num($service_amount): 0 ?></th>
+                                                <th class="text-center" id=""></th>
+
                                             </tr>
                                         </tfoot>
                                     </table>
                                 </fieldset>
                             </div>
-                            <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+                        </div>
+                        <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
                                 <fieldset>
                                     <legend>Products</legend>
                                     <div class="row align-items-end">
@@ -148,19 +186,18 @@ if(isset($_GET['id'])){
                                     <div class="clear-fix mb-2"></div>
                                     <table class="table table-striped table-bordered" id="product-list">
                                         <colgroup>
-                                            <col width="5%">
+                                            
                                             <col width="40%">
                                             <col width="15%">
                                             <col width="20%">
-                                            <col width="20%">
+                                            <col width="5%">
                                         </colgroup>
                                         <thead>
-                                            <tr class="bg-gradient-blue">
-                                                <th class="text-center"></th>
+                                            <tr class="bg-gradient-blue">         
                                                 <th class="text-center">Item Name</th>
                                                 <th class="text-center">Qty</th>
                                                 <th class="text-center">Price</th>
-                                                <th class="text-center">Total</th>
+                                                <th class="text-center"></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -172,31 +209,30 @@ if(isset($_GET['id'])){
                                                 $product_total += ($row['price'] * $row['qty']);
                                         ?>
                                             <tr>
-                                                <td class="text-center">
-                                                    <button class="btn btn-outline-danger btn-sm rounded-0 rem-product" type="button"><i class="fa fa-times"></i></button>
-                                                </td>
                                                 <td>
                                                     <input type="hidden" name="product_id[]" value="<?= $row['product_id'] ?>">
                                                     <input type="hidden" name="product_price[]" value="<?= $row['price'] ?>">
                                                     <span class="product_name"><?= $row['product'] ?></span>
                                                 </td>
-                                                <td class=""><input type="number" min="1" class="form-control form-control-sm rounded-0 text-center" name="product_qty[]" value="<?= $row['qty'] ?>"></td>
-                                                <td class="text-center product_price"><?= $row['price'] ?></td>
-                                                <td class="text-center product_total"><?= format_num($row['price'] * $row['qty']) ?></td>
+                                                <td class="text-center"><input type="number" min="1" class="form-control form-control-sm rounded-0 text-center" name="product_qty[]" value="<?= $row['qty'] ?>"></td>
+                                                <td class="text-center product_price"><?= format_num($row['price']) ?></td>
+                                                <td class="text-center">
+                                                    <button class="btn btn-outline-danger btn-sm rounded-0 rem-product" type="button"><i class="fa fa-trash"></i></button>
+                                                </td>
                                             </tr>
                                         <?php endwhile; ?>
                                         <?php endif; ?>
                                         </tbody>
                                         <tfoot>
                                             <tr class="bg-gradient-secondary">
-                                                <th colspan="4" class="text-center">Total</th>
+                                                <th colspan="2" class="text-center">Total</th>
                                                 <th class="text-center" id="product_total"><?= isset($product_total) ? format_num($product_total): 0 ?></th>
+                                                <th class="text-center" id=""></th>
                                             </tr>
                                         </tfoot>
                                     </table>
                                 </fieldset>
                             </div>
-                        </div>
                         <div class="clear-fix mb-3"></div>
                         <h2 class="text-black text-right">Total Payable Amount: <b id="amount"><?= isset($amount) ? format_num($amount) : "0.00" ?></b></h2>
                         <hr>
@@ -238,22 +274,19 @@ if(isset($_GET['id'])){
 </div>
 <noscript id="service-clone">
     <tr>
-        <td class="text-center">
-            <button class="btn btn-outline-danger btn-sm rounded-0 rem-service" type="button"><i class="fa fa-times"></i></button>
-        </td>
         <td>
             <input type="hidden" name="service_id[]" value="">
             <input type="hidden" name="service_price[]" value="0">
             <span class="service_name"></span>
         </td>
         <td class="text-center service_price"></td>
+        <td class="text-center">
+            <button class="btn btn-outline-danger btn-sm rounded-0 rem-service" type="button"><i class="fa fa-trash"></i></button>
+        </td>
     </tr>
 </noscript>
 <noscript id="product-clone">
     <tr>
-        <td class="text-center">
-            <button class="btn btn-outline-danger btn-sm rounded-0 rem-product" type="button"><i class="fa fa-times"></i></button>
-        </td>
         <td>
             <input type="hidden" name="product_id[]" value="">
             <input type="hidden" name="product_price[]" value="0">
@@ -261,7 +294,9 @@ if(isset($_GET['id'])){
         </td>
         <td class=""><input type="number" min="1" class="form-control form-control-sm rounded-0 text-center" name="product_qty[]" value="1"></td>
         <td class="text-center product_price"></td>
-        <td class="text-center product_total"></td>
+        <td class="text-center">
+            <button class="btn btn-outline-danger btn-sm rounded-0 rem-product" type="button"><i class="fa fa-trash"></i></button>
+        </td>
     </tr>
 </noscript>
 <script>

@@ -41,10 +41,8 @@
 						<th class="text-center">Product Name</th>
 						<th class="text-center">Available Stock</th>
 						<th class="text-center">Sold</th>
-						
 						<th class="text-center">Price</th>
 						<th class="text-center">Status</th>
-
 						<th class="text-center">Action</th>
 					</tr>
 				</thead>

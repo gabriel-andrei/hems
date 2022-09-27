@@ -11,7 +11,6 @@
 	<div class="card-body">
 		<div class="container-fluid mb-3">
             <fieldset class="px-2 py-1 border">
-                <legend class="w-auto px-3">Filter</legend>
                 <div class="container-fluid">
                     <form action="" id="filter-form">
                         <div class="row align-items-end">
