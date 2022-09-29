@@ -73,9 +73,9 @@ if(isset($_GET['id'])){
                         <hr>
                         
                         <div class="row">
-                            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-                                <fieldset>
-                                    <legend>Services</legend>
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <fieldset class="px-2 py-1 border">
+                                    <legend class="w-auto px-3">Services</legend>
                                     <div class="row align-items-end">
                                         <div class="col">
                                             <div class="form-group mb-0">
@@ -154,18 +154,18 @@ if(isset($_GET['id'])){
                                                 <th colspan="" class="text-center">Total</th>
                                                 <th class="text-center" id="service_total"><?= isset($service_amount) ? format_num($service_amount): 0 ?></th>
                                                 <th class="text-center" id=""></th>
-
                                             </tr>
                                         </tfoot>
                                     </table>
                                 </fieldset>
                             </div>
                         </div>
-                        <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
-                                <fieldset>
-                                    <legend>Products</legend>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <fieldset class="px-2 py-1 border">
+                                    <legend class="w-auto px-3">Products</legend>
                                     <div class="row align-items-end">
-                                        <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+                                        <div class="col">
                                             <div class="form-group mb-0">
                                                 <label for="product_sel" class="control-label">Select Product</label>
                                                 <select id="product_sel" class="form-control form-control-sm rounded">
@@ -233,6 +233,7 @@ if(isset($_GET['id'])){
                                     </table>
                                 </fieldset>
                             </div>
+                        </div>
                         <div class="clear-fix mb-3"></div>
                         <h2 class="text-black text-right">Total Payable Amount: <b id="amount"><?= isset($amount) ? format_num($amount) : "0.00" ?></b></h2>
                         <hr>

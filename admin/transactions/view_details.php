@@ -77,9 +77,10 @@ if(isset($_GET['id'])){
                     <div class="col-9 py-1 px-2 border mb-0"><?= isset($user_name) ? $user_name : '' ?></div>
                 </div>
                 <div class="clear-fix mb-2"></div>
+                <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <fieldset>
-                        <legend>Services</legend>
+                    <fieldset class="px-2 py-1 border">
+                        <legend class="w-auto px-3">Services</legend>
                         <div class="clear-fix mb-2"></div>
                         <table class="table table-striped table-bordered" id="service-list">
                             <colgroup>
@@ -114,10 +115,12 @@ if(isset($_GET['id'])){
                         </table>
                     </fieldset>
                 </div>
-                <hr>
+                </div>
+                
+                <div class="row">                        
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <fieldset>
-                        <legend>Products</legend>
+                <fieldset class="px-2 py-1 border">
+                    <legend class="w-auto px-3">Products</legend>
                         <div class="clear-fix mb-2"></div>
                         <table class="table table-striped table-bordered" id="product-list">
                             <colgroup>
@@ -134,6 +137,7 @@ if(isset($_GET['id'])){
                                     <th class="text-center">Total</th>
                                 </tr>
                             </thead>
+                        
                             <tbody>
                             <?php 
                                 $product_total = 0;
@@ -149,6 +153,7 @@ if(isset($_GET['id'])){
                                 </tr>
                             <?php endwhile; ?>
                             </tbody>
+                        
                             <tfoot>
                                 <tr class="bg-gradient-secondary">
                                     <th colspan="3" class="text-center">Total</th>
@@ -158,11 +163,13 @@ if(isset($_GET['id'])){
                         </table>
                     </fieldset>
                 </div>
+                </div>
                 <hr>
                 <div class="clear-fix mb-3"></div>
                 <h2 class="text-black text-right">Total Payable Amount: <b id="amount"><?= isset($amount) ? format_num($amount) : "0.00" ?></b></h2>
             </div>
             <hr>
+                                
             <div class="row justify-content-center">
                 <button class="btn btn-primary bg-gradient-blue border col-lg-3 col-md-4 col-sm-12 col-xs-12 rounded-pill" id="update_status" type="button">Update Status</button>
                 <a class="btn btn-primary bg-gradient-primary border col-lg-3 col-md-4 col-sm-12 col-xs-12 rounded-pill" href="./?page=transactions/manage_transaction&id=<?= isset($id) ? $id : '' ?>"><i class="fa fa-edit"></i> Edit</a>
