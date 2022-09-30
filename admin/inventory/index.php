@@ -10,6 +10,7 @@
 		object-fit:scale-down;
 		object-position:center center;
 	}
+
 </style>
 <div class="card card-outline card-primary">
 	<div class="card-header">

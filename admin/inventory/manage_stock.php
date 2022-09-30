@@ -18,7 +18,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 			<label for="quantity" class="control-label">Quantity</label>
 			<input type="text" name="quantity" id="quantity" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($quantity) ? $quantity : ''; ?>"  required/>
 		</div>
-		</div>
+		
 		<div class="form-group">
 			<label for="stock_date" class="control-label">Stock-In Date</label>
 			<input type="date" name="stock_date" id="stock_date" class="form-control form-control-sm rounded-0 text-right" value="<?php echo isset($stock_date) ? date("Y-m-d", strtotime($stock_date)) : ""; ?>" max="<?= date("Y-m-d") ?>"  required/>

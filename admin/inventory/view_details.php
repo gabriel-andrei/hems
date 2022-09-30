@@ -16,6 +16,9 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
         object-fit:scale-down;
         object-position:center center
     }
+    .bg-light-blue {
+  		background-color: #cae8ff;
+	}
 </style>
 
 <div class="row justify-content-center mt-n4">
@@ -73,7 +76,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
                                 <legend>Stock-In Records</legend>
                                 <table class="table table-bordered table-hover">
                                     <thead>
-                                        <tr class="bg-gradient-blue">
+                                        <tr class="bg-light-blue">
                                             <th class="px-2 py-1 text-center">Stock-In Date</th>
                                             <th class="px-2 py-1 text-center">Quantity</th>
                                         </tr>

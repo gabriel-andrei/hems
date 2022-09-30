@@ -5,8 +5,9 @@
 // Background Variant
 @mixin background-variant($name, $color) {
   .bg-#{$name} {
-    background-color: #{$color} !important;
-
+    background-color: #{$cyan-800} !important;
+  .card-#{$name} {
+    background-color: #{$cyan-800} !important;
     &,
     > a {
       color: color-yiq($color) !important;

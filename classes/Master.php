@@ -45,12 +45,12 @@ Class Master extends DBConnection {
 				$data .= " `{$k}`='{$v}' ";
 			}
 		}
-		$check = $this->conn->query("SELECT * FROM `service_list` where `name` = '{$name}' ".(!empty($id) ? " and id != {$id} " : "")." ")->num_rows;
+		$check = $this->conn->query("SELECT * FROM `service_list` where `service_sub` = '{$service_sub}' && `cylinder` = '{$cylinder}' ".(!empty($id) ? " and id != {$id} " : "")." ")->num_rows;
 		if($this->capture_err())
 			return $this->capture_err();
 		if($check > 0){
 			$resp['status'] = 'failed';
-			$resp['msg'] = "Service Name already exists.";
+			$resp['msg'] = "Service Sub Category Name already exists.";
 			return json_encode($resp);
 			exit;
 		}

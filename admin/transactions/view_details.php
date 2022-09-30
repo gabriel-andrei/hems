@@ -27,6 +27,11 @@ if(isset($_GET['id'])){
     echo '<script> alert("Transaction\'s ID is required to access the page."); location.replace("./?page=transactions"); </script>';
 }
 ?>
+<style>
+    .bg-light-blue {
+  		background-color: #cae8ff;
+	}
+</style>
 <div class="content py-3">
     <div class="card card-outline card-blue rounded-0 shadow">
         <div class="card-header">
@@ -38,17 +43,17 @@ if(isset($_GET['id'])){
         <div class="card-body">
             <div class="container-fluid" id="printout">
                 <div class="row mb-0">
-                    <div class="col-3 py-1 px-2 border border-blue bg-gradient-blue mb-0"><b>Transaction Code</b></div>
+                    <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Transaction Code</b></div>
                     <div class="col-9 py-1 px-2 border mb-0"><?= isset($code) ? $code : '' ?></div>
-                    <div class="col-3 py-1 px-2 border border-blue bg-gradient-blue mb-0"><b>Client Name</b></div>
+                    <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Client Name</b></div>
                     <div class="col-9 py-1 px-2 border mb-0"><?= isset($client_name) ? $client_name : '' ?></div>
-                    <div class="col-3 py-1 px-2 border border-blue bg-gradient-blue mb-0"><b>Contact #</b></div>
+                    <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Contact #</b></div>
                     <div class="col-9 py-1 px-2 border mb-0"><?= isset($contact) ? $contact : '' ?></div>
-                    <div class="col-3 py-1 px-2 border border-blue bg-gradient-blue mb-0"><b>Email</b></div>
+                    <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Email</b></div>
                     <div class="col-9 py-1 px-2 border mb-0"><?= isset($email) ? $email : '' ?></div>
-                    <div class="col-3 py-1 px-2 border border-blue bg-gradient-blue mb-0"><b>Address</b></div>
+                    <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Address</b></div>
                     <div class="col-9 py-1 px-2 border mb-0"><?= isset($address) ? $address : '' ?></div>
-                    <div class="col-3 py-1 px-2 border border-blue bg-gradient-blue mb-0"><b>Status</b></div>
+                    <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Status</b></div>
                     <div class="col-9 py-1 px-2 border mb-0">
                         <?php 
                         $status = isset($status) ? $status : '';
@@ -71,9 +76,9 @@ if(isset($_GET['id'])){
                         }
                         ?>
                     </div>
-                    <div class="col-3 py-1 px-2 border border-blue bg-gradient-blue mb-0"><b>Assigned Machinist</b></div>
+                    <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Assigned Machinist</b></div>
                     <div class="col-9 py-1 px-2 border mb-0"><?= isset($mechanic_name) ? $mechanic_name : '' ?></div>
-                    <div class="col-3 py-1 px-2 border border-blue bg-gradient-blue mb-0"><b>Prepared By</b></div>
+                    <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Prepared By</b></div>
                     <div class="col-9 py-1 px-2 border mb-0"><?= isset($user_name) ? $user_name : '' ?></div>
                 </div>
                 <div class="clear-fix mb-2"></div>
@@ -88,7 +93,7 @@ if(isset($_GET['id'])){
                                 <col width="30%">
                             </colgroup>
                             <thead>
-                                <tr class="bg-gradient-blue text-center">
+                                <tr class="bg-light-blue text-center">
                                     <th class="text-center">Service</th>
                                     <th class="text-center">Price</th>
                                 </tr>
@@ -96,7 +101,7 @@ if(isset($_GET['id'])){
                             <tbody>
                                 <?php 
                                 $service_amount = 0;
-                                $ts_qry = $conn->query("SELECT ts.*, s.name as `service` FROM `transaction_services` ts inner join `service_list` s on ts.service_id = s.id where ts.`transaction_id` = '{$id}' ");
+                                $ts_qry = $conn->query("SELECT ts.*, s.service as `service` FROM `transaction_services` ts inner join `service_list` s on ts.service_id = s.id where ts.`transaction_id` = '{$id}' ");
                                 while($row = $ts_qry->fetch_assoc()):
                                     $service_amount += $row['price'];
                                 ?>
@@ -130,7 +135,7 @@ if(isset($_GET['id'])){
                                 <col width="20%">
                             </colgroup>
                             <thead>
-                                <tr class="bg-gradient-blue">
+                                <tr class="bg-light-blue">
                                     <th class="text-center">Item Name</th>
                                     <th class="text-center">Qty</th>
                                     <th class="text-center">Price</th>

@@ -3,7 +3,7 @@
 	alert_toast("<?php echo $_settings->flashdata('success') ?>",'success')
 </script>
 <?php endif;?>
-<div class="card card-outline card-primary">
+<div class="card card-outline">
 	<div class="card-header">
 		<h3 class="card-title">List of Services</h3>
 		<div class="card-tools">
@@ -15,9 +15,12 @@
 			<table class="table table-hover table-striped table-bordered" id="list">
 				<colgroup>
 					<col width="5%">
+					<col width="10%">
+					<col width="20%">
 					<col width="15%">
-					<col width="25%">
-					<col width="25%">
+					<col width="10%">
+					<col width="20%">
+
 					<col width="10%">
 					<col width="10%">
 
@@ -27,7 +30,10 @@
 					<tr>
 						<th class="text-center">#</th>
 						<th class="text-center">Date Created</th>
-						<th class="text-center">Name</th>
+						<th class="text-center">Service</th>
+						<th class="text-center">Service Sub Category</th>
+						<th class="text-center">Cylinder</th>
+
 						<th class="text-center">Description</th>
 						<th class="text-center">Price</th>
 						<th class="text-center">Status</th>
@@ -37,13 +43,17 @@
 				<tbody>
 					<?php 
 					$i = 1;
-						$qry = $conn->query("SELECT * from `service_list` where delete_flag = 0 order by `name` asc ");
+						$qry = $conn->query("SELECT * from `service_list` where delete_flag = 0 order by `service` asc ");
 						while($row = $qry->fetch_assoc()):
 					?>
 						<tr>
 							<td class="text-center"><?php echo $i++; ?></td>
-							<td class="text-center"><?php echo date("Y-m-d H:i",strtotime($row['date_created'])) ?></td>
-							<td class="text-center"><?php echo $row['name'] ?></td>
+							<td class="text-center"><?php echo date("Y-m-d H:i",strtotime($row['date_created']))
+							 ?></td>
+							<td class="text-center"><?php echo $row['service'] ?></td>
+							<td class="text-center"><?php echo $row['service_sub'] ?></td>
+							<td class="text-center"><?php echo $row['cylinder'] ?></td>
+
 							<td class="text-center"><?php echo $row['description'] ?></td>
 							<td class="text-center"><?php echo $row['price'] ?></td>
 							<td class="text-center">
@@ -59,8 +69,6 @@
 				                    <span class="sr-only">Toggle Dropdown</span>
 				                  </button>
 				                  <div class="dropdown-menu" role="menu">
-				                    <a class="dropdown-item view_data" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-eye text-dark"></span> View</a>
-				                    <div class="dropdown-divider"></div>
 				                    <a class="dropdown-item edit_data" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-edit text-primary"></span> Edit</a>
 				                    <div class="dropdown-divider"></div>
 				                    <a class="dropdown-item delete_data" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-trash text-danger"></span> Delete</a>

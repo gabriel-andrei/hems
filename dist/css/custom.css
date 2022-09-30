@@ -162,3 +162,7 @@ label.star:before {
     content: '\2605';
     font-family: FontAwesome
 }
+
+.bg-blue {
+    background-color: #224759 !important;
+  }

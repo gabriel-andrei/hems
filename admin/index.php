@@ -13,7 +13,7 @@
     <?php endif;?>      
      <?php $page = isset($_GET['page']) ? $_GET['page'] : 'home';  ?>
       <!-- Content Wrapper. Contains page content -->
-      <div class="content-wrapper  pt-3" style="min-height: 567.854px;">
+      <div class="content-wrapper pt-3" style="min-height: 567.854px;">
      
         <!-- Main content -->
         <section class="content  text-dark">
@@ -26,7 +26,6 @@
                   include $page.'/index.php';
                 else
                   include $page.'.php';
-
               }
             ?>
           </div>

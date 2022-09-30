@@ -14,8 +14,29 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 	<form action="" id="service-form">
 		<input type="hidden" name ="id" value="<?php echo isset($id) ? $id : '' ?>">
 		<div class="form-group">
-			<label for="name" class="control-label">Name</label>
-			<input type="text" name="name" id="name" class="form-control form-control-sm rounded-0" value="<?php echo isset($name) ? $name : ''; ?>"  required/>
+			<label for="service" class="control-label">Service</label>
+			<select name="service" id="service" class="form-control form-control-sm rounded-0" required>
+			<option value="Cylinder Head" <?php echo isset($service) ? 'selected' : '' ?>>Cylinder Head</option>
+			<option value="Engine Block" <?php echo isset($service) ? 'selected' : '' ?>>Engine Block</option>
+			<option value="Crankshaft" <?php echo isset($service) ? 'selected' : '' ?>>Crankshaft</option>
+			<option value="Connecting Rod" <?php echo isset($service) ? 'selected' : '' ?>>Connecting Rod</option>
+			</select>
+		</div>
+		<div class="form-group">
+			<label for="service_sub" class="control-label">Service Sub Category</label>
+			<textarea type="text" name="service_sub" id="service_sub" class="form-control form-control-sm rounded-0" required><?php echo isset($service_sub) ? $service_sub : ''; ?></textarea>
+		</div>
+		<div class="form-group">
+			<label for="cylinder" class="control-label">Cylinder</label>
+			<select name="cylinder" id="cylinder" class="form-control form-control-sm rounded-0" required>
+			<option value="1 Cylinder" <?php echo isset($cylinder) ? 'selected' : '' ?>>1 Cylinder</option>
+			<option value="2 Cylinder" <?php echo isset($cylinder) ? 'selected' : '' ?>>2 Cylinder</option>
+			<option value="3 Cylinder" <?php echo isset($cylinder) ? 'selected' : '' ?>>3 Cylinder</option>
+			<option value="4 Small" <?php echo isset($cylinder) ? 'selected' : '' ?>>4 Small</option>
+			<option value="4 Big" <?php echo isset($cylinder) ? 'selected' : '' ?>>4 Big</option>
+			<option value="6 Cylinder" <?php echo isset($cylinder) ? 'selected' : '' ?>>6 Cylinder</option>
+			<option value="Heavy" <?php echo isset($cylinder) ? 'selected' : '' ?>>Heavy</option>
+			</select>
 		</div>
 		<div class="form-group">
 			<label for="description" class="control-label">Description</label>

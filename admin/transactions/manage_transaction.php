@@ -13,6 +13,12 @@ if(isset($_GET['id'])){
     }
 }
 ?>
+<style>
+	.bg-light-blue {
+  		background-color: #cae8ff;
+	}
+	
+</style>
 <div class="content py-3">
     <div class="container-fluid">
         <div class="card card-outline card-outline rounded-0 shadow blur">
@@ -56,17 +62,15 @@ if(isset($_GET['id'])){
                         </div>
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-
                                 <div class="form-group mb-3">
-                                    <label for="email" class="control-label">Engine Model</label>
-                                    <input type="email" name="email" id="email" class="form-control form-control-sm rounded-0" value="" required="required">
-                                </div>
+                                    <label for="engine_model" class="control-label">Engine Model</label>
+                                    <input type="engine_model" name="engine_model" id="engine_model" class="form-control form-control-sm rounded-0" value="<?= isset($engine_model) ? $engine_model : "" ?>" required="required">
+                                </div>          
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-
                                 <div class="form-group mb-3">
-                                    <label for="email" class="control-label">Job Order #</label>
-                                    <input type="email" name="email" id="email" class="form-control form-control-sm rounded-0" value="" required="required">
+                                    <label for="job_order" class="control-label">Job Order #</label>
+                                    <input type="job_order" name="job_order" id="job_order" class="form-control form-control-sm rounded-0" required="required"><?= isset($job_order) ? $job_order : "" ?>
                                 </div>
                             </div>
                         </div>
@@ -79,33 +83,42 @@ if(isset($_GET['id'])){
                                     <div class="row align-items-end">
                                         <div class="col">
                                             <div class="form-group mb-0">
-                                                <label for="service_sel" class="control-label">Select Service</label>
-                                                <select id="service_sel" class="form-control form-control-sm rounded">
+                                                <label for="service_sel" class="control-label">Service</label>
+                                                <select name="service_sel" id="service_sel" class="form-control form-control-sm rounded-0" onchange="disableServiceSub(this)" required>
+                                                <option value="" disabled selected></option>
+                                                <option value="Cylinder Head" <?php echo isset($service) ? 'selected' : '' ?>>Cylinder Head</option>
+                                                <option value="Engine Block" <?php echo isset($service) ? 'selected' : '' ?>>Engine Block</option>
+                                                <option value="Crankshaft" <?php echo isset($service) ? 'selected' : '' ?>>Crankshaft</option>
+                                                <option value="Connecting Rod" <?php echo isset($service) ? 'selected' : '' ?>>Connecting Rod</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group mb-0">
+                                                <label for="service_sel_sub" class="control-label">Select Service Sub Category</label>
+                                                <select id="service_sel_sub" class="form-control form-control-sm rounded-0" onchange="disableCylinder(this)" disabled="">
                                                     <option value="" disabled selected></option>
                                                     <?php 
-                                                    $service_qry = $conn->query("SELECT * FROM `service_list` where delete_flag = 0 and `status` = 1 order by `name`");
+                                                    $service_qry = $conn->query("SELECT service_sub FROM `service_list` where delete_flag = 0 and `status` = 1 order by `service_sub`");
                                                     while($row = $service_qry->fetch_assoc()):
                                                     ?>
-                                                    <option value="<?= $row['id'] ?>" data-price = "<?= $row['price'] ?>"><?= $row['name'] ?></option>
+                                                    <option value="<?= $row['id'] ?>" data-price = "<?= $row['price'] ?>"><?= $row['service_sub'] ?></option>
                                                     <?php endwhile; ?>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="form-group mb-0">
-                                                <label for="service_sel" class="control-label"> </label>
-                                                <select id="service_sel" class="form-control form-control-sm rounded-0">
-                                                    <option value="" disabled selected></option>
-
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="form-group mb-0">
-                                                <label for="service_sel" class="control-label"> </label>
-                                                <select id="service_sel" class="form-control form-control-sm rounded-0">
-                                                    <option value="" disabled selected></option>
-
+                                                <label for="cylinder_sel" class="control-label">Cylinder</label>
+                                                <select name="cylinder_sel" id="cylinder_sel" class="form-control form-control-sm rounded-0" disabled="">
+                                                <option value="" disabled selected></option>
+                                                <option value="1 Cylinder" <?php echo isset($cylinder) ? 'selected' : '' ?>>1 Cylinder</option>
+                                                <option value="2 Cylinder" <?php echo isset($cylinder) ? 'selected' : '' ?>>2 Cylinder</option>
+                                                <option value="3 Cylinder" <?php echo isset($cylinder) ? 'selected' : '' ?>>3 Cylinder</option>
+                                                <option value="4 Small" <?php echo isset($cylinder) ? 'selected' : '' ?>>4 Small</option>
+                                                <option value="4 Big" <?php echo isset($cylinder) ? 'selected' : '' ?>>4 Big</option>
+                                                <option value="6 Cylinder" <?php echo isset($cylinder) ? 'selected' : '' ?>>6 Cylinder</option>
+                                                <option value="Heavy" <?php echo isset($cylinder) ? 'selected' : '' ?>>Heavy</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -121,7 +134,7 @@ if(isset($_GET['id'])){
                                             <col width="10%">
                                         </colgroup>
                                         <thead>
-                                            <tr class="bg-gradient-blue">
+                                            <tr class="bg-light-blue">
                                                 <th class="text-center">Service</th>
                                                 <th class="text-center">Price</th>
                                                 <th class="text-center"></th>
@@ -131,7 +144,7 @@ if(isset($_GET['id'])){
                                             <?php 
                                             $service_amount = 0;
                                             if(isset($id)):
-                                            $ts_qry = $conn->query("SELECT ts.*, s.name as `service` FROM `transaction_services` ts inner join `service_list` s on ts.service_id = s.id where ts.`transaction_id` = '{$id}' ");
+                                            $ts_qry = $conn->query("SELECT ts.*, s.service as `service` FROM `transaction_services` ts inner join `service_list` s on ts.service_id = s.id where ts.`transaction_id` = '{$id}' ");
                                             while($row = $ts_qry->fetch_assoc()):
                                                 $service_amount += $row['price'];
                                             ?>
@@ -193,7 +206,7 @@ if(isset($_GET['id'])){
                                             <col width="5%">
                                         </colgroup>
                                         <thead>
-                                            <tr class="bg-gradient-blue">         
+                                            <tr class="bg-light-blue">         
                                                 <th class="text-center">Item Name</th>
                                                 <th class="text-center">Qty</th>
                                                 <th class="text-center">Price</th>
@@ -301,6 +314,14 @@ if(isset($_GET['id'])){
     </tr>
 </noscript>
 <script>
+    function disableServiceSub(dsbServiceSub){
+            document.getElementById('service_sel_sub').disabled = false
+    }
+
+    function disableCylinder(dsCylinder){
+            document.getElementById('cylinder_sel').disabled = false
+    }
+
     function calc_total_amount(){
         var total = 0;
         $('#service-list tbody tr').each(function(){
@@ -341,6 +362,16 @@ if(isset($_GET['id'])){
         })
         $('#service_sel').select2({
             placeholder:"Select Service",
+            width:'100%',
+            containerCssClass:'form-control form-control-sm rounded-0'
+        })
+        $('#service_sel_sub').select2({
+            placeholder:"Select Service Sub",
+            width:'100%',
+            containerCssClass:'form-control form-control-sm rounded-0'
+        })
+        $('#cylinder_sel').select2({
+            placeholder:"Select Cylinder",
             width:'100%',
             containerCssClass:'form-control form-control-sm rounded-0'
         })
@@ -396,6 +427,8 @@ if(isset($_GET['id'])){
                 }
             })
             $('#service_sel').val('').trigger("change")
+            $('#service_sel_sub').val('').trigger("change")
+            $('#cylinder_sel').val('').trigger("change")
         })
         $('#add_product').click(function(){
             if($('#product_sel').val() == null)

@@ -55,7 +55,7 @@
 					<?php 
                     $total = 0;
 					$i = 1;
-                    $qry = $conn->query("SELECT ts.*,tl.code, tl.client_name,sl.name as `service`,tl.date_created FROM `transaction_services` ts inner join transaction_list tl on ts.transaction_id = tl.id inner join service_list sl on ts.service_id = sl.id where tl.status != 4 and date(tl.date_created) = '{$date}' order by unix_timestamp(tl.date_updated) asc ");
+                    $qry = $conn->query("SELECT ts.*,tl.code, tl.client_name,sl.service as `service`,tl.date_created FROM `transaction_services` ts inner join transaction_list tl on ts.transaction_id = tl.id inner join service_list sl on ts.service_id = sl.id where tl.status != 4 and date(tl.date_created) = '{$date}' order by unix_timestamp(tl.date_updated) asc ");
                     while($row = $qry->fetch_assoc()):
                         $total += $row['price'];
 					?>
