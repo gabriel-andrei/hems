@@ -10,6 +10,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
     }
 }
 ?>
+
 <div class="container-fluid">
 	<form action="" id="inventory-form">
 		<input type="hidden" name ="id" value="<?php echo isset($id) ? $id : '' ?>">
