@@ -148,7 +148,7 @@ if(isset($_GET['id'])){
                                             while($row = $ts_qry->fetch_assoc()):
                                                 $service_amount += $row['price'];
                                             ?>
-                                            <tr>  
+                                            <tr>
                                                     <td>           
                                                         <input type="hidden" name="service_id[]" value="<?= $row['service_id'] ?>">
                                                         <input type="hidden" name="service_price[]" value="<?= $row['price'] ?>">
@@ -180,10 +180,21 @@ if(isset($_GET['id'])){
                                     <div class="row align-items-end">
                                         <div class="col">
                                             <div class="form-group mb-0">
+                                                <label for="engine_model_sel" class="control-label">Select Engine Model</label>
+                                                <select name="engine_model_sel" id="engine_model_sel" class="form-control form-control-sm rounded-0" onchange="disableProduct(this)" required>
+                                                <option value="" disabled selected></option>
+                                                <option value="4D33" <?php echo isset($engine_model) ? 'selected' : '' ?>>4D33</option>
+                                                <option value="4D56" <?php echo isset($engine_model) ? 'selected' : '' ?>>4D56</option>
+                                                <option value="4D32" <?php echo isset($engine_model) ? 'selected' : '' ?>>4D32</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group mb-0">
                                                 <label for="product_sel" class="control-label">Select Product</label>
-                                                <select id="product_sel" class="form-control form-control-sm rounded">
+                                                <select id="product_sel" class="form-control form-control-sm rounded" disabled=""> 
                                                     <option value="" disabled selected></option>
-                                                    <?php 
+                                                    <?php
                                                     $product_qry = $conn->query("SELECT * FROM `product_list` where delete_flag = 0 and `status` = 1 and (coalesce((SELECT SUM(quantity) FROM `inventory_list` where product_id = product_list.id),0) - coalesce((SELECT SUM(tp.qty) FROM `transaction_products` tp inner join `transaction_list` tl on tp.transaction_id = tl.id where tp.product_id = product_list.id and tl.status != 4),0)) > 0 ".(isset($id) ? " or id = '{$id}' " : "")." order by `name`");
                                                     while($row = $product_qry->fetch_assoc()):
                                                     ?>
@@ -317,11 +328,12 @@ if(isset($_GET['id'])){
     function disableServiceSub(dsbServiceSub){
             document.getElementById('service_sel_sub').disabled = false
     }
-
     function disableCylinder(dsCylinder){
             document.getElementById('cylinder_sel').disabled = false
     }
-
+    function disableProduct(dsProduct){
+            document.getElementById('product_sel').disabled = false
+    }
     function calc_total_amount(){
         var total = 0;
         $('#service-list tbody tr').each(function(){
@@ -357,6 +369,11 @@ if(isset($_GET['id'])){
     $(function(){
         $('select#mechanic_id').select2({
             placeholder:"Select Machinist",
+            width:'100%',
+            containerCssClass:'form-control form-control-sm rounded-0'
+        })
+        $('#engine_model_sel').select2({
+            placeholder:"Select Engine Model",
             width:'100%',
             containerCssClass:'form-control form-control-sm rounded-0'
         })
