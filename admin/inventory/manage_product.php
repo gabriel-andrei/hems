@@ -26,6 +26,16 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 			<input type="text" name="name" id="name" class="form-control form-control-sm rounded-0" value="<?php echo isset($name) ? $name : ''; ?>"  required/>
 		</div>
 		<div class="form-group">
+			<label for="engine_model" class="control-label">Engine Model</label>
+				<select name="engine_model" id="engine_model" class="form-control form-control-sm rounded-0" required>
+				<option value="" disabled selected></option>
+				<option value="4D56" <?php echo isset($engine_model) ? 'selected' : '' ?>>4D56</option>
+				<option value="4D33" <?php echo isset($engine_model) ? 'selected' : '' ?>>4D33</option>
+				<option value="4D32" <?php echo isset($engine_model) ? 'selected' : '' ?>>4D32</option>
+				</select>
+			</select>
+		</div>
+		<div class="form-group">
 			<label for="description" class="control-label">Description</label>
 			<textarea type="text" name="description" id="description" class="form-control form-control-sm rounded-0" required><?php echo isset($description) ? $description : ''; ?></textarea>
 		</div>
@@ -65,6 +75,13 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 				$('#cimg').attr('src', "<?= validate_image(isset($image_path) ? $image_path : '') ?>");
 		}
 	}
+	$(function(){
+        $('#engine_model').select2({
+            placeholder:"Select Engine Model",
+            width:'100%',
+            containerCssClass:'form-control form-control-sm rounded-0'
+        })
+	})
 	$(document).ready(function(){
 		$('#product-form').submit(function(e){
 			e.preventDefault();

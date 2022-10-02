@@ -25,6 +25,8 @@
 			<table class="table table-hover table-striped table-bordered" id="list">
 				<colgroup>
 					<col width="5%">
+					<col width="5%">
+
 					<col width="15%">
 					<col width="15%">
 					<col width="15%">
@@ -37,6 +39,8 @@
 				<thead>
 					<tr>
 						<th class="text-center">#</th>
+						<th class="text-center">Engine Model</th>
+
 						<th class="text-center">Date Created</th>
 						<th class="text-center">Image</th>
 						<th class="text-center">Product Name</th>
@@ -55,6 +59,8 @@
 					?>
 						<tr>
 							<td class="text-center"><?php echo $i++; ?></td>
+							<td class="text-center"><?php echo $row['engine_model'] ?></td>
+
 							<td class="text-center"><?php echo date("Y-m-d H:i",strtotime($row['date_created'])) ?></td>
 							<td class="text-center">
 								<img class="img-thumbnail prod-img" src="<?= validate_image($row['image_path']) ?>" alt="">
