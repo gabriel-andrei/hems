@@ -99,7 +99,7 @@ if(isset($_GET['id'])){
                                                 <select id="service_sel_sub" class="form-control form-control-sm rounded-0" onchange="disableCylinder(this)" disabled="">
                                                     <option value="" disabled selected></option>
                                                     <?php 
-                                                    $service_qry = $conn->query("SELECT * FROM `service_list` where delete_flag = 0 and `status` = 1 and service = '{$serviceSubSamp}' order by `service_sub`");
+                                                    $service_qry = $conn->query("SELECT * FROM `service_list` where delete_flag = 0 and `status` = 1 order by `service_sub`");
                                                     while($row = $service_qry->fetch_assoc()):
                                                     ?>
                                                     <option value="<?= $row['id'] ?>" data-price = "<?= $row['price'] ?>"><?= $row['service_sub'] ?></option>
@@ -149,7 +149,7 @@ if(isset($_GET['id'])){
                                                 $service_amount += $row['price'];
                                             ?>
                                             <tr>
-                                                    <td>           
+                                                    <td>
                                                         <input type="hidden" name="service_id[]" value="<?= $row['service_id'] ?>">
                                                         <input type="hidden" name="service_price[]" value="<?= $row['price'] ?>">
                                                         <span class="service_name"><?= $row['service'] ?></span>   
@@ -331,6 +331,10 @@ if(isset($_GET['id'])){
     function disableServiceSub(dsbServiceSub){
             document.getElementById('service_sel_sub').disabled = false
     }
+    function getServiceText(getSrvc){
+            var selectService = document.getElementById('service_sel');
+            var serviceText = selectService.options[selectService.selectedIndex].text;
+    }  
     function disableCylinder(dsCylinder){
             document.getElementById('cylinder_sel').disabled = false
     }
@@ -437,7 +441,6 @@ if(isset($_GET['id'])){
                 alert("Service already on the list.")
                 return false;
             }
-            var serviceSubSamp = $service.text()
             var name = $('#service_sel option[value="'+id+'"]').text()
             var price = $('#service_sel option[value="'+id+'"]').attr('data-price')
             var tr = $($('noscript#service-clone').html()).clone()
@@ -453,10 +456,13 @@ if(isset($_GET['id'])){
                     calc_service()
                 }
             })
-            $('#service_sel').val('').trigger("change")
             
+            $('#service_sel').val('').trigger("change")
             $('#service_sel_sub').val('').trigger("change")
             $('#cylinder_sel').val('').trigger("change")
+            document.getElementById('cylinder_sel').disabled = true
+            document.getElementById('service_sel_sub').disabled = true
+            document.getElementById('add_service').disabled = true
         })
         $('#add_product').click(function(){
             if($('#product_sel').val() == null)
@@ -493,6 +499,7 @@ if(isset($_GET['id'])){
             $('#product_sel').val('').trigger("change")
             $('#engine_model_sel').val('').trigger("change")
 
+            document.getElementById('product_sel').disabled = true
         })
         $('#product-list, #service-list').find('td, th').addClass('px-2 py-1 align-middle')
         $('#transaction-form').submit(function(e){

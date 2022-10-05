@@ -10,30 +10,71 @@
 <div class="card-header">
 		<h3 class="card-title">Payments</h3>
 	</div>
-	<div class="card-body">
-		
+	<div class="card-body">	
         <div class="container-fluid" id="printout">
 			<table class="table table-hover table-striped table-bordered">
 				<colgroup>
 					<col width="5%">
 					<col width="10%">
-
-					<col width="15%">
-			
+					<col width="10%">
+					<col width="20%">
+					<col width="10%">
+					<col width="10%">
 					<col width="5%">
+					<col width="10%">
 				</colgroup>
 				<thead>
 					<tr>
 						<th class="text-center">#</th>
-						<th class="text-center">Code</th>
-
-						<th class="text-center">Date Time</th>
+						<th class="text-center">Date Updated</th>
+						<th class="text-center">Payment ID</th>
+						<th class="text-center">Client</th>
+						<th class="text-center">Balance</th>
 						<th class="text-center">Amount</th>
-						
+						<th class="text-center">Status</th>
+						<th class="text-center">Action</th>
 					</tr>
 				</thead>
 				<tbody>
-					
+				<?php 
+					$i = 1;
+						$qry = $conn->query("SELECT * FROM `payment_list` where delete_flag = 0 order by `name` asc ");
+						while($row = $qry->fetch_assoc()):
+					?>
+						<tr>
+							<td class="text-center"><?php echo $i++; ?></td>
+							<td class="text-center"><?php echo $row['engine_model'] ?></td>
+
+							<td class="text-center"><?php echo date("Y-m-d H:i",strtotime($row['date_created'])) ?></td>
+							<td class="text-center">
+								<img class="img-thumbnail prod-img" src="<?= validate_image($row['image_path']) ?>" alt="">
+							</td>
+							<td class="text-center"><?php echo $row['name'] ?></td>
+							<td class="text-center"><?php echo $row['available'] ?></td>
+							<td class="text-center"><?php echo $row['sold'] ?></td>
+							<td class="text-center"><?php echo $row['price'] ?></td>
+							<td class="text-center">
+                                <?php if($row['status'] == 1): ?>
+                                    <span class="badge badge-success px-3 rounded-pill">Active</span>
+                                <?php else: ?>
+                                    <span class="badge badge-danger px-3 rounded-pill">Inactive</span>
+                                <?php endif; ?>
+                            </td>
+							<td align="center">
+								 <button type="button" class="btn btn-default border btn-md rounded-pill btn-sm dropdown-toggle dropdown-icon" data-toggle="dropdown">
+				                  		Action
+				                    <span class="sr-only">Toggle Dropdown</span>
+				                  </button>
+				                  <div class="dropdown-menu" role="menu">
+									<a class="dropdown-item new_stock" href="./?page=inventory/view_details&id=<?= $row['id'] ?>" data-id="<?php echo $row['id'] ?>"><span class="fa fa-plus text-dark"></span> Add Stock</a>
+				                    <div class="dropdown-divider"></div>
+				                    <a class="dropdown-item edit_data" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-edit text-primary"></span> Edit</a>
+				                    <div class="dropdown-divider"></div>
+				                    <a class="dropdown-item delete_data" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-trash text-danger"></span> Delete</a>
+				                  </div>
+							</td>
+						</tr>
+					<?php endwhile; ?>
 			</table>
 		</div>
 	</div>
@@ -41,30 +82,14 @@
 
 <script>
 	$(document).ready(function(){
-		$('#filter-form').submit(function(e){
-            e.preventDefault()
-            location.href = "./?page=reports/daily_sales_report&"+$(this).serialize()
-        })
-        $('#print').click(function(){
-            var h = $('head').clone()
-            var ph = $($('noscript#print-header').html()).clone()
-            var p = $('#printout').clone()
-            h.find('title').text('Daily Sales Report - Print View')
-
-            start_loader()
-            var nw = window.open("", "_blank", "width="+($(window).width() * .8)+", height="+($(window).height() * .8)+", left="+($(window).width() * .1)+", top="+($(window).height() * .1))
-                     nw.document.querySelector('head').innerHTML = h.html()
-                     nw.document.querySelector('body').innerHTML = ph.html()
-                     nw.document.querySelector('body').innerHTML += p[0].outerHTML
-                     nw.document.close()
-                     setTimeout(() => {
-                         nw.print()
-                         setTimeout(() => {
-                             nw.close()
-                             end_loader()
-                         }, 300);
-                     }, 300);
-        })
+		
+		$('.table').dataTable({
+			columnDefs: [
+					{ orderable: false, targets: [5] }
+			],
+			order:[0,'asc']
+		});
+		$('.dataTable td,.dataTable th').addClass('py-1 px-2 align-middle')
 	})
 	
 </script>
