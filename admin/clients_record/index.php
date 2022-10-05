@@ -43,30 +43,13 @@
 
 <script>
 	$(document).ready(function(){
-		$('#filter-form').submit(function(e){
-            e.preventDefault()
-            location.href = "./?page=reports/daily_sales_report&"+$(this).serialize()
-        })
-        $('#print').click(function(){
-            var h = $('head').clone()
-            var ph = $($('noscript#print-header').html()).clone()
-            var p = $('#printout').clone()
-            h.find('title').text('Daily Sales Report - Print View')
-
-            start_loader()
-            var nw = window.open("", "_blank", "width="+($(window).width() * .8)+", height="+($(window).height() * .8)+", left="+($(window).width() * .1)+", top="+($(window).height() * .1))
-                     nw.document.querySelector('head').innerHTML = h.html()
-                     nw.document.querySelector('body').innerHTML = ph.html()
-                     nw.document.querySelector('body').innerHTML += p[0].outerHTML
-                     nw.document.close()
-                     setTimeout(() => {
-                         nw.print()
-                         setTimeout(() => {
-                             nw.close()
-                             end_loader()
-                         }, 300);
-                     }, 300);
-        })
+		
+		$('.table').dataTable({
+			columnDefs: [
+					{ orderable: false, targets: [5] }
+			],
+			order:[0,'asc']
+		});
+		$('.dataTable td,.dataTable th').addClass('py-1 px-2 align-middle')
 	})
-	
 </script>

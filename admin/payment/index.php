@@ -30,7 +30,7 @@
 						<th class="text-center">Payment ID</th>
 						<th class="text-center">Client</th>
 						<th class="text-center">Balance</th>
-						<th class="text-center">Amount</th>
+						<th class="text-center">Total Amount</th>
 						<th class="text-center">Status</th>
 						<th class="text-center">Action</th>
 					</tr>
@@ -38,7 +38,7 @@
 				<tbody>
 				<?php 
 					$i = 1;
-						$qry = $conn->query("SELECT * FROM `payment_list` where delete_flag = 0 order by `name` asc ");
+						$qry = $conn->query("SELECT * FROM `payment_list` where status = 1 order by `client_name` asc ");
 						while($row = $qry->fetch_assoc()):
 					?>
 						<tr>
