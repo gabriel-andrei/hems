@@ -7,7 +7,7 @@
 	<div class="card-header">
 		<h3 class="card-title">List of Services</h3>
 		<div class="card-tools">
-			<a href="javascript:void(0)" id="create_new" class="btn btn-flat btn-primary"><span class="fas fa-plus"></span>  Create New</a>
+			<a href="javascript:void(0)" id="create_new" class="btn btn-primary border btn-md rounded-pill"><span class=""></span>  Create New</a>
 		</div>
 	</div>
 	<div class="card-body">
@@ -58,13 +58,13 @@
 							<td class="text-center"><?php echo $row['price'] ?></td>
 							<td class="text-center">
                                 <?php if($row['status'] == 1): ?>
-                                    <span class="badge badge-success px-3 rounded-pill">Active</span>
+                                    <span class="">Active</span>
                                 <?php else: ?>
-                                    <span class="badge badge-danger px-3 rounded-pill">Inactive</span>
+                                    <span class="">Inactive</span>
                                 <?php endif; ?>
                             </td>
 							<td align="center">
-								 <button type="button" class="btn btn-flat p-1 btn-default btn-sm dropdown-toggle dropdown-icon" data-toggle="dropdown">
+								 <button type="button" class="btn btn-default border btn-sm rounded-pill dropdown-toggle dropdown-icon" data-toggle="dropdown">
 				                  		Action
 				                    <span class="sr-only">Toggle Dropdown</span>
 				                  </button>

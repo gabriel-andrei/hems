@@ -54,7 +54,7 @@
 		<div class="card-footer py-2 text-right">
 			<div class="col-md-12">
 				<div class="row">
-					<button class="btn btn-sm btn-primary" form="system-frm">Update</button>
+					<button class="btn btn-primary border btn-md rounded-pill" form="system-frm">Update</button>
 				</div>
 			</div>
 		</div>

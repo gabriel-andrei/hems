@@ -37,7 +37,7 @@ if(isset($_GET['id'])){
         <div class="card-header">
             <h4 class="card-title">Transaction Details: <b><?= isset($code) ? $code : "" ?></b></h4>
             <div class="card-tools">
-                <a href="./?page=transactions" class="btn btn-default border btn-sm"><i class="fa fa-angle-left"></i> Back to List</a>
+                <a href="./?page=transactions" class="btn btn-default border btn-md rounded-pill"><i class="fa fa-angle-left"></i> Back to List</a>
             </div>
         </div>
         <div class="card-body">
@@ -59,19 +59,19 @@ if(isset($_GET['id'])){
                         $status = isset($status) ? $status : '';
                         switch($status){
                             case 0:
-                                echo '<span class="badge badge-default border px-3 rounded-pill">Pending</span>';
+                                echo '<span class="">Pending</span>';
                                 break;
                             case 1:
-                                echo '<span class="badge badge-primary px-3 rounded-pill">On-Progress</span>';
+                                echo '<span class="">On-Progress</span>';
                                 break;
                             case 2:
-                                echo '<span class="badge badge-success px-3 rounded-pill">Done</span>';
+                                echo '<span class="">Done</span>';
                                 break;
                             case 3:
-                                echo '<span class="badge badge-teal bg-gradient-teal px-3 rounded-pill">Paid</span>';
+                                echo '<span class="">Paid</span>';
                                 break;
                             case 4:
-                                echo '<span class="badge badge-danger px-3 rounded-pill">Cancelled</span>';
+                                echo '<span class="">Cancelled</span>';
                                 break;
                         }
                         ?>
@@ -171,7 +171,7 @@ if(isset($_GET['id'])){
                 </div>
                 <hr>
                 <div class="clear-fix mb-3"></div>
-                <h2 class="text-black text-right">Total Payable Amount: <b id="amount"><?= isset($amount) ? format_num($amount) : "0.00" ?></b></h2>
+                <h4 class="text-black text-right">Total Payable Amount: <b id="amount"><?= isset($amount) ? format_num($amount) : "0.00" ?></b></h4>
             </div>
             <hr>
                                 
@@ -179,7 +179,6 @@ if(isset($_GET['id'])){
                 <button class="btn btn-primary bg-gradient-blue border col-lg-3 col-md-4 col-sm-12 col-xs-12 rounded-pill" id="update_status" type="button">Update Status</button>
                 <a class="btn btn-primary bg-gradient-primary border col-lg-3 col-md-4 col-sm-12 col-xs-12 rounded-pill" href="./?page=transactions/manage_transaction&id=<?= isset($id) ? $id : '' ?>"><i class="fa fa-edit"></i> Edit</a>
                 <button class="btn btn-light bg-gradient-light border col-lg-3 col-md-4 col-sm-12 col-xs-12 rounded-pill" id="print"><i class="fa fa-print"></i> Print</button>
-                <button class="btn btn-danger bg-gradient-danger border col-lg-3 col-md-4 col-sm-12 col-xs-12 rounded-pill" id="delete_transaction" type="button"><i class="fa fa-trash"></i> Delete Transaction</button>
             </div>
         </div>
     </div>
@@ -226,7 +225,7 @@ $(function(){
                  },500)
     })
     $('#update_status').click(function(){
-        uni_modal("Update transaction Status", "transactions/update_status.php?id=<?= isset($id) ? $id : '' ?>")
+        uni_modal("Update Transaction Status", "transactions/update_status.php?id=<?= isset($id) ? $id : '' ?>")
     })
     $('#delete_transaction').click(function(){
         _conf("Are you sure to delete this transaction permanently?","delete_transaction",[])

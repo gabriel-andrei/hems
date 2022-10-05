@@ -22,8 +22,8 @@
                             </div>
                             <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
-                                    <button class="btn btn-primary btn-sm bg-gradient-primary rounded-0"><i class="fa fa-filter"></i> Filter</button>
-                                    <button class="btn btn-light btn-sm bg-gradient-light rounded-0 border" type="button" id="print"><i class="fa fa-print"></i> Print</button>
+                                    <button class="btn btn-primary border btn-sm rounded-pill"><i class="fa fa-filter"></i> Filter</button>
+                                    <button class="btn btn-default border btn-sm rounded-pill" type="button" id="print"><i class="fa fa-print"></i> Print</button>
                                 </div>
                             </div>
                         </div>

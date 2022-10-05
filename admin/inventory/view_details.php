@@ -29,8 +29,8 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
         <div class="card rounded-0 shadow">
             <div class="card-header">
                 <div class="card-tools">
-                    <button class="btn btn-primary bg-gradient-primary btn-sm rounded-0" type="button" id="create_new"><i class="fa fa-plus"></i> Add Stock</button>
-                    <a class="btn btn-light bg-gradient-light btn-sm rounded-0 border" href="./?page=inventory" ><i class="fa fa-angle-left"></i> Back</a>
+                    <button class="btn btn-primary border btn-md rounded-pill" type="button" id="create_new"><i class=""></i> Add Stock</button>
+                    <a class="btn btn-default border btn-md rounded-pill" href="./?page=inventory" ><i class="fa fa-angle-left"></i> Back To List</a>
                 </div>
             </div>
             <div class="card-body">

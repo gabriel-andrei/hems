@@ -17,7 +17,7 @@
 		<h3 class="card-title">Inventory</h3>
 		
 		<div class="card-tools">
-			<a href="javascript:void(0)" id="create_new" style="margin:5px" class="btn btn-flat btn-primary"><span class="fas fa-plus"></span>  Create New</a>
+			<a href="javascript:void(0)" id="create_new" style="margin:0px" class="btn btn-primary border btn-md rounded-pill"><span class=""></span>  Create New</a>
 		</div>
 	</div>
 	<div class="card-body">
@@ -26,7 +26,6 @@
 				<colgroup>
 					<col width="5%">
 					<col width="5%">
-
 					<col width="15%">
 					<col width="15%">
 					<col width="15%">
@@ -40,7 +39,6 @@
 					<tr>
 						<th class="text-center">#</th>
 						<th class="text-center">Engine Model</th>
-
 						<th class="text-center">Date Created</th>
 						<th class="text-center">Image</th>
 						<th class="text-center">Product Name</th>
@@ -77,7 +75,7 @@
                                 <?php endif; ?>
                             </td>
 							<td align="center">
-								 <button type="button" class="btn btn-flat p-1 btn-default btn-sm dropdown-toggle dropdown-icon" data-toggle="dropdown">
+								 <button type="button" class="btn btn-default border btn-md rounded-pill btn-sm dropdown-toggle dropdown-icon" data-toggle="dropdown">
 				                  		Action
 				                    <span class="sr-only">Toggle Dropdown</span>
 				                  </button>

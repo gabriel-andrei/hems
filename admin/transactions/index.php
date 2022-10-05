@@ -7,7 +7,7 @@
 	<div class="card-header">
 		<h3 class="card-title">List of Transactions</h3>
 		<div class="card-tools">
-			<a href="./?page=transactions/manage_transaction" id="create_new" class="btn btn-flat btn-primary"><span class="fas fa-plus"></span>  Create New</a>
+			<a href="./?page=transactions/manage_transaction" id="create_new" class="btn btn-primary border btn-md rounded-pill"><span class=""></span>  Create New</a>
 		</div>
 	</div>
 	<div class="card-body">
@@ -54,25 +54,25 @@
 								<?php 
 								switch($row['status']){
 									case 0:
-										echo '<span class="badge badge-default border px-3 rounded-pill">Pending</span>';
+										echo '<span class="">Pending</span>';
 										break;
 									case 1:
-										echo '<span class="badge badge-primary px-3 rounded-pill">On-Progress</span>';
+										echo '<span class="">On-Progress</span>';
 										break;
 									case 2:
-										echo '<span class="badge badge-success px-3 rounded-pill">Done</span>';
+										echo '<span class="">Done</span>';
 										break;
 									case 3:
-										echo '<span class="badge badge-success bg-gradient-teal px-3 rounded-pill">Paid</span>';
+										echo '<span class="">Paid</span>';
 										break;
 									case 4:
-										echo '<span class="badge badge-danger px-3 rounded-pill">Cancelled</span>';
+										echo '<span class="">Cancelled</span>';
 										break;
 								}
 								?>
                             </td>
 							<td align="center">
-								<a class="btn btn-default bg-gradient-light btn-flat btn-sm" href="?page=transactions/view_details&id=<?php echo $row['id'] ?>"><span class="fa fa-eye text-dark"></span> View</a>
+								<a class="btn btn-default border btn-md rounded-pill" href="?page=transactions/view_details&id=<?php echo $row['id'] ?>"><span class=""></span> View</a>
 							</td>
 						</tr>
 					<?php endwhile; ?>
