@@ -35,7 +35,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<?php 
+					<?php
 					$i = 1;
 						if($_settings->userdata('type') == 3):
 						$qry = $conn->query("SELECT * FROM `transaction_list` where tech_id = '{$_settings->userdata('id')}' order by unix_timestamp(date_updated) desc ");
@@ -51,7 +51,7 @@
 							<td class="text-center"><p class="m-0 truncate-1"><?= $row['client_name'] ?></p></td>
 							<td class="text-center"><?= format_num($row['amount']) ?></td>
 							<td class="text-center">
-								<?php 
+								<?php
 								switch($row['status']){
 									case 0:
 										echo '<span class="">Pending</span>';
