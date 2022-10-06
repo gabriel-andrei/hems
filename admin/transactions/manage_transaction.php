@@ -86,10 +86,12 @@ if(isset($_GET['id'])){
                                                 <label for="service_sel" class="control-label">Service</label>
                                                 <select name="service_sel" id="service_sel" class="form-control form-control-sm rounded-0" onchange="disableServiceSub(this)" required>
                                                 <option value="" disabled selected></option>
-                                                <option value="Cylinder Head" <?php echo isset($service) ? 'selected' : '' ?>>Cylinder Head</option>
-                                                <option value="Engine Block" <?php echo isset($service) ? 'selected' : '' ?>>Engine Block</option>
-                                                <option value="Crankshaft" <?php echo isset($service) ? 'selected' : '' ?>>Crankshaft</option>
-                                                <option value="Connecting Rod" <?php echo isset($service) ? 'selected' : '' ?>>Connecting Rod</option>
+                                                <?php 
+                                                    $service_qry = $conn->query("SELECT * FROM `service_list` where delete_flag = 0 and `status` = 1 order by `service`");
+                                                    while($row = $service_qry->fetch_assoc()):
+                                                    ?>
+                                                    <option value="<?= $row['id'] ?>" data-price = "<?= $row['price'] ?>"><?= $row['service'] ?></option>
+                                                    <?php endwhile; ?>
                                                 </select>
                                             </div>
                                         </div>
@@ -129,13 +131,17 @@ if(isset($_GET['id'])){
                                     <div class="clear-fix mb-2"></div>
                                     <table class="table table-striped table-bordered" id="service-list">
                                         <colgroup>
-                                            <col width="70%">
+                                            <col width="30%">
+                                            <col width="30%">
+                                            <col width="30%">
                                             <col width="20%">                 
                                             <col width="10%">
                                         </colgroup>
                                         <thead>
                                             <tr class="bg-light-blue">
                                                 <th class="text-center">Service</th>
+                                                <th class="text-center">Service Sub</th>
+                                                <th class="text-center">Cylinder</th>
                                                 <th class="text-center">Price</th>
                                                 <th class="text-center"></th>
                                             </tr>
@@ -149,11 +155,11 @@ if(isset($_GET['id'])){
                                                 $service_amount += $row['price'];
                                             ?>
                                             <tr>
-                                                    <td>
-                                                        <input type="hidden" name="service_id[]" value="<?= $row['service_id'] ?>">
-                                                        <input type="hidden" name="service_price[]" value="<?= $row['price'] ?>">
-                                                        <span class="service_name"><?= $row['service'] ?></span>   
-                                                    </td>
+                                                <td class="text-center">
+                                                    <input type="hidden" name="service_id[]" value="<?= $row['service_id'] ?>">
+                                                    <input type="hidden" name="service_price[]" value="<?= $row['price'] ?>">
+                                                    <span class="service_name"><?= $row['service'] ?></span>
+                                                </td>
                                                 <td class="text-center service_price"><?= format_num($row['price']) ?></td>
                                                 <td class="text-center">
                                                     <button class="btn btn-outline-danger btn-sm rounded-0 rem-service" type="button"><i class="fa fa-trash"></i></button>
@@ -213,15 +219,16 @@ if(isset($_GET['id'])){
                                     <div class="clear-fix mb-2"></div>
                                     <table class="table table-striped table-bordered" id="product-list">
                                         <colgroup>
-                                            
-                                            <col width="40%">
+                                            <col width="30%">
+                                            <col width="30%">
                                             <col width="15%">
                                             <col width="20%">
                                             <col width="5%">
                                         </colgroup>
                                         <thead>
-                                            <tr class="bg-light-blue">         
-                                                <th class="text-center">Item Name</th>
+                                            <tr class="bg-light-blue">
+                                                <th class="text-center">Engine Model</th>
+                                                <th class="text-center">Product</th>
                                                 <th class="text-center">Qty</th>
                                                 <th class="text-center">Price</th>
                                                 <th class="text-center"></th>

@@ -26,15 +26,15 @@
                     <li class="nav-item dropdown">
                       <a href="./" class="nav-link nav-home">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>
+                        <p style="font-size: 16px">
                           Dashboard
                         </p>
                       </a>
                     </li> 
                     <li class="nav-item dropdown">
                       <a href="<?php echo base_url ?>admin/?page=clients_record" class="nav-link nav-clients_record">
-                        <i class="nav-icon fas fa-list"></i>
-                        <p>
+                        <i class="nav-icon fas fa-folder-open"></i>
+                        <p style="font-size: 16px">
                           Client's Record
                         </p>
                       </a>
@@ -42,15 +42,16 @@
                     <li class="nav-item dropdown">
                       <a href="<?php echo base_url ?>admin/?page=inventory" class="nav-link nav-inventory">
                         <i class="nav-icon fas fa-clipboard-check"></i>
-                        <p>
+                        <p style="font-size: 16px">
                           Inventory
                         </p>
                       </a>
                     </li>
                     <li class="nav-item dropdown">
                       <a href="<?php echo base_url ?>admin/?page=transactions" class="nav-link nav-transactions">
+                      <!-- <a href="<?php echo base_url ?>admin/?page=transactions/manage_transaction" class="nav-link nav-transactions-manage_transaction"> -->
                         <i class="nav-icon fas fa-clipboard-list"></i>
-                        <p>
+                        <p style="font-size: 16px">
                           Transactions
                         </p>
                       </a>
@@ -58,17 +59,17 @@
                     <li class="nav-item dropdown">
                       <a href="<?php echo base_url ?>admin/?page=payment" class="nav-link nav-payment">
                         <i class="nav-icon fas fa-credit-card"></i>
-                        <p>
+                        <p style="font-size: 16px">
                           Payment
                         </p>
                       </a>
                     </li>
                     
-                    <li class="nav-header">Maintenance</li>
+                    <li class="nav-header" style="font-size: 16px">Reports</li>
                     <li class="nav-item dropdown">
                       <a href="<?php echo base_url ?>admin/?page=reports/daily_sales_report" class="nav-link nav-reports_daily_sales_report">
                         <i class="nav-icon far fa-circle"></i>
-                        <p>
+                        <p style="font-size: 16px">
                           Daily Sales Report
                         </p>
                       </a>
@@ -76,17 +77,17 @@
                     <li class="nav-item dropdown">
                       <a href="<?php echo base_url ?>admin/?page=reports/daily_service_report" class="nav-link nav-reports_daily_service_report">
                         <i class="nav-icon far fa-circle"></i>
-                        <p>
+                        <p style="font-size: 16px">
                           Daily Service Report
                         </p>
                       </a>
                     </li>
                     <?php if($_settings->userdata('type') == 1): ?>
-                    <li class="nav-header">Maintenance</li>
+                    <li class="nav-header" style="font-size: 16px">Maintenance</li>
                     <li class="nav-item dropdown">
                       <a href="<?php echo base_url ?>admin/?page=services" class="nav-link nav-services">
                         <i class="nav-icon fas fa-th-list"></i>
-                        <p>
+                        <p style="font-size: 16px">
                           Service List
                         </p>
                       </a>
@@ -94,7 +95,7 @@
                     <li class="nav-item dropdown">
                       <a href="<?php echo base_url ?>admin/?page=mechanics" class="nav-link nav-mechanics">
                         <i class="nav-icon fas fa-user-friends"></i>
-                        <p>
+                        <p style="font-size: 16px">
                           Machinist List
                         </p>
                       </a>
@@ -102,7 +103,7 @@
                     <li class="nav-item dropdown">
                       <a href="<?php echo base_url ?>admin/?page=user" class="nav-link nav-user">
                         <i class="nav-icon fas fa-users-cog"></i>
-                        <p>
+                        <p style="font-size: 16px">
                           User List
                         </p>
                       </a>
@@ -110,7 +111,7 @@
                     <li class="nav-item dropdown">
                       <a href="<?php echo base_url ?>admin/?page=system_info" class="nav-link nav-system_info">
                         <i class="nav-icon fas fa-tools"></i>
-                        <p>
+                        <p style="font-size: 16px">
                           Settings
                         </p>
                       </a>
@@ -152,7 +153,6 @@
         if($('.nav-link.nav-'+page).hasClass('nav-is-tree') == true){
           $('.nav-link.nav-'+page).parent().addClass('menu-open')
         }
-
       }
       $('.nav-link.active').addClass('bg-blue')
     })
