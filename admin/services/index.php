@@ -20,20 +20,17 @@
 					<col width="15%">
 					<col width="10%">
 					<col width="20%">
-
 					<col width="10%">
 					<col width="10%">
-
 					<col width="20%">
 				</colgroup>
 				<thead>
 					<tr>
 						<th class="text-center">#</th>
 						<th class="text-center">Date Created</th>
-						<th class="text-center">Service</th>
+						<th class="text-center">Service Name</th>
 						<th class="text-center">Service Sub Category</th>
 						<th class="text-center">Cylinder</th>
-
 						<th class="text-center">Description</th>
 						<th class="text-center">Price</th>
 						<th class="text-center">Status</th>
@@ -48,12 +45,10 @@
 					?>
 						<tr>
 							<td class="text-center"><?php echo $i++; ?></td>
-							<td class="text-center"><?php echo date("Y-m-d H:i",strtotime($row['date_created']))
-							 ?></td>
+							<td class="text-center"><?php echo date("Y-m-d H:i",strtotime($row['date_created']))?></td>
 							<td class="text-center"><?php echo $row['service'] ?></td>
 							<td class="text-center"><?php echo $row['service_sub'] ?></td>
 							<td class="text-center"><?php echo $row['cylinder'] ?></td>
-
 							<td class="text-center"><?php echo $row['description'] ?></td>
 							<td class="text-center"><?php echo $row['price'] ?></td>
 							<td class="text-center">

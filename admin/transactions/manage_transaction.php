@@ -87,11 +87,16 @@ if(isset($_GET['id'])){
                                                 <select name="service_sel" id="service_sel" class="form-control form-control-sm rounded-0" onchange="disableServiceSub(this)" required>
                                                 <option value="" disabled selected></option>
                                                 <?php 
+
                                                     $service_qry = $conn->query("SELECT * FROM `service_list` where delete_flag = 0 and `status` = 1 order by `service`");
+                                                    $service_cond = 'service';
                                                     while($row = $service_qry->fetch_assoc()):
                                                     ?>
+                                                    
                                                     <option value="<?= $row['id'] ?>" data-price = "<?= $row['price'] ?>"><?= $row['service'] ?></option>
+                                                   
                                                     <?php endwhile; ?>
+                                                    
                                                 </select>
                                             </div>
                                         </div>
@@ -160,7 +165,14 @@ if(isset($_GET['id'])){
                                                     <input type="hidden" name="service_price[]" value="<?= $row['price'] ?>">
                                                     <span class="service_name"><?= $row['service'] ?></span>
                                                 </td>
+                                                <td class="text-center">
+                                                    
+                                                    <span class="service_sub_name"><?= $row['service_sub'] ?></span>
+                                                </td>
+                                                
+                                                <td class="text-center"><?=($row['cylinder']) ?></td>
                                                 <td class="text-center service_price"><?= format_num($row['price']) ?></td>
+                                                
                                                 <td class="text-center">
                                                     <button class="btn btn-outline-danger btn-sm rounded-0 rem-service" type="button"><i class="fa fa-trash"></i></button>
                                                 </td>        
@@ -444,21 +456,34 @@ if(isset($_GET['id'])){
             if($('#service_sel').val() == null)
             return false;
             var id = $('#service_sel').val()
+            var id2 = $('#service_sel_sub').val()
+            var id3 = $('#cylinder_sel').val()
+
+
             if($('#service-list tbody tr input[name="service_id[]"][value="'+id+'"]').length > 0){
                 alert("Service already on the list.")
                 return false;
             }
+
             var name = $('#service_sel option[value="'+id+'"]').text()
+            var serviceSub = $('#service_sel_sub option[value="'+id2+'"]').text()
+            var cylinderSel = $('#cylinder_sel option[value="'+id3+'"]').text()
+
             var price = $('#service_sel option[value="'+id+'"]').attr('data-price')
             var tr = $($('noscript#service-clone').html()).clone()
             tr.find('input[name="service_id[]"]').val(id)
             tr.find('input[name="service_price[]"]').val(price)
             tr.find('.service_name').text(name)
+            tr.find('.service_sub_name').text(serviceSub)
+            tr.find('.service_cylinder_name').text(cylinderSel)
+
+
+
             tr.find('.service_price').text(parseFloat(price).toLocaleString())
             $('#service-list tbody').append(tr)
             calc_service()
             tr.find('.rem-service').click(function(){
-                if(confirm("Are you sure to remove "+name+" from service list?") === true){
+                if(confirm("Are you sure to remove "+name+" "+serviceSub+" "+cylinderSel+" from service list?") === true){
                     tr.remove()
                     calc_service()
                 }
