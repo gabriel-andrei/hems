@@ -26,9 +26,9 @@
 				<thead>
 					<tr>
 						<th class="text-center">#</th>
-						<th class="text-center">Date Updated</th>
+						<th class="text-center">Date Created</th>
 						<th class="text-center">Payment ID</th>
-						<th class="text-center">Client</th>
+						<th class="text-center">Client Name</th>
 						<th class="text-center">Balance</th>
 						<th class="text-center">Total Amount</th>
 						<th class="text-center">Status</th>
@@ -38,40 +38,25 @@
 				<tbody>
 				<?php 
 					$i = 1;
-						$qry = $conn->query("SELECT * FROM `payment_list` where status = 1 order by `client_name` asc ");
+						$qry = $conn->query("SELECT * FROM `payment_list` order by `date_created` desc ");
 						while($row = $qry->fetch_assoc()):
 					?>
 						<tr>
 							<td class="text-center"><?php echo $i++; ?></td>
-							<td class="text-center"><?php echo $row['engine_model'] ?></td>
-
-							<td class="text-center"><?php echo date("Y-m-d H:i",strtotime($row['date_created'])) ?></td>
-							<td class="text-center">
-								<img class="img-thumbnail prod-img" src="<?= validate_image($row['image_path']) ?>" alt="">
-							</td>
-							<td class="text-center"><?php echo $row['name'] ?></td>
-							<td class="text-center"><?php echo $row['available'] ?></td>
-							<td class="text-center"><?php echo $row['sold'] ?></td>
-							<td class="text-center"><?php echo $row['price'] ?></td>
+							<td class="text-center"><?php echo $row['date_created'] ?></td>
+							<td class="text-center"><?php echo $row['payment_id'] ?></td>
+							<td class="text-center"><?php echo $row['client_name'] ?></td>
+							<td class="text-center"><?php echo $row['balance'] ?></td>
+							<td class="text-center"><?php echo $row['total_amount'] ?></td>
 							<td class="text-center">
                                 <?php if($row['status'] == 1): ?>
-                                    <span class="badge badge-success px-3 rounded-pill">Active</span>
+                                    <span class="">Active</span>
                                 <?php else: ?>
-                                    <span class="badge badge-danger px-3 rounded-pill">Inactive</span>
+                                    <span class="">Inactive</span>
                                 <?php endif; ?>
                             </td>
 							<td align="center">
-								 <button type="button" class="btn btn-default border btn-md rounded-pill btn-sm dropdown-toggle dropdown-icon" data-toggle="dropdown">
-				                  		Action
-				                    <span class="sr-only">Toggle Dropdown</span>
-				                  </button>
-				                  <div class="dropdown-menu" role="menu">
-									<a class="dropdown-item new_stock" href="./?page=inventory/view_details&id=<?= $row['id'] ?>" data-id="<?php echo $row['id'] ?>"><span class="fa fa-plus text-dark"></span> Add Stock</a>
-				                    <div class="dropdown-divider"></div>
-				                    <a class="dropdown-item edit_data" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-edit text-primary"></span> Edit</a>
-				                    <div class="dropdown-divider"></div>
-				                    <a class="dropdown-item delete_data" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-trash text-danger"></span> Delete</a>
-				                  </div>
+								<a class="btn btn-default border btn-md rounded-pill edit_data" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class=""></span> View</a>
 							</td>
 						</tr>
 					<?php endwhile; ?>
@@ -90,6 +75,10 @@
 			order:[0,'asc']
 		});
 		$('.dataTable td,.dataTable th').addClass('py-1 px-2 align-middle')
+
+		$('.edit_data').click(function(){
+			uni_modal("<i class='fa fa-edit'></i> Update Payment Details","payment/manage_payment.php?id="+$(this).attr('data-id'))
+		})
 	})
 	
 </script>

@@ -69,9 +69,9 @@
 							<td class="text-center"><?php echo $row['price'] ?></td>
 							<td class="text-center">
                                 <?php if($row['status'] == 1): ?>
-                                    <span class="badge badge-success px-3 rounded-pill">Active</span>
+                                    <span class="">Active</span>
                                 <?php else: ?>
-                                    <span class="badge badge-danger px-3 rounded-pill">Inactive</span>
+                                    <span class="">Inactive</span>
                                 <?php endif; ?>
                             </td>
 							<td align="center">

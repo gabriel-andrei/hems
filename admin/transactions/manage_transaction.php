@@ -166,10 +166,8 @@ if(isset($_GET['id'])){
                                                     <span class="service_name"><?= $row['service'] ?></span>
                                                 </td>
                                                 <td class="text-center">
-                                                    
                                                     <span class="service_sub_name"><?= $row['service_sub'] ?></span>
                                                 </td>
-                                                
                                                 <td class="text-center"><?=($row['cylinder']) ?></td>
                                                 <td class="text-center service_price"><?= format_num($row['price']) ?></td>
                                                 

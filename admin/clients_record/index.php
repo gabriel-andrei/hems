@@ -26,8 +26,8 @@
 				<thead>
 					<tr>
 						<th class="text-center">#</th>
-						<th class="text-center">Date Time</th>
-						<th class="text-center">Client</th>
+						<th class="text-center">Date Created</th>
+						<th class="text-center">Client Name</th>
 						<th class="text-center">Contact #</th>
 						<th class="text-center">Address</th>
 						<th class="text-center">Engine Model</th>
@@ -35,7 +35,24 @@
 					</tr>
 				</thead>
 				<tbody>
-					
+				<?php 
+					$i = 1;
+						$qry = $conn->query("SELECT * FROM `clients_record` order by `date_created` desc ");
+						while($row = $qry->fetch_assoc()):
+					?>
+						<tr>
+							<td class="text-center"><?php echo $i++; ?></td>
+							<td class="text-center"><?php echo $row['date_created'] ?></td>
+							<td class="text-center"><?php echo $row['client_name'] ?></td>
+							<td class="text-center"><?php echo $row['contact'] ?></td>
+							<td class="text-center"><?php echo $row['address'] ?></td>
+							<td class="text-center"><?php echo $row['engine_model'] ?></td>
+							<td align="center">
+								<a class="btn btn-default border btn-md rounded-pill" href=""><span class=""></span> View</a>
+							</td>
+						</tr>
+					<?php endwhile; ?>
+				</tbody>	
 			</table>
 		</div>
 	</div>
