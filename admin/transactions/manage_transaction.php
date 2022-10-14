@@ -86,17 +86,10 @@ if(isset($_GET['id'])){
                                                 <label for="service_sel" class="control-label">Service</label>
                                                 <select name="service_sel" id="service_sel" class="form-control form-control-sm rounded-0" onchange="disableServiceSub(this)" required>
                                                 <option value="" disabled selected></option>
-                                                <?php 
-
-                                                    $service_qry = $conn->query("SELECT * FROM `service_list` where delete_flag = 0 and `status` = 1 order by `service`");
-                                                    $service_cond = 'service';
-                                                    while($row = $service_qry->fetch_assoc()):
-                                                    ?>
-                                                    
-                                                    <option value="<?= $row['id'] ?>" data-price = "<?= $row['price'] ?>"><?= $row['service'] ?></option>
-                                                   
-                                                    <?php endwhile; ?>
-                                                    
+                                                    <option value="Connecting Rod" <?php echo isset($service) ? 'selected' : '' ?>>Connecting Rod</option>
+                                                    <option value="Cylinder Head" <?php echo isset($service) ? 'selected' : '' ?>>Cylinder Head</option>
+                                                    <option value="Crankshaft" <?php echo isset($service) ? 'selected' : '' ?>>Crankshaft</option>
+                                                    <option value="Engine Block" <?php echo isset($service) ? 'selected' : '' ?>>Engine Block</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -104,9 +97,12 @@ if(isset($_GET['id'])){
                                             <div class="form-group mb-0">
                                                 <label for="service_sel_sub" class="control-label">Select Service Sub Category</label>
                                                 <select id="service_sel_sub" class="form-control form-control-sm rounded-0" onchange="disableCylinder(this)" disabled="">
+                                                
                                                     <option value="" disabled selected></option>
                                                     <?php 
-                                                    $service_qry = $conn->query("SELECT * FROM `service_list` where delete_flag = 0 and `status` = 1 order by `service_sub`");
+                                                    
+
+                                                    $service_qry = $conn->query("SELECT service_sub FROM `service_list` where delete_flag = 0 and `status` = 1 order by `service_sub`");
                                                     while($row = $service_qry->fetch_assoc()):
                                                     ?>
                                                     <option value="<?= $row['id'] ?>" data-price = "<?= $row['price'] ?>"><?= $row['service_sub'] ?></option>
@@ -148,11 +144,11 @@ if(isset($_GET['id'])){
                                                 <th class="text-center">Service Sub</th>
                                                 <th class="text-center">Cylinder</th>
                                                 <th class="text-center">Price</th>
-                                                <th class="text-center"></th>
+                                                <th class="text-center">            </th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php 
+                                            <?php
                                             $service_amount = 0;
                                             if(isset($id)):
                                             $ts_qry = $conn->query("SELECT ts.*, s.service as `service` FROM `transaction_services` ts inner join `service_list` s on ts.service_id = s.id where ts.`transaction_id` = '{$id}' ");
@@ -165,12 +161,9 @@ if(isset($_GET['id'])){
                                                     <input type="hidden" name="service_price[]" value="<?= $row['price'] ?>">
                                                     <span class="service_name"><?= $row['service'] ?></span>
                                                 </td>
-                                                <td class="text-center">
-                                                    <span class="service_sub_name"><?= $row['service_sub'] ?></span>
-                                                </td>
-                                                <td class="text-center"><?=($row['cylinder']) ?></td>
+                                                <td class="text-center service_sub_name"></td>
+                                                <td class="text-center service_cylinder_name"></td>
                                                 <td class="text-center service_price"><?= format_num($row['price']) ?></td>
-                                                
                                                 <td class="text-center">
                                                     <button class="btn btn-outline-danger btn-sm rounded-0 rem-service" type="button"><i class="fa fa-trash"></i></button>
                                                 </td>        
@@ -180,6 +173,8 @@ if(isset($_GET['id'])){
                                         </tbody>
                                         <tfoot>
                                             <tr class="bg-gradient-secondary">
+                                                <th></th>
+                                                <th></th>
                                                 <th colspan="" class="text-center">Total</th>
                                                 <th class="text-center" id="service_total"><?= isset($service_amount) ? format_num($service_amount): 0 ?></th>
                                                 <th class="text-center" id=""></th>
@@ -324,6 +319,8 @@ if(isset($_GET['id'])){
             <input type="hidden" name="service_price[]" value="0">
             <span class="service_name"></span>
         </td>
+        <td class="text-center service_sub_name"></td>
+        <td class="text-center service_cylinder_name"></td>
         <td class="text-center service_price"></td>
         <td class="text-center">
             <button class="btn btn-outline-danger btn-sm rounded-0 rem-service" type="button"><i class="fa fa-trash"></i></button>
@@ -332,6 +329,7 @@ if(isset($_GET['id'])){
 </noscript>
 <noscript id="product-clone">
     <tr>
+        <td class="text-center engineModelName"></td>
         <td>
             <input type="hidden" name="product_id[]" value="">
             <input type="hidden" name="product_price[]" value="0">
@@ -346,6 +344,7 @@ if(isset($_GET['id'])){
 </noscript>
 <script>
     function disableServiceSub(dsbServiceSub){
+            var selectedService = $('#service_sel').val()
             document.getElementById('service_sel_sub').disabled = false
     }
     function getServiceText(getSrvc){
@@ -360,6 +359,7 @@ if(isset($_GET['id'])){
     }
     function disableAddServiceBtn(dsAddService){
             document.getElementById('add_service').disabled = false
+            
     }
     function disableAddProductBtn(dsAddProduct){
             document.getElementById('add_product').disabled = false
@@ -451,18 +451,16 @@ if(isset($_GET['id'])){
 
         })
         $('#add_service').click(function(){
-            if($('#service_sel').val() == null)
+            if($('#service_sel').val() == null || $('#service_sel_sub').val() == null || $('#cylinder_sel').val() == null)
             return false;
             var id = $('#service_sel').val()
             var id2 = $('#service_sel_sub').val()
             var id3 = $('#cylinder_sel').val()
 
-
             if($('#service-list tbody tr input[name="service_id[]"][value="'+id+'"]').length > 0){
                 alert("Service already on the list.")
                 return false;
             }
-
             var name = $('#service_sel option[value="'+id+'"]').text()
             var serviceSub = $('#service_sel_sub option[value="'+id2+'"]').text()
             var cylinderSel = $('#cylinder_sel option[value="'+id3+'"]').text()
@@ -471,12 +469,9 @@ if(isset($_GET['id'])){
             var tr = $($('noscript#service-clone').html()).clone()
             tr.find('input[name="service_id[]"]').val(id)
             tr.find('input[name="service_price[]"]').val(price)
-            tr.find('.service_name').text(name)
+            tr.find('.service_name').text(name) 
             tr.find('.service_sub_name').text(serviceSub)
             tr.find('.service_cylinder_name').text(cylinderSel)
-
-
-
             tr.find('.service_price').text(parseFloat(price).toLocaleString())
             $('#service-list tbody').append(tr)
             calc_service()
@@ -503,11 +498,15 @@ if(isset($_GET['id'])){
                 return false;
             }
             var name = $('#product_sel option[value="'+id+'"]').text()
+            var engineModelName = $('#engine_model_sel').val()
+            var name = $('#service_sel option[value="'+id+'"]').text()
+
             var price = $('#product_sel option[value="'+id+'"]').attr('data-price')
             var tr = $($('noscript#product-clone').html()).clone()
             tr.find('input[name="product_id[]"]').val(id)
             tr.find('input[name="product_price[]"]').val(price)
-            tr.find('.product_name').text(name)
+            tr.find('.engineModelName').text(engineModelName)
+
             tr.find('.product_price').text(parseFloat(price).toLocaleString())
             tr.find('.product_total').text(parseFloat(price).toLocaleString())
             $('#product-list tbody').append(tr)
