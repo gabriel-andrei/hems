@@ -132,11 +132,11 @@ if(isset($_GET['id'])){
                                     <div class="clear-fix mb-2"></div>
                                     <table class="table table-striped table-bordered" id="service-list">
                                         <colgroup>
-                                            <col width="30%">
-                                            <col width="30%">
-                                            <col width="30%">
+                                            <col width="20%">
+                                            <col width="20%">
+                                            <col width="20%">
                                             <col width="20%">                 
-                                            <col width="10%">
+                                            <col width="5%">
                                         </colgroup>
                                         <thead>
                                             <tr class="bg-light-blue">
@@ -144,7 +144,7 @@ if(isset($_GET['id'])){
                                                 <th class="text-center">Service Sub</th>
                                                 <th class="text-center">Cylinder</th>
                                                 <th class="text-center">Price</th>
-                                                <th class="text-center">            </th>
+                                                <th class="text-center"></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -173,11 +173,10 @@ if(isset($_GET['id'])){
                                         </tbody>
                                         <tfoot>
                                             <tr class="bg-gradient-secondary">
-                                                <th></th>
-                                                <th></th>
-                                                <th colspan="" class="text-center">Total</th>
+                                                
+                                                <th colspan="3" class="text-center">Total</th>
                                                 <th class="text-center" id="service_total"><?= isset($service_amount) ? format_num($service_amount): 0 ?></th>
-                                                <th class="text-center" id=""></th>
+                                                <th class="text-center"></th>
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -237,6 +236,7 @@ if(isset($_GET['id'])){
                                                 <th class="text-center">Qty</th>
                                                 <th class="text-center">Price</th>
                                                 <th class="text-center"></th>
+
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -264,9 +264,14 @@ if(isset($_GET['id'])){
                                         </tbody>
                                         <tfoot>
                                             <tr class="bg-gradient-secondary">
-                                                <th colspan="2" class="text-center">Total</th>
+                                                
+
+                                                <th colspan="3" class="text-center">Total</th>
+                                                
+
                                                 <th class="text-center" id="product_total"><?= isset($product_total) ? format_num($product_total): 0 ?></th>
-                                                <th class="text-center" id=""></th>
+                                                <th class="text-center"></th>
+
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -493,19 +498,21 @@ if(isset($_GET['id'])){
             if($('#product_sel').val() == null)
             return false;
             var id = $('#product_sel').val()
+            var id2 = $('#engine_model_sel').val()
+
             if($('#product-list tbody tr input[name="product_id[]"][value="'+id+'"]').length > 0){
                 alert("Product already on the list.")
                 return false;
             }
             var name = $('#product_sel option[value="'+id+'"]').text()
-            var engineModelName = $('#engine_model_sel').val()
-            var name = $('#service_sel option[value="'+id+'"]').text()
+            var engineModelName = $('#engine_model_sel option[value="'+id2+'"]').text()
 
             var price = $('#product_sel option[value="'+id+'"]').attr('data-price')
             var tr = $($('noscript#product-clone').html()).clone()
             tr.find('input[name="product_id[]"]').val(id)
             tr.find('input[name="product_price[]"]').val(price)
             tr.find('.engineModelName').text(engineModelName)
+            tr.find('.product_name').text(name)
 
             tr.find('.product_price').text(parseFloat(price).toLocaleString())
             tr.find('.product_total').text(parseFloat(price).toLocaleString())
