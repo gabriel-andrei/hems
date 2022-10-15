@@ -17,7 +17,13 @@ if(isset($_GET['id'])){
 	.bg-light-blue {
   		background-color: #cae8ff;
 	}
-	
+	.span{
+       display: inline-block;
+       width: 9em;
+       text-align: center;
+       white-space: normal;
+       word-break: break-word;
+    }
 </style>
 <div class="content py-3">
     <div class="container-fluid">
@@ -93,16 +99,14 @@ if(isset($_GET['id'])){
                                                 </select>
                                             </div>
                                         </div>
+                                        
                                         <div class="col">
                                             <div class="form-group mb-0">
                                                 <label for="service_sel_sub" class="control-label">Select Service Sub Category</label>
                                                 <select id="service_sel_sub" class="form-control form-control-sm rounded-0" onchange="disableCylinder(this)" disabled="">
-                                                
                                                     <option value="" disabled selected></option>
-                                                    <?php 
-                                                    
-
-                                                    $service_qry = $conn->query("SELECT service_sub FROM `service_list` where delete_flag = 0 and `status` = 1 order by `service_sub`");
+                                                    <?php
+                                                    $service_qry = $conn->query("SELECT * FROM `service_list` where delete_flag = 0 and `status` = 1 order by `service_sub`");
                                                     while($row = $service_qry->fetch_assoc()):
                                                     ?>
                                                     <option value="<?= $row['id'] ?>" data-price = "<?= $row['price'] ?>"><?= $row['service_sub'] ?></option>
@@ -349,8 +353,7 @@ if(isset($_GET['id'])){
 </noscript>
 <script>
     function disableServiceSub(dsbServiceSub){
-            var selectedService = $('#service_sel').val()
-            document.getElementById('service_sel_sub').disabled = false
+            document.getElementById('service_sel_sub').disabled = false                                     
     }
     function getServiceText(getSrvc){
             var selectService = document.getElementById('service_sel');
@@ -361,6 +364,7 @@ if(isset($_GET['id'])){
     }
     function disableProduct(dsProduct){
             document.getElementById('product_sel').disabled = false
+            var service = $('#service_sel').text()
     }
     function disableAddServiceBtn(dsAddService){
             document.getElementById('add_service').disabled = false
@@ -469,19 +473,18 @@ if(isset($_GET['id'])){
             var name = $('#service_sel option[value="'+id+'"]').text()
             var serviceSub = $('#service_sel_sub option[value="'+id2+'"]').text()
             var cylinderSel = $('#cylinder_sel option[value="'+id3+'"]').text()
-
             var price = $('#service_sel option[value="'+id+'"]').attr('data-price')
             var tr = $($('noscript#service-clone').html()).clone()
             tr.find('input[name="service_id[]"]').val(id)
             tr.find('input[name="service_price[]"]').val(price)
-            tr.find('.service_name').text(name) 
+            tr.find('.service_name').text(name)
             tr.find('.service_sub_name').text(serviceSub)
             tr.find('.service_cylinder_name').text(cylinderSel)
             tr.find('.service_price').text(parseFloat(price).toLocaleString())
             $('#service-list tbody').append(tr)
             calc_service()
             tr.find('.rem-service').click(function(){
-                if(confirm("Are you sure to remove "+name+" "+serviceSub+" "+cylinderSel+" from service list?") === true){
+                if(confirm("Are you sure to remove "+name+" | "+serviceSub+" | "+cylinderSel+" from service list?") === true){
                     tr.remove()
                     calc_service()
                 }
