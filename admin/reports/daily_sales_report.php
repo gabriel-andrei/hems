@@ -45,7 +45,7 @@
 				<thead>
 					<tr>
 						<th class="text-center">#</th>
-						<th class="text-center">DateTime</th>
+						<th class="text-center">Date</th>
 						<th class="text-center">Code/Client</th>
 						<th class="text-center">Product Name</th>
 						<th class="text-center">Price</th>

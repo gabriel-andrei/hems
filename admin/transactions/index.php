@@ -26,7 +26,7 @@
 				<thead>
 					<tr>
 						<th class="text-center">#</th>
-						<th class="text-center">Date Updated</th>
+						<th class="text-center">Date</th>
 						<th class="text-center">Code</th>
 						<th class="text-center">Client</th>
 						<th class="text-center">Amount</th>

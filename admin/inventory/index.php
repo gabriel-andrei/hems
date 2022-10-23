@@ -25,27 +25,23 @@
 			<table class="table table-hover table-striped table-bordered" id="list">
 				<colgroup>
 					<col width="5%">
+					<col width="15%">
+					<col width="15%">
+					<col width="10%">
+					<col width="10%">
+					<col width="10%">
+
 					<col width="5%">
-					<col width="15%">
-					<col width="15%">
-					<col width="15%">
-					<col width="10%">
-					<col width="5%">
-					<col width="10%">
-					<col width="10%">
-					<col width="15%">
 				</colgroup>
 				<thead>
 					<tr>
 						<th class="text-center">#</th>
-						<th class="text-center">Engine Model</th>
-						<th class="text-center">Date Created</th>
-						<th class="text-center">Image</th>
+						<th class="text-center">Date</th>
 						<th class="text-center">Product Name</th>
 						<th class="text-center">Available Stock</th>
-						<th class="text-center">Sold</th>
+						<th class="text-center">Low Stock</th>
+
 						<th class="text-center">Price</th>
-						<th class="text-center">Status</th>
 						<th class="text-center">Action</th>
 					</tr>
 				</thead>
@@ -57,23 +53,13 @@
 					?>
 						<tr>
 							<td class="text-center"><?php echo $i++; ?></td>
-							<td class="text-center"><?php echo $row['engine_model'] ?></td>
-
 							<td class="text-center"><?php echo date("Y-m-d H:i",strtotime($row['date_created'])) ?></td>
-							<td class="text-center">
-								<img class="img-thumbnail prod-img" src="<?= validate_image($row['image_path']) ?>" alt="">
-							</td>
 							<td class="text-center"><?php echo $row['name'] ?></td>
 							<td class="text-center"><?php echo $row['available'] ?></td>
-							<td class="text-center"><?php echo $row['sold'] ?></td>
+
+							<td class="text-center"> </td>
+
 							<td class="text-center"><?php echo $row['price'] ?></td>
-							<td class="text-center">
-                                <?php if($row['status'] == 1): ?>
-                                    <span class="">Active</span>
-                                <?php else: ?>
-                                    <span class="">Inactive</span>
-                                <?php endif; ?>
-                            </td>
 							<td align="center">
 								 <button type="button" class="btn btn-default border btn-md rounded-pill btn-sm dropdown-toggle dropdown-icon" data-toggle="dropdown">
 				                  		Action

@@ -26,7 +26,7 @@
 				<thead>
 					<tr>
 						<th class="text-center">#</th>
-						<th class="text-center">Date Created</th>
+						<th class="text-center">Date</th>
 						<th class="text-center">Payment ID</th>
 						<th class="text-center">Client Name</th>
 						<th class="text-center">Balance</th>

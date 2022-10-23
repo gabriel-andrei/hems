@@ -27,7 +27,7 @@
 				<thead>
 					<tr>
 						<th class="text-center">#</th>
-						<th class="text-center">Date Created</th>
+						<th class="text-center">Date</th>
 						<th class="text-center">Service Name</th>
 						<th class="text-center">Service Sub Category</th>
 						<th class="text-center">Cylinder</th>

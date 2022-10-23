@@ -33,7 +33,7 @@
 				<thead>
 					<tr>
 						<th class="text-center">#</th>
-						<th class="text-center">Date Updated</th>
+						<th class="text-center">Date</th>
 						<th class="text-center">Avatar</th>
 						<th class="text-center">Name</th>
 						<th class="text-center">Username</th>

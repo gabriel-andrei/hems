@@ -191,7 +191,7 @@ if(isset($_GET['id'])){
         <div class="col-8 text-center">
             <div style="line-height:1em">
                 <h4 class="text-center"><?= $_settings->info('name') ?></h4>
-                <h3 class="text-center"><b>Transaction Details</b></h3>
+                <h3 class="text-center"><b>Transaction Invoice</b></h3>
             </div>
         </div>
     </div>
@@ -205,7 +205,7 @@ $(function(){
         var phead = $($('noscript#print-header').html()).clone()
         var el = $('<div>')
         el.append(head)
-        el.find('title').text("Transaction Details-Print View")
+        el.find('title').text("Transaction Invoice-Print View")
         el.append(phead)
         el.append(p)
         el.find('.bg-gradient-blue').css({'background':'#001f3f linear-gradient(180deg, #26415c, #001f3f) repeat-x !important','color':'#fff'})
