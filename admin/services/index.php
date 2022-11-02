@@ -53,9 +53,9 @@
 							<td class="text-center"><?php echo $row['price'] ?></td>
 							<td class="text-center">
                                 <?php if($row['status'] == 1): ?>
-                                    <span class="">Active</span>
+                                    <span class="">Available</span>
                                 <?php else: ?>
-                                    <span class="">Inactive</span>
+                                    <span class="">Not Available</span>
                                 <?php endif; ?>
                             </td>
 							<td align="center">
