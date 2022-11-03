@@ -62,22 +62,22 @@ if(isset($_GET['id'])){
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="form-group mb-3">
                                     <label for="address" class="control-label">Address</label>
-                                    <textarea name="address" id="address" class="form-control form-control-sm rounded-0" required="required"><?= isset($address) ? $address : "" ?></textarea>
+                                    <input type="text" name="address" id="address" class="form-control form-control-sm rounded-0" value="<?= isset($address) ? $address : "" ?>" required="required">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group mb-3">
-                                    <label for="engine_model" class="control-label">Engine Model</label>
-                                    <input type="engine_model" name="engine_model" id="engine_model" class="form-control form-control-sm rounded-0" value="<?= isset($engine_model) ? $engine_model : "" ?>" required="required">
-                                </div>          
+                                    <label for="vehicle_type" class="control-label">Vehicle Type</label>
+                                    <input type="vehicle_type" name="vehicle_type" id="vehicle_type" class="form-control form-control-sm rounded-0" required="required"><?= isset($vehicle_type) ? $vehicle_type : "" ?>
+                                </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group mb-3">
-                                    <label for="job_order" class="control-label">Job Order #</label>
-                                    <input type="job_order" name="job_order" id="job_order" class="form-control form-control-sm rounded-0" required="required"><?= isset($job_order) ? $job_order : "" ?>
-                                </div>
+                                    <label for="engine_model" class="control-label">Engine Model</label>
+                                    <input type="engine_model" name="engine_model" id="engine_model" class="form-control form-control-sm rounded-0" value="<?= isset($engine_model) ? $engine_model : "" ?>" required="required">
+                                </div>          
                             </div>
                         </div>
                         <hr>

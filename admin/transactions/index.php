@@ -16,9 +16,8 @@
 			<table class="table table-hover table-striped table-bordered">
 				<colgroup>
 					<col width="5%">
-					<col width="15%">
-					<col width="20%">
 					<col width="25%">
+					<col width="20%">
 					<col width="10%">
 					<col width="10%">
 					<col width="15%">
@@ -26,9 +25,9 @@
 				<thead>
 					<tr>
 						<th class="text-center">#</th>
-						<th class="text-center">Date</th>
+						<th class="text-center">Client Name</th>
+
 						<th class="text-center">Code</th>
-						<th class="text-center">Client</th>
 						<th class="text-center">Amount</th>
 						<th class="text-center">Status</th>
 						<th class="text-center">Action</th>
@@ -46,9 +45,8 @@
 					?>
 						<tr>
 							<td class="text-center"><?php echo $i++; ?></td>
-							<td class="text-center"><p class="m-0 truncate-1"><?= date("M d, Y H:i", strtotime($row['date_updated'])) ?></p></td>
-							<td class="text-center"><p class="m-0 truncate-1"><?= $row['code'] ?></p></td>
 							<td class="text-center"><p class="m-0 truncate-1"><?= $row['client_name'] ?></p></td>
+							<td class="text-center"><p class="m-0 truncate-1"><?= $row['code'] ?></p></td>
 							<td class="text-center"><?= format_num($row['amount']) ?></td>
 							<td class="text-center">
 								<?php

@@ -35,8 +35,8 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 			</select>
 		</div>
 		<div class="form-group">
-			<label for="cheque_number" class="control-label">Cheque Number</label>
-			<textarea type="text" name="cheque_number" id="cheque_number" class="form-control form-control-sm rounded-0" required><?php echo isset($cheque_number) ? $cheque_number : ''; ?></textarea>
+			<label for="cheque_number" class="control-label">Cheque Number</label><br>
+			<input type="text" name ="cheque_number" value="<?php echo isset($cheque_number) ? $cheque_number : '' ?>" readonly>
 		</div>
 		<div class="form-group">
 			<label for="engine_model" class="control-label">Payment Type</label>
