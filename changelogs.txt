@@ -6,6 +6,7 @@
     UPDATE service_list SET service_sub =  'Balancer Bushing Replace' WHERE id=184;
     -- Remove 'remaining' field from 'inventory_list' table
     -- Change datatype of 'job_order' field in 'transaction_list' table from (int) to (varchar)
+    -- Added a trigger on 'transaction_list' table to save client record if not yet recorded in 'clients_list' table
 > Transactions 
     -- Working dynamic dropdown thru AJAX
     -- added 'transactions/ajax-data.php' to handle ajax data requests
@@ -15,3 +16,4 @@
         product name but has different prices (can be removed if not necessary)
     -- Fixed saving of transaction (new/edit)
     -- Added transaction date detail when viewing transaction record
+    -- Creates client record if not yet recorded (uniquiness: client_name, address, contact)
