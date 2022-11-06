@@ -1,0 +1,17 @@
+11-06
+> Database Patch:
+    -- Execute the following query below to FIX trailing spaces and carriage returns of the saved data
+    UPDATE service_list SET service_sub =  REPLACE(`service_sub`, '	', '');
+    UPDATE service_list SET service_sub =  REPLACE(`service_sub`, '\n', '');
+    UPDATE service_list SET service_sub =  'Balancer Bushing Replace' WHERE id=184;
+    -- Remove 'remaining' field from 'inventory_list' table
+    -- Change datatype of 'job_order' field in 'transaction_list' table from (int) to (varchar)
+> Transactions 
+    -- Working dynamic dropdown thru AJAX
+    -- added 'transactions/ajax-data.php' to handle ajax data requests
+    -- Fixed bugs in selection of products and services
+    -- Fixed queries to complete the details printed in the datatables (services/products)
+    -- Added price data in product name dropdown to distinguish between records with service_name
+        product name but has different prices (can be removed if not necessary)
+    -- Fixed saving of transaction (new/edit)
+    -- Added transaction date detail when viewing transaction record

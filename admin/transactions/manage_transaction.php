@@ -70,7 +70,7 @@ if(isset($_GET['id'])){
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group mb-3">
                                     <label for="vehicle_type" class="control-label">Vehicle Type</label>
-                                    <input type="vehicle_type" name="vehicle_type" id="vehicle_type" class="form-control form-control-sm rounded-0" required="required"><?= isset($vehicle_type) ? $vehicle_type : "" ?>
+                                    <input type="vehicle_type" name="vehicle_type" id="vehicle_type" class="form-control form-control-sm rounded-0" value="<?= isset($vehicle_type) ? $vehicle_type : "" ?>" required="required">
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -90,12 +90,15 @@ if(isset($_GET['id'])){
                                         <div class="col">
                                             <div class="form-group mb-0">
                                                 <label for="service_sel" class="control-label">Service</label>
-                                                <select name="service_sel" id="service_sel" class="form-control form-control-sm rounded-0" onchange="disableServiceSub(this)" required>
-                                                <option value="" disabled selected></option>
-                                                    <option value="Connecting Rod" <?php echo isset($service) ? 'selected' : '' ?>>Connecting Rod</option>
-                                                    <option value="Cylinder Head" <?php echo isset($service) ? 'selected' : '' ?>>Cylinder Head</option>
-                                                    <option value="Crankshaft" <?php echo isset($service) ? 'selected' : '' ?>>Crankshaft</option>
-                                                    <option value="Engine Block" <?php echo isset($service) ? 'selected' : '' ?>>Engine Block</option>
+                                                <select name="service_sel" id="service_sel" class="form-control form-control-sm rounded-0" 
+                                                 >
+                                                    <option value="" selected></option>
+                                                    <?php
+                                                    $service_qry = $conn->query("SELECT DISTINCT `service` FROM `service_list` where delete_flag = 0 and `status` = 1 order by `service`");
+                                                    while($row = $service_qry->fetch_assoc()):
+                                                    ?>
+                                                    <option value="<?= $row['service'] ?>" ><?= $row['service'] ?></option>
+                                                    <?php endwhile; ?>
                                                 </select>
                                             </div>
                                         </div>
@@ -103,29 +106,15 @@ if(isset($_GET['id'])){
                                         <div class="col">
                                             <div class="form-group mb-0">
                                                 <label for="service_sel_sub" class="control-label">Select Service Sub Category</label>
-                                                <select id="service_sel_sub" class="form-control form-control-sm rounded-0" onchange="disableCylinder(this)" disabled="">
-                                                    <option value="" disabled selected></option>
-                                                    <?php
-                                                    $service_qry = $conn->query("SELECT * FROM `service_list` where delete_flag = 0 and `status` = 1 order by `service_sub`");
-                                                    while($row = $service_qry->fetch_assoc()):
-                                                    ?>
-                                                    <option value="<?= $row['id'] ?>" data-price = "<?= $row['price'] ?>"><?= $row['service_sub'] ?></option>
-                                                    <?php endwhile; ?>
+                                                <select id="service_sel_sub" class="form-control form-control-sm rounded-0" disabled="">
+                                                    
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="form-group mb-0">
                                                 <label for="cylinder_sel" class="control-label">Cylinder</label>
-                                                <select name="cylinder_sel" id="cylinder_sel" class="form-control form-control-sm rounded-0" onchange="disableAddServiceBtn(this)" disabled="">
-                                                <option value="" disabled selected></option>
-                                                <option value="1 Cylinder" <?php echo isset($cylinder) ? 'selected' : '' ?>>1 Cylinder</option>
-                                                <option value="2 Cylinder" <?php echo isset($cylinder) ? 'selected' : '' ?>>2 Cylinder</option>
-                                                <option value="3 Cylinder" <?php echo isset($cylinder) ? 'selected' : '' ?>>3 Cylinder</option>
-                                                <option value="4 Small" <?php echo isset($cylinder) ? 'selected' : '' ?>>4 Small</option>
-                                                <option value="4 Big" <?php echo isset($cylinder) ? 'selected' : '' ?>>4 Big</option>
-                                                <option value="6 Cylinder" <?php echo isset($cylinder) ? 'selected' : '' ?>>6 Cylinder</option>
-                                                <option value="Heavy" <?php echo isset($cylinder) ? 'selected' : '' ?>>Heavy</option>
+                                                <select name="cylinder_sel" id="cylinder_sel" class="form-control form-control-sm rounded-0" disabled="">
                                                 </select>
                                             </div>
                                         </div>
@@ -155,7 +144,7 @@ if(isset($_GET['id'])){
                                             <?php
                                             $service_amount = 0;
                                             if(isset($id)):
-                                            $ts_qry = $conn->query("SELECT ts.*, s.service as `service` FROM `transaction_services` ts inner join `service_list` s on ts.service_id = s.id where ts.`transaction_id` = '{$id}' ");
+                                            $ts_qry = $conn->query("SELECT ts.*, s.service as `service` , s.service_sub, s.cylinder FROM `transaction_services` ts inner join `service_list` s on ts.service_id = s.id where ts.`transaction_id` = '{$id}' ");
                                             while($row = $ts_qry->fetch_assoc()):
                                                 $service_amount += $row['price'];
                                             ?>
@@ -165,8 +154,8 @@ if(isset($_GET['id'])){
                                                     <input type="hidden" name="service_price[]" value="<?= $row['price'] ?>">
                                                     <span class="service_name"><?= $row['service'] ?></span>
                                                 </td>
-                                                <td class="text-center service_sub_name"></td>
-                                                <td class="text-center service_cylinder_name"></td>
+                                                <td class="text-center service_sub_name"><?= $row['service_sub'] ?></td>
+                                                <td class="text-center service_cylinder_name"><?= $row['cylinder'] ?></td>
                                                 <td class="text-center service_price"><?= format_num($row['price']) ?></td>
                                                 <td class="text-center">
                                                     <button class="btn btn-outline-danger btn-sm rounded-0 rem-service" type="button"><i class="fa fa-trash"></i></button>
@@ -195,13 +184,19 @@ if(isset($_GET['id'])){
                                         <div class="col">
                                             <div class="form-group mb-0">
                                                 <label for="engine_model_sel" class="control-label">Select Engine Model</label>
-                                                <select name="engine_model_sel" id="engine_model_sel" class="form-control form-control-sm rounded-0" onchange="disableProduct(this)" required>
-                                                <option value="" disabled selected></option>
-                                                <?php
-                                                    $product_qry = $conn->query("SELECT * FROM `product_list` where delete_flag = 0 and `status` = 1 and (coalesce((SELECT SUM(quantity) FROM `inventory_list` where product_id = product_list.id),0) - coalesce((SELECT SUM(tp.qty) FROM `transaction_products` tp inner join `transaction_list` tl on tp.transaction_id = tl.id where tp.product_id = product_list.id and tl.status != 4),0)) > 0 ".(isset($id) ? " or id = '{$id}' " : "")." order by `engine_model`");
+                                                <select name="engine_model_sel" id="engine_model_sel" class="form-control form-control-sm rounded-0" >
+                                                    <option value="" disabled selected></option>
+                                                    <?php
+                                                    $product_qry = $conn->query("SELECT DISTINCT engine_model FROM (
+                                                        SELECT id, engine_model, price
+                                                        , coalesce((SELECT SUM(quantity) FROM `inventory_list` where product_id = product_list.id),0) available
+                                                        , coalesce((SELECT SUM(tp.qty) FROM `transaction_products` tp 
+                                                            inner join `transaction_list` tl on tp.transaction_id = tl.id 
+                                                            where tp.product_id = product_list.id and tl.status != 4),0) used
+                                                        FROM `product_list` where delete_flag = 0 and `status` = 1  GROUP BY id HAVING available-used > 0 ".(isset($id) ? " or id = '{$id}' " : "")."  ) a order by `engine_model`");
                                                     while($row = $product_qry->fetch_assoc()):
                                                     ?>
-                                                    <option value="<?= $row['id'] ?>" data-price = "<?= $row['price'] ?>"><?= $row['engine_model'] ?></option>
+                                                    <option value="<?= $row['engine_model'] ?>"><?= $row['engine_model'] ?></option>
                                                     <?php endwhile; ?>
                                                 </select>
                                             </div>
@@ -209,14 +204,7 @@ if(isset($_GET['id'])){
                                         <div class="col">
                                             <div class="form-group mb-0">
                                                 <label for="product_sel" class="control-label">Select Product</label>
-                                                <select id="product_sel" class="form-control form-control-sm rounded" onchange="disableAddProductBtn(this)" disabled=""> 
-                                                    <option value="" disabled selected></option>
-                                                    <?php
-                                                    $product_qry = $conn->query("SELECT * FROM `product_list` where delete_flag = 0 and `status` = 1 and (coalesce((SELECT SUM(quantity) FROM `inventory_list` where product_id = product_list.id),0) - coalesce((SELECT SUM(tp.qty) FROM `transaction_products` tp inner join `transaction_list` tl on tp.transaction_id = tl.id where tp.product_id = product_list.id and tl.status != 4),0)) > 0 ".(isset($id) ? " or id = '{$id}' " : "")." order by `name`");
-                                                    while($row = $product_qry->fetch_assoc()):
-                                                    ?>
-                                                    <option value="<?= $row['id'] ?>" data-price = "<?= $row['price'] ?>"><?= $row['name'] ?></option>
-                                                    <?php endwhile; ?>
+                                                <select id="product_sel" class="form-control form-control-sm rounded" disabled=""> 
                                                 </select>
                                             </div>
                                         </div>
@@ -240,21 +228,21 @@ if(isset($_GET['id'])){
                                                 <th class="text-center">Qty</th>
                                                 <th class="text-center">Price</th>
                                                 <th class="text-center"></th>
-
                                             </tr>
                                         </thead>
                                         <tbody>
                                         <?php 
                                             $product_total = 0;
                                             if(isset($id)):
-                                            $tp_qry = $conn->query("SELECT tp.*, p.name as `product` FROM `transaction_products` tp inner join `product_list` p on tp.product_id = p.id where tp.`transaction_id` = '{$id}' ");
+                                            $tp_qry = $conn->query("SELECT tp.*, p.name as `product`, engine_model FROM `transaction_products` tp inner join `product_list` p on tp.product_id = p.id where tp.`transaction_id` = '{$id}' ");
                                             while($row = $tp_qry->fetch_assoc()):
                                                 $product_total += ($row['price'] * $row['qty']);
                                         ?>
                                             <tr>
-                                                <td>
-                                                    <input type="hidden" name="product_id[]" value="<?= $row['product_id'] ?>">
-                                                    <input type="hidden" name="product_price[]" value="<?= $row['price'] ?>">
+                                                <td class="text-center "><?= $row['engine_model']  ?></td>
+                                                <td class="text-center">
+                                                    <input class="product_id" type="hidden" name="product_id[]" value="<?= $row['product_id'] ?>">
+                                                    <input class="product_sub_price" type="hidden" name="product_price[]" value="<?= $row['price'] ?>">
                                                     <span class="product_name"><?= $row['product'] ?></span>
                                                 </td>
                                                 <td class="text-center"><input type="number" min="1" class="form-control form-control-sm rounded-0 text-center" name="product_qty[]" value="<?= $row['qty'] ?>"></td>
@@ -268,14 +256,9 @@ if(isset($_GET['id'])){
                                         </tbody>
                                         <tfoot>
                                             <tr class="bg-gradient-secondary">
-                                                
-
                                                 <th colspan="3" class="text-center">Total</th>
-                                                
-
                                                 <th class="text-center" id="product_total"><?= isset($product_total) ? format_num($product_total): 0 ?></th>
                                                 <th class="text-center"></th>
-
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -323,7 +306,7 @@ if(isset($_GET['id'])){
 </div>
 <noscript id="service-clone">
     <tr>
-        <td>
+        <td class="text-center">
             <input type="hidden" name="service_id[]" value="">
             <input type="hidden" name="service_price[]" value="0">
             <span class="service_name"></span>
@@ -339,12 +322,12 @@ if(isset($_GET['id'])){
 <noscript id="product-clone">
     <tr>
         <td class="text-center engineModelName"></td>
-        <td>
-            <input type="hidden" name="product_id[]" value="">
+        <td class="text-center">
+            <input class="product_id" type="hidden" name="product_id[]" value="">
             <input type="hidden" name="product_price[]" value="0">
             <span class="product_name"></span>
         </td>
-        <td class=""><input type="number" min="1" class="form-control form-control-sm rounded-0 text-center" name="product_qty[]" value="1"></td>
+        <td class="text-center px-2 py-1 align-middle"><input type="number" min="1" class="form-control form-control-sm rounded-0 text-center" name="product_qty[]" value="1"></td>
         <td class="text-center product_price"></td>
         <td class="text-center">
             <button class="btn btn-outline-danger btn-sm rounded-0 rem-product" type="button"><i class="fa fa-trash"></i></button>
@@ -352,27 +335,10 @@ if(isset($_GET['id'])){
     </tr>
 </noscript>
 <script>
-    function disableServiceSub(dsbServiceSub){
-            document.getElementById('service_sel_sub').disabled = false                                     
-    }
     function getServiceText(getSrvc){
             var selectService = document.getElementById('service_sel');
             var serviceText = selectService.options[selectService.selectedIndex].text;
     }  
-    function disableCylinder(dsCylinder){
-            document.getElementById('cylinder_sel').disabled = false
-    }
-    function disableProduct(dsProduct){
-            document.getElementById('product_sel').disabled = false
-            var service = $('#service_sel').text()
-    }
-    function disableAddServiceBtn(dsAddService){
-            document.getElementById('add_service').disabled = false
-            
-    }
-    function disableAddProductBtn(dsAddProduct){
-            document.getElementById('add_product').disabled = false
-    }
     function calc_total_amount(){
         var total = 0;
         $('#service-list tbody tr').each(function(){
@@ -452,12 +418,13 @@ if(isset($_GET['id'])){
         })
         $('#product-list tbody tr').find('[name="product_qty[]"]').on('input change', function(){
             var tr = $(this).closest('tr')
+            var id = tr.find('.product_id').val()
+            var price = tr.find('.product_sub_price').val()
             var qty = $(this).val()
             qty = qty > 0 ? qty : 0
             var total = parseFloat(qty) * parseFloat(price)
-            tr.find('.product_total').text(parseFloat(total).toLocaleString())
+            tr.find('.product_price').text(parseFloat(total).toLocaleString())
             calc_product()
-
         })
         $('#add_service').click(function(){
             if($('#service_sel').val() == null || $('#service_sel_sub').val() == null || $('#cylinder_sel').val() == null)
@@ -466,16 +433,16 @@ if(isset($_GET['id'])){
             var id2 = $('#service_sel_sub').val()
             var id3 = $('#cylinder_sel').val()
 
-            if($('#service-list tbody tr input[name="service_id[]"][value="'+id+'"]').length > 0){
+            if($('#service-list tbody tr input[name="service_id[]"][value="'+id3+'"]').length > 0){
                 alert("Service already on the list.")
                 return false;
             }
             var name = $('#service_sel option[value="'+id+'"]').text()
             var serviceSub = $('#service_sel_sub option[value="'+id2+'"]').text()
             var cylinderSel = $('#cylinder_sel option[value="'+id3+'"]').text()
-            var price = $('#service_sel option[value="'+id+'"]').attr('data-price')
+            var price = $('#cylinder_sel option[value="'+id3+'"]').attr('data-price')
             var tr = $($('noscript#service-clone').html()).clone()
-            tr.find('input[name="service_id[]"]').val(id)
+            tr.find('input[name="service_id[]"]').val(id3)
             tr.find('input[name="service_price[]"]').val(price)
             tr.find('.service_name').text(name)
             tr.find('.service_sub_name').text(serviceSub)
@@ -489,14 +456,18 @@ if(isset($_GET['id'])){
                     calc_service()
                 }
             })
-            
-            $('#service_sel').val('').trigger("change")
-            $('#service_sel_sub').val('').trigger("change")
-            $('#cylinder_sel').val('').trigger("change")
-            document.getElementById('cylinder_sel').disabled = true
-            document.getElementById('service_sel_sub').disabled = true
-            document.getElementById('add_service').disabled = true
+            // $('#service_sel').val('').trigger("change")
+            // $('#service_sel_sub').val('').trigger("change")
+            // $('#cylinder_sel').val('').trigger("change")
+
+            $("#service_sel").val("");
+            $("#service_sel_sub").empty();
+            $("#cylinder_sel").empty();
+            $("#service_sel_sub").prop( "disabled", true );
+            $("#cylinder_sel").prop( "disabled", true );
+            $("#add_service").prop( "disabled", true );
         })
+
         $('#add_product').click(function(){
             if($('#product_sel').val() == null)
             return false;
@@ -531,12 +502,11 @@ if(isset($_GET['id'])){
                 var qty = $(this).val()
                 qty = qty > 0 ? qty : 0
                 var total = parseFloat(qty) * parseFloat(price)
-                tr.find('.product_total').text(parseFloat(total).toLocaleString())
+                tr.find('.product_price').text(parseFloat(total).toLocaleString())
                 calc_product()
-
             })
-            $('#product_sel').val('').trigger("change")
             $('#engine_model_sel').val('').trigger("change")
+            // $('#product_sel').val('').trigger("change")
 
             document.getElementById('product_sel').disabled = true
         })
@@ -578,4 +548,115 @@ if(isset($_GET['id'])){
 			})
 		})
     })
+</script>
+<!-- AJAX SCRIPTS -->
+<script>
+    $(document).ready(function() {
+        
+        $("#service_sel").change(function() {
+            var service = $(this).val();
+            $(this).fadeIn();
+
+            start_loader();
+            $.ajax({
+			    url:_base_url_+"admin/transactions/ajax-data.php",
+                method:"POST",
+                data: {
+                    type: 'service',
+                    value: service
+                },
+                dataType:"html",
+                error:err=>{
+                    console.log(err)
+                    alert_toast("An error occured.",'error');
+                    end_loader();
+                },
+                success:function(resp){
+                    if(resp != ''){
+                        $("#service_sel_sub").empty();
+                        $("#service_sel_sub").prop( "disabled", false );
+
+                        $("#cylinder_sel").empty();
+                        $("#cylinder_sel").prop( "disabled", true );
+
+                        $("#add_service").prop( "disabled", true );
+
+                        $("#service_sel_sub").append(resp);
+                    }else{
+                        alert_toast("An error occured.",'error');
+                    }
+                    end_loader();
+                }
+            });
+        });
+        
+        $("#service_sel_sub").change(function() {
+            var service = $(this).val();
+            $(this).fadeIn();
+
+            start_loader();
+            $.ajax({
+			    url:_base_url_+"admin/transactions/ajax-data.php",
+                method:"POST",
+                data: {
+                    type: 'service_sub',
+                    value: service
+                },
+                dataType:"html",
+                error:err=>{
+                    console.log(err)
+                    alert_toast("An error occured.",'error');
+                    end_loader();
+                },
+                success:function(resp){
+                    if(resp != ''){
+                        $("#cylinder_sel").empty();
+                        $("#cylinder_sel").prop( "disabled", false );
+
+                        $("#add_service").prop( "disabled", false );
+
+                        $("#cylinder_sel").append(resp);
+                    }else{
+                        alert_toast("An error occured.",'error');
+                    }
+                    end_loader();
+                }
+            });
+        });
+        
+        $("#engine_model_sel").change(function() {
+            var service = $(this).val();
+            $(this).fadeIn();
+
+            start_loader();
+            $.ajax({
+			    url:_base_url_+"admin/transactions/ajax-data.php",
+                method:"POST",
+                data: {
+                    type: 'engine_model',
+                    value: service,
+                    id: <?=isset($id) ? "'{$id}'" : "''"?>,
+                },
+                dataType:"html",
+                error:err=>{
+                    console.log(err)
+                    alert_toast("An error occured.",'error');
+                    end_loader();
+                },
+                success:function(resp){
+                    if(resp != ''){
+                        $("#product_sel").empty();
+                        $("#product_sel").prop( "disabled", false );
+
+                        $("#add_product").prop( "disabled", false );
+
+                        $("#product_sel").append(resp);
+                    }else{
+                        alert_toast("An error occured.",'error');
+                    }
+                    end_loader();
+                }
+            });
+        });
+     });
 </script>

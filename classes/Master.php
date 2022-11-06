@@ -280,25 +280,32 @@ Class Master extends DBConnection {
 		return json_encode($resp);
 
 	}
+	function endsWith( $haystack, $needle ) {
+		$length = strlen( $needle );
+		if( !$length ) {
+			return true;
+		}
+		return substr( $haystack, -$length ) === $needle;
+	}
 	function save_transaction(){
+		$code = '';
 		if(empty($_POST['id'])){
 			$_POST['user_id'] = $this->settings->userdata('id');
-			$prefix = date("Ymd");
-			$code = sprintf("%'.04d", 1);
-			while(true){
-				$check = $this->conn->query("SELECT * FROM `transaction_list` where code = '{$prefix}{$code}' ")->num_rows;
-				if($check > 0){
-					$code = sprintf("%'.04d", abs($code) + 1);
-				}else{
-					$_POST['code'] = $prefix.$code;
-					break;
-				}
-			}
+			$prefix = date("ym");
+			// $code = sprintf("%'.04d", 1);
+
+			// EXPECTED FORMAT: yymm0000
+			// SAMPLE: 22110001
+			$result = $this->conn->query("SELECT RIGHT(CONCAT('0000', COALESCE(MAX(CAST(RIGHT(`code`, 4) as UNSIGNED) + 1), 1)), 4) as 'next'
+								FROM transaction_list WHERE `code` LIKE '{$prefix}%'");
+			$row = $result->fetch_assoc();
+			$code = $prefix.$row['next'];
 		}
 		extract($_POST);
-		$data = "";
+		$data = !empty($code)? " `code`='{$code}' " :"";
 		foreach($_POST as $k =>$v){
-			if(!in_array($k,array('id')) && !is_array($_POST[$k])){
+			if(!in_array($k,array('id')) && !is_array($_POST[$k]) 
+				&& !$this->endsWith($k, '_sel')){
 				if(!empty($data)) $data .=",";
 				$v = $this->conn->real_escape_string($v);
 				$data .= " `{$k}`='{$v}' ";
@@ -309,7 +316,8 @@ Class Master extends DBConnection {
 		}else{
 			$sql = "UPDATE `transaction_list` set {$data} where id = '{$id}' ";
 		}
-			$save = $this->conn->query($sql);
+		
+		$save = $this->conn->query($sql);
 		if($save){
 			$tid = !empty($id) ? $id : $this->conn->insert_id;
 			$resp['tid'] = $tid;

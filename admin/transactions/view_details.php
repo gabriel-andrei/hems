@@ -8,6 +8,8 @@ if(isset($_GET['id'])){
                 $$k = $v;
             }
         }
+        $date_created = date("m/d/Y", strtotime($date_created));  
+        
         if(isset($mechanic_id) && is_numeric($mechanic_id)){
             $mechanic = $conn->query("SELECT concat(firstname,' ', coalesce(concat(middlename,' '),''), lastname) as `name` FROM `mechanic_list` where id = '{$mechanic_id}' ");
             if($mechanic->num_rows > 0){
@@ -45,6 +47,8 @@ if(isset($_GET['id'])){
                 <div class="row mb-0">
                     <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Transaction Code</b></div>
                     <div class="col-9 py-1 px-2 border mb-0"><?= isset($code) ? $code : '' ?></div>
+                    <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Transaction Date</b></div>
+                    <div class="col-9 py-1 px-2 border mb-0"><?= isset($date_created) ? $date_created : '' ?></div>
                     <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Client Name</b></div>
                     <div class="col-9 py-1 px-2 border mb-0"><?= isset($client_name) ? $client_name : '' ?></div>
                     <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Contact #</b></div>
@@ -89,30 +93,38 @@ if(isset($_GET['id'])){
                         <div class="clear-fix mb-2"></div>
                         <table class="table table-striped table-bordered" id="service-list">
                             <colgroup>
-                                <col width="70%">
                                 <col width="30%">
+                                <col width="30%">
+                                <col width="20%">
+                                <col width="20%">
                             </colgroup>
                             <thead>
                                 <tr class="bg-light-blue text-center">
                                     <th class="text-center">Service</th>
+                                    <th class="text-center">Details</th>
+                                    <th class="text-center">Cylinder</th>
                                     <th class="text-center">Price</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php 
                                 $service_amount = 0;
-                                $ts_qry = $conn->query("SELECT ts.*, s.service as `service` FROM `transaction_services` ts inner join `service_list` s on ts.service_id = s.id where ts.`transaction_id` = '{$id}' ");
+                                $ts_qry = $conn->query("SELECT ts.*, s.service as `service` , s.service_sub, s.cylinder FROM `transaction_services` ts inner join `service_list` s on ts.service_id = s.id where ts.`transaction_id` = '{$id}' ");
                                 while($row = $ts_qry->fetch_assoc()):
                                     $service_amount += $row['price'];
                                 ?>
                                 <tr>
                                     <td class="text-center"><?= $row['service'] ?></td>
+                                    <td class="text-center"><?= $row['service_sub'] ?></td>
+                                    <td class="text-center"><?= $row['cylinder'] ?></td>
                                     <td class="text-center service_price"><?= format_num($row['price']) ?></td>
                                 </tr>
                                 <?php endwhile; ?>
                             </tbody>
                             <tfoot>
                                 <tr class="bg-gradient-secondary">
+                                    <th class="text-center"></th>
+                                    <th class="text-center"></th>
                                     <th class="text-center">Total</th>
                                     <th class="text-center" id="service_total"><?= isset($service_amount) ? format_num($service_amount): 0 ?></th>
                                 </tr>
