@@ -50,31 +50,11 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 				<option value="0" <?php echo isset($status) && $status == 0 ? 'selected' : '' ?>>Inactive</option>
 			</select>
 		</div>
-		<div class="form-group">
-			<label for="" class="control-label">Thumbnail</label>
-			<div class="custom-file">
-				<input type="file" class="custom-file-input rounded-circle" id="customFile1" accept="image/png, image/jpeg" name="img" onchange="displayImg(this,$(this))">
-				<label class="custom-file-label" for="customFile1">Choose file</label>
-			</div>
-		</div>
-		<div class="form-group">
-			<img src="<?= validate_image(isset($image_path) ? $image_path : '') ?>" alt="" id="cimg" class="img-fluid img-thumbnail w-100">
-		</div>
+		
 	</form>
 </div>
 <script>
-	function displayImg(input,_this) {
-	    if (input.files && input.files[0]) {
-	        var reader = new FileReader();
-	        reader.onload = function (e) {
-	        	$('#cimg').attr('src', e.target.result);
-	        	_this.siblings('.custom-file-label').html(input.files[0].name)
-	        }
-	        reader.readAsDataURL(input.files[0]);
-	    }else{
-				$('#cimg').attr('src', "<?= validate_image(isset($image_path) ? $image_path : '') ?>");
-		}
-	}
+	
 	$(function(){
         $('#engine_model').select2({
             placeholder:"Select Engine Model",

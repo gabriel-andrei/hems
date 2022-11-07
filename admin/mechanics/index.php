@@ -15,7 +15,6 @@
 			<table class="table table-hover table-striped table-bordered">
 				<colgroup>
 					<col width="5%">
-					<col width="15%">
 					<col width="30%">
 					<col width="15%">
 					<col width="15%">
@@ -23,7 +22,6 @@
 				<thead>
 					<tr>
 						<th class="text-center">#</th>
-						<th class="text-center">Date</th>
 						<th class="text-center">Name</th>
 						<th class="text-center">Status</th>
 						<th class="text-center">Action</th>
@@ -37,7 +35,6 @@
 					?>
 						<tr>
 							<td class="text-center py-1 px-2 align-middle"><?php echo $i++; ?></td>
-							<td class="text-center py-1 px-2 align-middle"><?php echo date("Y-m-d H:i",strtotime($row['date_added'])) ?></td>
 							<td class="text-center py-1 px-2 align-middle"><?php echo $row['name'] ?></td>
 							<td class="text-center py-1 px-2 align-middle">
                                 <?php if($row['status'] == 1): ?>
@@ -52,8 +49,6 @@
 				                    <span class="sr-only">Toggle Dropdown</span>
 				                  </button>
 				                  <div class="dropdown-menu" role="menu">
-				                    <a class="dropdown-item view_data" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-eye text-dark"></span> View</a>
-				                    <div class="dropdown-divider"></div>
 				                    <a class="dropdown-item edit_data" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-edit text-primary"></span> Edit</a>
 				                    <div class="dropdown-divider"></div>
 				                    <a class="dropdown-item delete_data" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-trash text-danger"></span> Delete</a>

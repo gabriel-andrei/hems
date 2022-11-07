@@ -30,7 +30,6 @@
 					<col width="10%">
 					<col width="10%">
 					<col width="10%">
-
 					<col width="5%">
 				</colgroup>
 				<thead>
@@ -40,7 +39,6 @@
 						<th class="text-center">Product Name</th>
 						<th class="text-center">Available Stock</th>
 						<th class="text-center">Low Stock</th>
-
 						<th class="text-center">Price</th>
 						<th class="text-center">Action</th>
 					</tr>
