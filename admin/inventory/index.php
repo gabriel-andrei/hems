@@ -26,6 +26,7 @@
 				<colgroup>
 					<col width="5%">
 					<col width="20%">
+					<col width="10%">
 					<col width="5%">
 					<col width="5%">
 					<col width="5%">
@@ -34,6 +35,7 @@
 					<tr>
 						<th class="text-center">#</th>
 						<th class="text-center">Product Name</th>
+						<th class="text-center">Engine Model</th>
 						<th class="text-center">Available Stock</th>
 						<th class="text-center">Price</th>
 						<th class="text-center">Action</th>
@@ -48,6 +50,7 @@
 						<tr>
 							<td class="text-center"><?php echo $i++; ?></td>
 							<td class="text-center"><?php echo $row['name'] ?></td>
+							<td class="text-center"><?php echo $row['engine_model'] ?></td>
 							<td class="text-center"><?php echo $row['available'] ?></td>
 							<td class="text-center"><?php echo $row['price'] ?></td>
 							<td align="center">
