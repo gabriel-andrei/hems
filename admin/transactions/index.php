@@ -26,7 +26,6 @@
 					<tr>
 						<th class="text-center">#</th>
 						<th class="text-center">Client Name</th>
-
 						<th class="text-center">Code</th>
 						<th class="text-center">Amount</th>
 						<th class="text-center">Status</th>
