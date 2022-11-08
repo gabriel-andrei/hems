@@ -22,6 +22,11 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 	<form action="" id="product-form">
 		<input type="hidden" name ="id" value="<?php echo isset($id) ? $id : '' ?>">
 		<div class="form-group">
+			<label for="total_amount" class="control-label">Total Amount</label><br>
+				<input type="text" name="total_amount" id="total_amount" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($total_amount) ? $total_amount : ''; ?>"  readonly/>
+
+		</div>	
+		<div class="form-group">
 			<label for="clients_name" class="control-label">Client's Name</label><br>
 				<input type="text" name="client_name" id="client_name" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($client_name) ? $client_name : ''; ?>"  readonly/>
 
@@ -52,11 +57,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 			<label for="price" class="control-label">Amount Paid</label>
 			<input type="text" name="price" id="price" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($price) ? $price : ''; ?>"  required/>
 		</div>
-		<div class="form-group">
-			<label for="total_amount" class="control-label">Total Amount</label><br>
-				<input type="text" name="total_amount" id="total_amount" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($total_amount) ? $total_amount : ''; ?>"  readonly/>
-
-		</div>	
+		
 	</form>
 </div>
 <script>
