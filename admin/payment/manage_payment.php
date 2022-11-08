@@ -23,7 +23,8 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 		<input type="hidden" name ="id" value="<?php echo isset($id) ? $id : '' ?>">
 		<div class="form-group">
 			<label for="clients_name" class="control-label">Client's Name</label><br>
-				<input type="text" name ="client_name" value="<?php echo isset($client_name) ? $client_name : '' ?>" readonly>
+				<input type="text" name="client_name" id="client_name" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($client_name) ? $client_name : ''; ?>"  readonly/>
+
 		</div>	
 		<div class="form-group">
 			<label for="engine_model" class="control-label">Payment Method</label>
@@ -36,7 +37,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 		</div>
 		<div class="form-group">
 			<label for="cheque_number" class="control-label">Cheque Number</label><br>
-			<input type="text" name ="cheque_number" value="<?php echo isset($cheque_number) ? $cheque_number : '' ?>" readonly>
+			<input type="text" name="cheque_number" id="cheque_number" class="form-control form-control-sm rounded-0 text-left" value=""  required/>
 		</div>
 		<div class="form-group">
 			<label for="engine_model" class="control-label">Payment Type</label>
@@ -53,17 +54,25 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 		</div>
 		<div class="form-group">
 			<label for="total_amount" class="control-label">Total Amount</label><br>
-				<input type="text" name ="total_amount" value="<?php echo isset($total_amount) ? $total_amount : '' ?>" readonly>
+				<input type="text" name="total_amount" id="total_amount" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($total_amount) ? $total_amount : ''; ?>"  readonly/>
+
 		</div>	
 	</form>
 </div>
 <script>
+
 	$(function(){
-        $('#engine_model').select2({
-            placeholder:"Select Engine Model",
+        $('#payment_method').select2({
+            placeholder:"Select Payment Method",
             width:'100%',
             containerCssClass:'form-control form-control-sm rounded-0'
         })
+		$('#payment_type').select2({
+            placeholder:"Select Payment Type",
+            width:'100%',
+            containerCssClass:'form-control form-control-sm rounded-0'
+        })
+		$("#cheque_number").prop( "disabled", true );
 	})
 	$(document).ready(function(){
 		$('#product-form').submit(function(e){
