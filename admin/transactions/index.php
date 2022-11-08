@@ -17,7 +17,9 @@
 				<colgroup>
 					<col width="5%">
 					<col width="25%">
-					<col width="20%">
+					<col width="10%">
+
+					<col width="10%">
 					<col width="10%">
 					<col width="10%">
 					<col width="15%">
@@ -26,6 +28,7 @@
 					<tr>
 						<th class="text-center">#</th>
 						<th class="text-center">Client Name</th>
+						<th class="text-center">Vehicle Type</th>
 
 						<th class="text-center">Code</th>
 						<th class="text-center">Amount</th>
@@ -46,6 +49,7 @@
 						<tr>
 							<td class="text-center"><?php echo $i++; ?></td>
 							<td class="text-center"><p class="m-0 truncate-1"><?= $row['client_name'] ?></p></td>
+							<td class="text-center"><p class="m-0 truncate-1"><?= $row['vehicle_type'] ?></p></td>
 							<td class="text-center"><p class="m-0 truncate-1"><?= $row['code'] ?></p></td>
 							<td class="text-center"><?= format_num($row['amount']) ?></td>
 							<td class="text-center">
