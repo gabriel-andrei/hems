@@ -25,20 +25,16 @@
 			<table class="table table-hover table-striped table-bordered" id="list">
 				<colgroup>
 					<col width="5%">
-					<col width="15%">
-					<col width="15%">
-					<col width="10%">
-					<col width="10%">
-					<col width="10%">
+					<col width="20%">
+					<col width="5%">
+					<col width="5%">
 					<col width="5%">
 				</colgroup>
 				<thead>
 					<tr>
 						<th class="text-center">#</th>
-						<th class="text-center">Date</th>
 						<th class="text-center">Product Name</th>
 						<th class="text-center">Available Stock</th>
-						<th class="text-center">Low Stock</th>
 						<th class="text-center">Price</th>
 						<th class="text-center">Action</th>
 					</tr>
@@ -51,12 +47,8 @@
 					?>
 						<tr>
 							<td class="text-center"><?php echo $i++; ?></td>
-							<td class="text-center"><?php echo date("Y-m-d H:i",strtotime($row['date_created'])) ?></td>
 							<td class="text-center"><?php echo $row['name'] ?></td>
 							<td class="text-center"><?php echo $row['available'] ?></td>
-
-							<td class="text-center"> </td>
-
 							<td class="text-center"><?php echo $row['price'] ?></td>
 							<td align="center">
 								 <button type="button" class="btn btn-default border btn-md rounded-pill btn-sm dropdown-toggle dropdown-icon" data-toggle="dropdown">
@@ -79,8 +71,6 @@
 	</div>
 </div>
 <script>
-	
-
 	$(document).ready(function(){
 		$('.delete_data').click(function(){
 			_conf("Are you sure to delete this Product permanently?","delete_product",[$(this).attr('data-id')])
@@ -96,7 +86,7 @@
 		})
 		$('.table').dataTable({
 			columnDefs: [
-					{ orderable: false, targets: [6] }
+					{ orderable: false, targets: [4] }
 			],
 			order:[0,'asc']
 		});
