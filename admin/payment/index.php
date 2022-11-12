@@ -40,6 +40,7 @@
 						$qry = $conn->query("SELECT t.*, COALESCE(SUM(p.total_amount)) payment
 						FROM `transaction_list` t LEFT JOIN payment_list p ON t.id=p.transaction_id
 						where t.`status` > 0 
+						GROUP BY t.id
 						order by unix_timestamp(t.date_updated) desc ");
 						while($row = $qry->fetch_assoc()):
 							$balance = $row['amount']-$row['payment'];
