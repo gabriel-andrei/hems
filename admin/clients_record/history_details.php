@@ -1,9 +1,7 @@
 <?php 
+require_once('../../config.php');
 if(isset($_GET['id'])){
-    $qry = $conn->query("SELECT t.*, SUM(p.total_amount) payments FROM `transaction_list` t 
-        LEFT JOIN payment_list p ON t.id=p.transaction_id
-        where t.id = '{$_GET['id']}'
-        group by t.id ");
+    $qry = $conn->query("SELECT * FROM `transaction_list` where id = '{$_GET['id']}' ");
     if($qry->num_rows > 0){
         $res = $qry->fetch_array();
         foreach($res as $k => $v){
@@ -11,7 +9,6 @@ if(isset($_GET['id'])){
                 $$k = $v;
             }
         }
-        $balance = $amount - $payments;
         $date_created = date("m/d/Y", strtotime($date_created));  
         
         if(isset($mechanic_id) && is_numeric($mechanic_id)){
@@ -39,11 +36,11 @@ if(isset($_GET['id'])){
 	}
 </style>
 <div class="content py-3">
-    <div class="card card-outline card-blue rounded-0 shadow">
+    <div class="card card-outline card-blue rounded-0 shadow  m-1">
         <div class="card-header">
             <h4 class="card-title">Transaction Details: <b><?= isset($code) ? $code : "" ?></b></h4>
             <div class="card-tools">
-                <a href="./?page=transactions" class="btn btn-default border btn-md rounded-pill"><i class="fa fa-angle-left"></i> Back to List</a>
+				<a class="btn btn-default border btn-md rounded-pill back-to-list" href="javascript:void(0)" data-id="<?php echo $client_id ?>"><i class="fa fa-angle-left"></i> Back to List</a>
             </div>
         </div>
         <div class="card-body">
@@ -53,7 +50,15 @@ if(isset($_GET['id'])){
                     <div class="col-9 py-1 px-2 border mb-0"><?= isset($code) ? $code : '' ?></div>
                     <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Transaction Date</b></div>
                     <div class="col-9 py-1 px-2 border mb-0"><?= isset($date_created) ? $date_created : '' ?></div>
-                    <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Transaction Status</b></div>
+                    <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Client Name</b></div>
+                    <div class="col-9 py-1 px-2 border mb-0"><?= isset($client_name) ? $client_name : '' ?></div>
+                    <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Contact #</b></div>
+                    <div class="col-9 py-1 px-2 border mb-0"><?= isset($contact) ? $contact : '' ?></div>
+                    <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Email</b></div>
+                    <div class="col-9 py-1 px-2 border mb-0"><?= isset($email) ? $email : '' ?></div>
+                    <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Address</b></div>
+                    <div class="col-9 py-1 px-2 border mb-0"><?= isset($address) ? $address : '' ?></div>
+                    <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Status</b></div>
                     <div class="col-9 py-1 px-2 border mb-0">
                         <?php 
                         $status = isset($status) ? $status : '';
@@ -76,14 +81,6 @@ if(isset($_GET['id'])){
                         }
                         ?>
                     </div>
-                    <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Client Name</b></div>
-                    <div class="col-9 py-1 px-2 border mb-0"><?= isset($client_name) ? $client_name : '' ?></div>
-                    <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Contact #</b></div>
-                    <div class="col-9 py-1 px-2 border mb-0"><?= isset($contact) ? $contact : '' ?></div>
-                    <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Email</b></div>
-                    <div class="col-9 py-1 px-2 border mb-0"><?= isset($email) ? $email : '' ?></div>
-                    <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Address</b></div>
-                    <div class="col-9 py-1 px-2 border mb-0"><?= isset($address) ? $address : '' ?></div>
                     <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Assigned Machinist</b></div>
                     <div class="col-9 py-1 px-2 border mb-0"><?= isset($mechanic_name) ? $mechanic_name : '' ?></div>
                     <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Prepared By</b></div>
@@ -187,102 +184,18 @@ if(isset($_GET['id'])){
                 </div>
                 <hr>
                 <div class="clear-fix mb-3"></div>
-                <div class="d-flex row">
-                        <div class="col-3 offset-7"><h4 class="text-black text-right">Total Payable Amount:</h4></div>
-                        <div class="col-2"><h4 class="text-black text-right pr-2"> <b id="amount"><?= isset($amount) ? format_num($amount) : "0.00" ?></b></h4></div>
-                </div>
-                <?php if($payments>0):?>
-                <div class="d-flex row">
-                        <div class="col-3 offset-7"><h4 class="text-black text-right">Total Payments:</h4></div>
-                        <div class="col-2"><h4 class="text-black text-right pr-2"> <b id="payments"><?= isset($payments) ? format_num($payments) : "0.00" ?></b></h4></div>
-                </div>
-                <div class="d-flex row">
-                        <hr class="col-5 offset-7"/>
-                </div>
-                <div class="d-flex row">
-                        <div class="col-3 offset-7"><h4 class="text-black text-right">Balance:</h4></div>
-                        <div class="col-2"><h4 class="text-black text-right pr-2"> <b id="balance"><?= isset($balance) ? number_format($balance, 2) : "0.00" ?></b></h4></div>
-                </div>
-                <?php endif; ?>
+                <h4 class="text-black text-right">Total Payable Amount: <b id="amount"><?= isset($amount) ? format_num($amount) : "0.00" ?></b></h4>
             </div>
             <hr>
-                                
-            <div class="row justify-content-center">
-                <button class="btn btn-primary bg-gradient-blue border col-lg-3 col-md-4 col-sm-12 col-xs-12 rounded-pill" id="update_status" type="button">Update Status</button>
-                <a class="btn btn-primary bg-gradient-primary border col-lg-3 col-md-4 col-sm-12 col-xs-12 rounded-pill" href="./?page=transactions/manage_transaction&id=<?= isset($id) ? $id : '' ?>"><i class="fa fa-edit"></i> Edit</a>
-                <button class="btn btn-light bg-gradient-light border col-lg-3 col-md-4 col-sm-12 col-xs-12 rounded-pill" id="print"><i class="fa fa-print"></i> Print</button>
-            </div>
         </div>
     </div>
 </div>
-<noscript id="print-header">
-    <div class="d-flex w-100">
-        <div class="col-2 text-center">
-            <img style="height:.8in;width:.8in!important;object-fit:cover;object-position:center center" src="<?= validate_image($_settings->info('logo')) ?>" alt="" class="w-100 img-thumbnail rounded-circle">
-        </div>
-        <div class="col-8 text-center">
-            <div style="line-height:1em">
-                <h4 class="text-center"><?= $_settings->info('name') ?></h4>
-                <h3 class="text-center"><b>Transaction Invoice</b></h3>
-            </div>
-        </div>
-    </div>
-    <hr>
-</noscript>
 <script>
-$(function(){
-    $('#print').click(function(){
-        var head = $('head').clone()
-        var p = $('#printout').clone()
-        var phead = $($('noscript#print-header').html()).clone()
-        var el = $('<div>')
-        el.append(head)
-        el.find('title').text("Transaction Invoice-Print View")
-        el.append(phead)
-        el.append(p)
-        el.find('.bg-gradient-blue').css({'background':'#001f3f linear-gradient(180deg, #26415c, #001f3f) repeat-x !important','color':'#fff'})
-        el.find('.bg-gradient-secondary').css({'background':'#6c757d linear-gradient(180deg, #828a91, #6c757d) repeat-x !important','color':'#fff'})
-        el.find('tr.bg-gradient-blue').attr('style',"color:#000")
-        el.find('tr.bg-gradient-secondary').attr('style',"color:#000")
-        start_loader();
-        var nw = window.open("", "_blank", "width="+($(window).width() * .8)+", height="+($(window).height() * .8)+", left="+($(window).width() * .1)+", top="+($(window).height() * .1))
-                 nw.document.write(el.html())
-                 nw.document.close()
-                 setTimeout(()=>{
-                     nw.print()
-                     setTimeout(()=>{
-                        nw.close()
-                        end_loader()
-                     },300)
-                 },500)
-    })
-    $('#update_status').click(function(){
-        uni_modal("Update Transaction Status", "transactions/update_status.php?id=<?= isset($id) ? $id : '' ?>")
-    })
-    $('#delete_transaction').click(function(){
-        _conf("Are you sure to delete this transaction permanently?","delete_transaction",[])
-    })
-})
-function delete_transaction($id){
-		start_loader();
-		$.ajax({
-			url:_base_url_+"classes/Master.php?f=delete_transaction",
-			method:"POST",
-			data:{id: '<?= isset($id) ? $id : "" ?>'},
-			dataType:"json",
-			error:err=>{
-				console.log(err)
-				alert_toast("An error occured.",'error');
-				end_loader();
-			},
-			success:function(resp){
-				if(typeof resp== 'object' && resp.status == 'success'){
-					location.replace('./?page=transactions');
-				}else{
-					alert_toast("An error occured.",'error');
-					end_loader();
-				}
-			}
+
+	$(document).ready(function(){
+		$('.back-to-list').click(function(){
+				uni_modal("<i class='fa fa-info-circle'></i> Transaction History","clients_record/view_history.php?id="+$(this).attr('data-id'), 'modal-xl')
+                $('#uni_modal #submit').hide();
 		})
-	}
+	})
 </script>

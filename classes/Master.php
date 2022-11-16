@@ -326,6 +326,26 @@ Class Master extends DBConnection {
 				$resp['msg'] = "New Transaction successfully saved.";
 			else
 				$resp['msg'] = " Transaction successfully updated.";
+
+			if(empty($id)){
+				$result = $this->conn->query("SELECT id FROM clients_record 
+					WHERE client_name='{$client_name}' AND contact='{$contact}' AND address='{$address}'");
+				$row = $result->fetch_assoc();
+				if($row){
+					$cid = $row['id'];
+					$sql = "UPDATE `transaction_list` SET client_id='{$cid}'  where id = '{$tid}'  ";
+					$this->conn->query($sql);
+				}else{
+					$sql = " INSERT INTO `clients_record` ( `date_created`, `trans_ref`, `client_name`, `contact`, `address`, `engine_model`) 
+						VALUES ( CURRENT_TIMESTAMP(), '{$tid}', '{$client_name}', '{$contact}', '{$address}', '{$engine_model}') ";
+					if($this->conn->query($sql)){
+						$cid = $this->conn->insert_id;
+						$sql = "UPDATE `transaction_list` SET client_id='{$cid}'  where id = '{$tid}'  ";
+						$this->conn->query($sql);
+					}
+				}
+
+			}
 			if(isset($service_id)){
 				$data = "";
 				foreach($service_id as $k =>$v){

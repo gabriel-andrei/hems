@@ -1,3 +1,21 @@
+11-16
+> Database
+    -- added client_id field to transaction_list table
+    -- dropped the transaction_after_list trigger
+> Client records
+    -- Removed date from list viewing
+    -- Added button for viewing details
+    -- Added button for updating details (not yet saving)
+    -- Added button for viewing of transactions history
+        -- Lists transactions linked to client by id
+        -- Can view details of a selected transaction
+> Transactions>Create new
+    -- Modified saving process, check if a client record already exists then get its client_id
+        -- else create new client record and get its record id
+        -- then update transaction record and set the client_id for history linking.
+> Transactions>view
+    -- added payment details below if theres any
+
 11-06
 > Database Patch:
     -- Execute the following query below to FIX trailing spaces and carriage returns of the saved data

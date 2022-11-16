@@ -184,13 +184,13 @@
         </div>
 <div class="container">
   <?php 
-    $files = array();
-      $fopen = scandir(base_app.'uploads/banner');
-      foreach($fopen as $fname){
-        if(in_array($fname,array('.','..')))
-          continue;
-        $files[]= validate_image('uploads/banner/'.$fname);
-      }
+    // $files = array();
+    //   $fopen = scandir(base_app.'uploads/banner');
+    //   foreach($fopen as $fname){
+    //     if(in_array($fname,array('.','..')))
+    //       continue;
+    //     $files[]= validate_image('uploads/banner/'.$fname);
+    //   }
   ?>
 </div>
 </div>
