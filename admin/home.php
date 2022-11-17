@@ -170,7 +170,14 @@
                 <span class="info-box-text" style="color:black">Low Stock Items</span>
                 <span class="info-box-number" style="color:black">
                   <?php 
-                    $total = $conn->query("SELECT * FROM users ")->num_rows;
+                  
+                    $total = $conn->query("SELECT p.*, COALESCE(SUM(i.quantity),0) stocks , COALESCE(SUM(t.qty),0) sold 
+                    from `product_list` p
+                    LEFT JOIN inventory_list i ON p.id=i.product_id
+                    LEFT JOIN transaction_products t ON p.id=t.product_id 
+                    where p.delete_flag = 0 
+                    GROUP BY p.id HAVING stocks < stocks-sold OR stocks <= 0
+                    ")->num_rows;
                     echo format_num($total);
                   ?>
                   <?php ?>

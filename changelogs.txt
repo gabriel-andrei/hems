@@ -7,14 +7,19 @@
         -- UPDATE inventory_list SET unit='pcs' 
 > Inventory List
     -- implement conditional style for stock status values
+    -- handled null stocks value
 > Inventory>Products
     -- fixed saving of product record
     -- fixed input validation for price and lowstock field (should be numbers only and not less than 1)
     -- added input fields for unit and lowstock fields on manage and viewing of record
 > Inventory>Products>Stocks
+    -- handled null stocks value
     -- fixed input validation for quantity field (should be numbers only and not less than 1)
     -- added input field for unit on manage Stocks
     -- added column for unit in viewing of stocks
+> Home (Dashboard)
+    -- fixed query for the total number of low in stock items
+    -- handled null stocks value
 
 11-16
 > Database

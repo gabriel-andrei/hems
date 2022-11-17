@@ -52,7 +52,7 @@
 						// 	from `product_list` 
 						// 	where delete_flag = 0 
 						// 	order by `name` asc ");
-						$qry = $conn->query("SELECT p.*, SUM(i.quantity) stocks , SUM(t.qty) sold 
+						$qry = $conn->query("SELECT p.*, COALESCE(SUM(i.quantity),0) stocks , COALESCE(SUM(t.qty),0) sold 
 							from `product_list` p
 							LEFT JOIN inventory_list i ON p.id=i.product_id
 							LEFT JOIN transaction_products t ON p.id=t.product_id 

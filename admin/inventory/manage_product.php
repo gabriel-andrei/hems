@@ -2,7 +2,7 @@
 
 require_once('../../config.php');
 if(isset($_GET['id']) && $_GET['id'] > 0){
-    $qry = $conn->query("SELECT p.*, SUM(quantity) available from `product_list` p
+    $qry = $conn->query("SELECT p.*, COALESCE(SUM(quantity),0) available from `product_list` p
 		LEFT JOIN inventory_list i ON p.id=i.product_id
 		where p.id = '{$_GET['id']}' 
 		GROUP BY p.id");
