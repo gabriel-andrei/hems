@@ -1,3 +1,21 @@
+11-17
+> Database
+    -- added unit and lowstock fields to product_list table
+    -- added unit field to inventory_list table
+    -- execute the following queries to set the unit of existing records to pcs
+        -- UPDATE product_list SET unit='pcs' 
+        -- UPDATE inventory_list SET unit='pcs' 
+> Inventory List
+    -- implement conditional style for stock status values
+> Inventory>Products
+    -- fixed saving of product record
+    -- fixed input validation for price and lowstock field (should be numbers only and not less than 1)
+    -- added input fields for unit and lowstock fields on manage and viewing of record
+> Inventory>Products>Stocks
+    -- fixed input validation for quantity field (should be numbers only and not less than 1)
+    -- added input field for unit on manage Stocks
+    -- added column for unit in viewing of stocks
+
 11-16
 > Database
     -- added client_id field to transaction_list table

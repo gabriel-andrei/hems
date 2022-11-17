@@ -56,6 +56,8 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
                                     <dd class="text-center"><?= isset($description) ? $description : '' ?></dd>
                                     <dt class="text-center">Price</dt>
                                     <dd class="text-center"><?= isset($price) ? format_num($price) : '' ?></dd>
+                                    <dt class="text-center">Unit</dt>
+                                    <dd class="text-center"><?= isset($unit) ? ($unit) : '' ?></dd>
                                     <dt class="text-center">Status</dt>
                                     <dd class="text-center">
                                         <?php if($status == 1): ?>
@@ -64,6 +66,8 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
                                             <span class="badge badge-danger px-3 rounded-pill">Inactive</span>
                                         <?php endif; ?>
                                     </dd>
+                                    <dt class="text-center">Low Stock Value</dt>
+                                    <dd class="text-center"><?= isset($lowstock) ? format_num($lowstock) : '' ?></dd>
                                     <dt class="text-center">Available Stock</dt>
                                     <dd class="text-center"><?= isset($available) ? format_num($available) : '' ?></dd>
                                     <dt class="text-center">Sold</dt>
@@ -79,6 +83,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
                                         <tr class="bg-light-blue">
                                             <th class="px-2 py-1 text-center">Stock-In Date</th>
                                             <th class="px-2 py-1 text-center">Quantity</th>
+                                            <th class="px-2 py-1 text-center">Unit</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -89,6 +94,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
                                         <tr>
                                             <td class="px-2 py-1 align-middle text-center"><?= date("M d, Y", strtotime($row['stock_date'])) ?></td>
                                             <td class="px-2 py-1 align-middle text-center"><?= format_num($row['quantity']) ?></td>
+                                            <td class="px-2 py-1 align-middle text-center"><?= ($row['unit']) ?></td>
                                         </tr>
                                         <?php endwhile; ?>
                                         <?php if($inv_qry->num_rows <= 0): ?>

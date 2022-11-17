@@ -25,18 +25,20 @@
 			<table class="table table-hover table-striped table-bordered" id="list">
 				<colgroup>
 					<col width="5%">
+					<col width="10%">
 					<col width="20%">
 					<col width="10%">
-					<col width="5%">
-					<col width="5%">
+					<col width="10%">
+					<col width="10%">
 					<col width="5%">
 				</colgroup>
 				<thead>
 					<tr>
 						<th class="text-center">#</th>
-						<th class="text-center">Product Name</th>
 						<th class="text-center">Engine Model</th>
+						<th class="text-center">Product Name</th>
 						<th class="text-center">Available Stock</th>
+						<th class="text-center">Stocks Status</th>
 						<th class="text-center">Price</th>
 						<th class="text-center">Action</th>
 					</tr>
@@ -44,15 +46,35 @@
 				<tbody>
 					<?php 
 					$i = 1;
-						$qry = $conn->query("SELECT *, (coalesce((SELECT SUM(quantity) FROM `inventory_list` where product_id = product_list.id),0) - coalesce((SELECT SUM(tp.qty) FROM `transaction_products` tp inner join `transaction_list` tl on tp.transaction_id = tl.id where tp.product_id = product_list.id and tl.status != 4),0)) as `available`,coalesce((SELECT SUM(tp.qty) FROM `transaction_products` tp inner join `transaction_list` tl on tp.transaction_id = tl.id where tp.product_id = product_list.id and tl.status != 4),0) as `sold` from `product_list` where delete_flag = 0 order by `name` asc ");
+						// $qry = $conn->query("SELECT *
+						// 	, (coalesce((SELECT SUM(quantity) FROM `inventory_list` where product_id = product_list.id),0) - coalesce((SELECT SUM(tp.qty) FROM `transaction_products` tp inner join `transaction_list` tl on tp.transaction_id = tl.id where tp.product_id = product_list.id and tl.status != 4),0)) as `available`
+						// 	, coalesce((SELECT SUM(tp.qty) FROM `transaction_products` tp inner join `transaction_list` tl on tp.transaction_id = tl.id where tp.product_id = product_list.id and tl.status != 4),0) as `sold` 
+						// 	from `product_list` 
+						// 	where delete_flag = 0 
+						// 	order by `name` asc ");
+						$qry = $conn->query("SELECT p.*, SUM(i.quantity) stocks , SUM(t.qty) sold 
+							from `product_list` p
+							LEFT JOIN inventory_list i ON p.id=i.product_id
+							LEFT JOIN transaction_products t ON p.id=t.product_id 
+							where p.delete_flag = 0 
+							GROUP BY p.id
+							order by p.`name` asc ");
 						while($row = $qry->fetch_assoc()):
+							$lowstock = $row['lowstock'];
+							$available = $row['stocks']-$row['sold'];
+							$lowinstock = $available<$row['lowstock'];
+							$nostocks =  $available == 0;
 					?>
-						<tr>
+						<tr >
 							<td class="text-center"><?php echo $i++; ?></td>
-							<td class="text-center"><?php echo $row['name'] ?></td>
 							<td class="text-center"><?php echo $row['engine_model'] ?></td>
-							<td class="text-center"><?php echo $row['available'] ?></td>
-							<td class="text-center"><?php echo $row['price'] ?></td>
+							<td class="text-center"><?php echo $row['name'] ?></td>
+							<td class="text-center"><?php echo $available ?></td>
+							<td class="text-center" style="font-size:1.1em;"><?php echo ($lowinstock || $nostocks)?
+								'<span class="badge badge-danger rounded-pill" style="padding: 5px 10px;"> Low in stock (<'.$lowstock.') </span>':
+								'<span class="badge badge-success rounded-pill" style="padding: 5px 10px;"> Sufficient (>'.$lowstock.') </span>'; ?>
+							</td>
+							<td class="text-center"><?php echo number_format($row['price'],2) ?></td>
 							<td align="center">
 								 <button type="button" class="btn btn-default border btn-md rounded-pill btn-sm dropdown-toggle dropdown-icon" data-toggle="dropdown">
 				                  		Action

@@ -2,7 +2,10 @@
 
 require_once('../../config.php');
 if(isset($_GET['id']) && $_GET['id'] > 0){
-    $qry = $conn->query("SELECT * from `product_list` where id = '{$_GET['id']}' ");
+    $qry = $conn->query("SELECT p.*, SUM(quantity) available from `product_list` p
+		LEFT JOIN inventory_list i ON p.id=i.product_id
+		where p.id = '{$_GET['id']}' 
+		GROUP BY p.id");
     if($qry->num_rows > 0){
         foreach($qry->fetch_assoc() as $k => $v){
             $$k=$v;
@@ -37,7 +40,17 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 		</div>
 		<div class="form-group">
 			<label for="price" class="control-label">Price</label>
-			<input type="text" name="price" id="price" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($price) ? $price : ''; ?>"  required/>
+			<input type="number" min="1" name="price" id="price" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($price) ? $price : ''; ?>"  required/>
+		</div>
+		<div class="row">
+			<div class="form-group col-6">
+				<label for="unit" class="control-label">Unit</label>
+				<input type="text" name="unit" id="unit" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($unit) ? $unit : ''; ?>"  required/>
+			</div>
+			<div class="form-group col-6">
+				<label for="lowstock" class="control-label">Low Stock Value</label>
+				<input type="number" min="1" name="lowstock" id="lowstock" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($lowstock) ? $lowstock : ''; ?>"  required/>
+			</div>
 		</div>
 		<div class="form-group">
 			<label for="status" class="control-label">Status</label>

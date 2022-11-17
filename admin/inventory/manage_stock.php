@@ -17,9 +17,12 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 		<input type="hidden" name ="product_id" value="<?php echo isset($product_id) ? $product_id : (isset($_GET['product_id']) ? $_GET['product_id'] : '') ?>">
 		<div class="form-group">
 			<label for="quantity" class="control-label">Quantity</label>
-			<input type="text" name="quantity" id="quantity" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($quantity) ? $quantity : ''; ?>"  required/>
+			<input type="number" min="1" name="quantity" id="quantity" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($quantity) ? $quantity : ''; ?>"  required/>
 		</div>
-		
+		<div class="form-group">
+			<label for="unit" class="control-label">Unit</label>
+			<input type="text" name="unit" id="unit" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($unit) ? $unit : ''; ?>"  required/>
+		</div>
 		<div class="form-group">
 			<label for="stock_date" class="control-label">Stock-In Date</label>
 			<input type="date" name="stock_date" id="stock_date" class="form-control form-control-sm rounded-0 text-right" value="<?php echo isset($stock_date) ? date("Y-m-d", strtotime($stock_date)) : ""; ?>" max="<?= date("Y-m-d") ?>"  required/>
