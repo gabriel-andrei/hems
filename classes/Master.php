@@ -35,6 +35,41 @@ Class Master extends DBConnection {
 		}
 		return json_encode($resp);
 	}
+	function save_payment(){
+		extract($_POST);
+		$data = "";
+		foreach($_POST as $k =>$v){
+			if(!empty($data)) $data .=",";
+			$v = $this->conn->real_escape_string($v);
+			if ($k =='balance'){
+				$v = $_POST['balance']-$_POST['total_amount'];
+			}
+			$data .= " `{$k}`='{$v}' ";
+		}
+		// var_dump($data);
+		// die;
+		if(empty($id)){
+			$sql = "INSERT INTO `payment_list` set {$data} ";
+		}else{
+			$sql = "UPDATE `payment_list` set {$data} where id = '{$id}' ";
+		}
+			$save = $this->conn->query($sql);
+		if($save){
+			$bid = !empty($id) ? $id : $this->conn->insert_id;
+			$resp['status'] = 'success';
+			if(empty($id))
+				$resp['msg'] = "New Payment has been saved successfully.";
+			else
+				$resp['msg'] = " Payment has been updated successfully.";
+			
+		}else{
+			$resp['status'] = 'failed';
+			$resp['err'] = $this->conn->error."[{$sql}]";
+		}
+		if($resp['status'] == 'success')
+			$this->settings->set_flashdata('success',$resp['msg']);
+			return json_encode($resp);
+	}
 	function save_service(){
 		extract($_POST);
 		$data = "";
@@ -441,6 +476,9 @@ $sysset = new SystemSettings();
 switch ($action) {
 	case 'delete_img':
 		echo $Master->delete_img();
+	break;
+	case 'save_payment':
+		echo $Master->save_payment();
 	break;
 	case 'save_service':
 		echo $Master->save_service();

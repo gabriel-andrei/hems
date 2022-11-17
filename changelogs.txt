@@ -5,6 +5,10 @@
     -- execute the following queries to set the unit of existing records to pcs
         -- UPDATE product_list SET unit='pcs' 
         -- UPDATE inventory_list SET unit='pcs' 
+    -- created a new table bank_list
+        -- populated with common banks
+    -- renamed payment_id to ornumber field of payment_list table
+    -- added necessary payment details (cheque_number, bank_id, etc.) field to payment_list table
 > Inventory List
     -- implement conditional style for stock status values
     -- handled null stocks value
@@ -20,7 +24,15 @@
 > Home (Dashboard)
     -- fixed query for the total number of low in stock items
     -- handled null stocks value
+> Payments
+    -- shows list of transactions that are tagged as On-Progress (Transactions)
+    -- added 'PayNow' button to add payment details
+        -- conditional: shows only if transaction has outstanding Balance
+        -- otherwise: show 'Payments' button to access all payments made for the selected transaction
+    -- shows a list of all of the payments made (Payment History)
 
+
+    
 11-16
 > Database
     -- added client_id field to transaction_list table
