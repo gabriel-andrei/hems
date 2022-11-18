@@ -121,9 +121,7 @@ if(isset($_GET['id'])){
                             </tbody>
                             <tfoot>
                                 <tr class="bg-gradient-secondary">
-                                    <th class="text-center"></th>
-                                    <th class="text-center"></th>
-                                    <th class="text-center">Total</th>
+                                    <th colspan="3" class="text-center">Total</th>
                                     <th class="text-center" id="service_total"><?= isset($service_amount) ? format_num($service_amount): 0 ?></th>
                                 </tr>
                             </tfoot>
