@@ -52,13 +52,6 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 				<input type="number" min="1" name="lowstock" id="lowstock" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($lowstock) ? $lowstock : ''; ?>"  required/>
 			</div>
 		</div>
-		<div class="form-group">
-			<label for="status" class="control-label">Status</label>
-			<select name="status" id="status" class="form-control form-control-sm rounded-0" required>
-				<option value="1" <?php echo isset($status) && $status == 1 ? 'selected' : '' ?>>Active</option>
-				<option value="0" <?php echo isset($status) && $status == 0 ? 'selected' : '' ?>>Inactive</option>
-			</select>
-		</div>
 		
 	</form>
 </div>

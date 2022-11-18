@@ -97,7 +97,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 		<div class="row">
 			<div class="form-group col-6">
 				<label for="ornumber" class="control-label">OR Number</label><br>
-					<input type="text" name="ornumber" id="ornumber" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($ornumber) ? $ornumber : ''; ?>"  required/>
+					<input type="text" name="ornumber" id="ornumber" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($ornumber) ? $ornumber : ''; ?>" placeholder="(Optional)"/>
 			</div>	
 			<div class="form-group col-6">
 				<label for="total_amount" class="control-label">Amount Paid</label>

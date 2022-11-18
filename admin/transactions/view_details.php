@@ -65,12 +65,6 @@ if(isset($_GET['id'])){
                                 echo '<span class="">On-Progress</span>';
                                 break;
                             case 2:
-                                echo '<span class="">Done</span>';
-                                break;
-                            case 3:
-                                echo '<span class="">Paid</span>';
-                                break;
-                            case 4:
                                 echo '<span class="">Cancelled</span>';
                                 break;
                         }
