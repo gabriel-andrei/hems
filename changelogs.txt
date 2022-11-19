@@ -1,3 +1,7 @@
+11-19
+> Payment
+    -- repositioned the Remaining Balance up in the Pay Now
+
 11-18
 > Payment
     -- renamed "Transactions" into Pending Payments
@@ -13,7 +17,7 @@
 > Inventory
     -- removed the delete option from action the button
     -- removed the Status from Update Product Details
-
+    -- new interface for add stock
 
 11-17
 > Database

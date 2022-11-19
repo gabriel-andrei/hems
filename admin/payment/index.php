@@ -128,8 +128,8 @@
 							<td class="text-center"><?php echo $row['date_created'] ?></td>
 							<td class="text-center"><?php echo $row['ornumber'] ?></td>
 							<td class="text-center"><?php echo $row['client_name'] ?></td>
-							<td class="text-center"><?php echo $row['total_amount'] ?></td>
-							<td class="text-center"><?php echo $row['balance'] ?></td>
+							<td class="text-center"><?php echo format_num($row['total_amount']) ?></td>
+							<td class="text-center"><?php echo format_num($row['balance']) ?></td>
 							<td class="text-center">
                                 <?php if($row['status'] == 1): ?>
                                     <span class="">Active</span>

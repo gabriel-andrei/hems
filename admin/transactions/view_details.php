@@ -161,7 +161,7 @@ if(isset($_GET['id'])){
                                 <tr>
                                     <td class="text-center"><?= $row['product'] ?></td>
                                     <td class="text-center"><?= $row['qty'] ?></td>
-                                    <td class="text-center product_price"><?= $row['price'] ?></td>
+                                    <td class="text-center product_price"><?= format_num($row['price']) ?></td>
                                     <td class="text-center product_total"><?= format_num($row['price'] * $row['qty']) ?></td>
                                 </tr>
                             <?php endwhile; ?>

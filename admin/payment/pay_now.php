@@ -25,6 +25,12 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 	<form action="" id="product-form">
 		<input type="hidden" name="transaction_id" id="id" class="form-control " value="<?php echo isset($id) ? $id : '' ?>"/>
 		<div class="row">
+                        <div class="col-8"><h3 class="text-black text-left">Remaining Balance:</h4></div>
+                        <div class=""><h3 class="text-black text-right"> <b id="amount"><?= isset($amount) ? format_num($amount) : "0.00" ?></b></h4></div>
+        </div>
+		<hr>
+                        
+		<div class="row">
 			<div class="form-group col-12">
 				<label for="client_name" class="control-label">Client Name</label><br>
 					<input type="text" name="client_name" id="client_name" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($client_name) ? $client_name : ''; ?>"  readonly/>
@@ -50,12 +56,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 					<input type="number" id="payment" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($payment) ? $payment : ''; ?>"  readonly/>
 			</div>	
 		</div>
-		<div class="row">
-			<div class="form-group col-12">
-				<label for="balance" class="control-label">Remaining Balance</label><br>
-					<input type="number" name="balance" id="balance" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($balance) ? $balance : ''; ?>"  readonly/>
-			</div>	
-		</div>
+	
 		<div class="row">
 			<div class="form-group col-6">
 				<label for="payment_type" class="control-label">Payment Type</label>
