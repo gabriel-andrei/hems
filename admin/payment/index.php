@@ -16,7 +16,7 @@
 			<table class="table table-hover table-striped table-bordered">
 				<colgroup>
 					<col width="5%">
-					<col width="25%">
+					<col width="20%">
 					<col width="20%">
 					<col width="10%">
 					<col width="10%">
@@ -97,20 +97,20 @@
 			<table class="table table-hover table-striped table-bordered">
 				<colgroup>
 					<col width="5%">
-					<col width="10%">
-					<col width="10%">
 					<col width="20%">
 					<col width="10%">
 					<col width="10%">
-					<col width="5%">
-					<col width="5%">
+					<col width="10%">
+					<col width="10%">
+					<col width="10%">
+					<col width="10%">
 				</colgroup>
 				<thead>
 					<tr>
 						<th class="text-center">#</th>
+						<th class="text-center">Client Name</th>
 						<th class="text-center">Date</th>
 						<th class="text-center">OR Number</th>
-						<th class="text-center">Client Name</th>
 						<th class="text-center">Payment</th>
 						<th class="text-center">Balance</th>
 						<th class="text-center">Status</th>
@@ -125,9 +125,9 @@
 					?>
 						<tr>
 							<td class="text-center"><?php echo $i++; ?></td>
+							<td class="text-center"><?php echo $row['client_name'] ?></td>
 							<td class="text-center"><?php echo $row['date_created'] ?></td>
 							<td class="text-center"><?php echo $row['ornumber'] ?></td>
-							<td class="text-center"><?php echo $row['client_name'] ?></td>
 							<td class="text-center"><?php echo format_num($row['total_amount']) ?></td>
 							<td class="text-center"><?php echo format_num($row['balance']) ?></td>
 							<td class="text-center">
