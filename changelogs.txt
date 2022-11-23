@@ -1,3 +1,30 @@
+11.23
+> Database
+    - added tbl_status to hold the definition of transaction status codes
+> Payment
+    - added functionality for view the payment details
+> Payment>Pennding Payments
+    - modified query to show only the transactions that follows the ff: Status='On-Progress' AND Not pending transactions but with outstanding balance
+> Payment>Pending Payments>Payments
+    - added functionality for view the payment details
+> Transactions
+    - updated status description (0-pending;1-on-progress; 2-done; 3-cancelled)
+> Transactions>view details
+    - if there's no product or service availed, hide their respective list view
+    - renamed transaction code to 'Invoice Number'
+    - renamed transaction date to 'Date'
+    - renamed transaction status to 'Status'
+    - Status shows 'Fully Paid' if has no outstanding balance
+    - removed showing of email, address
+> Dashboard> Monitoring
+    - added monitoring of active machinists
+    - shows status of machinist and its recent transaction/job_order
+    - click code to view details
+    - shows the summary of jobs per status
+    - shows the working machinists first
+
+
+
 11-19
 > Payment
     -- repositioned the Remaining Balance up in the Pay Now

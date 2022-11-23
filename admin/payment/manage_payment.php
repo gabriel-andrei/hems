@@ -2,13 +2,20 @@
 
 require_once('../../config.php');
 if(isset($_GET['id']) && $_GET['id'] > 0){
-    $qry = $conn->query("SELECT * from `payment_list` where id = '{$_GET['id']}' ");
+	$qry = $conn->query("SELECT p.*, t.id trans_id, t.code, t.amount, COALESCE(SUM(p.total_amount)) payment, b.bank_name
+	FROM payment_list p LEFT JOIN `transaction_list` t ON t.id=p.transaction_id
+	LEFT JOIN `bank_list` b ON b.id=p.bank_id
+	where p.id = '{$_GET['id']}'");
     if($qry->num_rows > 0){
         foreach($qry->fetch_assoc() as $k => $v){
             $$k=$v;
+			// echo $k . ' = ' . $v;
+			// echo '<br/>';
         }
+		$balance = $amount - $payment;
     }
 }
+
 ?>
 <style>
 	#cimg{
@@ -20,98 +27,74 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 </style>
 <div class="container-fluid">
 	<form action="" id="product-form">
-		<input type="hidden" name ="id" value="<?php echo isset($id) ? $id : '' ?>">
-		<div class="form-group">
-			<label for="total_amount" class="control-label">Total Amount</label><br>
-				<input type="text" name="total_amount" id="total_amount" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($total_amount) ? $total_amount : ''; ?>"  readonly/>
-
-		</div>	
-		<div class="form-group">
-			<label for="clients_name" class="control-label">Client's Name</label><br>
-				<input type="text" name="client_name" id="client_name" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($client_name) ? $client_name : ''; ?>"  readonly/>
-
-		</div>	
-		<div class="form-group">
-			<label for="engine_model" class="control-label">Payment Method</label>
-				<select name="payment_method" id="payment_method" class="form-control form-control-sm rounded-0" required>
-				<option value="" disabled selected></option>
-				<option value="Cash on hand" <?php echo isset($payment_method) ? 'selected' : '' ?>>Cash on hand</option>
-				<option value="Cheque" <?php echo isset($payment_method) ? 'selected' : '' ?>>Cheque</option>
-				</select>
-			</select>
+		<?php if(!isset($_GET['source'])): ?>
+		<div class="card-tools d-flex justify-content-end">
+			<a class="btn btn-default border btn-md rounded-pill back-to-list" id="back-to-list" href="javascript:void(0)" data-id="<?php echo $client_id ?>"><i class="fa fa-angle-left"></i> Back to List</a>
 		</div>
-		<div class="form-group">
-			<label for="cheque_number" class="control-label">Cheque Number</label><br>
-			<input type="text" name="cheque_number" id="cheque_number" class="form-control form-control-sm rounded-0 text-left" value=""  required/>
-		</div>
-		<div class="form-group">
-			<label for="engine_model" class="control-label">Payment Type</label>
-				<select name="payment_type" id="payment_type" class="form-control form-control-sm rounded-0" required>
-				<option value="" disabled selected></option>
-				<option value="Downpayment" <?php echo isset($payment_type) ? 'selected' : '' ?>>Downpayment</option>
-				<option value="Full Payment" <?php echo isset($payment_type) ? 'selected' : '' ?>>Full Payment</option>
-				</select>
-			</select>
-		</div>
-		<div class="form-group">
-			<label for="price" class="control-label">Amount Paid</label>
-			<input type="text" name="price" id="price" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($price) ? $price : ''; ?>"  required/>
-		</div>
+		<?php endif; ?>
 		
+		<input type="hidden" name="transaction_id" id="id" class="form-control " value="<?php echo isset($trans_id) ? $trans_id : '' ?>"/>
+                        
+		<div class="row">
+			<div class="form-group col-12">
+				<label for="client_name" class="control-label">Client Name</label><br>
+					<input type="text" name="client_name" id="client_name" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($client_name) ? $client_name : ''; ?>"  readonly/>
+			</div>	
+		</div>
+		<div class="row">
+			<div class="form-group col-6">
+				<label for="code" class="control-label">Invoice Number</label><br>
+					<input type="text" id="code" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($code) ? $code : ''; ?>"  readonly/>
+			</div>	
+			<div class="form-group col-6">
+				<label for="date_created" class="control-label">Invoice Date</label><br>
+					<input type="date" id="date_created" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($date_created) ?  date("Y-m-d", strtotime($date_created))  : ''; ?>"  readonly/>
+			</div>	
+		</div>
+
+		<div class="row">
+			<div class="form-group col-6">
+				<label for="payment_type" class="control-label">Payment Type</label><br>
+					<input type="text" id="payment_type" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($payment_type) ? $payment_type : ''; ?>"  readonly/>
+			</div>	
+			<div class="form-group col-6">
+				<label for="payment_method" class="control-label">Payment Method</label><br>
+					<input type="text" id="payment_method" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($payment_method) ? $payment_method : ''; ?>"  readonly/>
+			</div>	
+		</div>
+
+		<?php if($payment_method=='Cheque'): ?>
+		<div class="row " id="cheque-payment">
+			
+			<div class="form-group col-6">
+				<label for="bank_name" class="control-label">Payor's Bank</label><br>
+					<input type="text" id="bank_name" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($bank_name) ? $bank_name : ''; ?>"  readonly/>
+			</div>	
+			<div class="form-group col-6">
+				<label for="cheque_number" class="control-label">Cheque Number</label><br>
+					<input type="text" id="cheque_number" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($cheque_number) ? $cheque_number : ''; ?>"  readonly/>
+			</div>	
+		</div>
+		<?php endif; ?>
+
+		<div class="row">
+			<div class="form-group col-6">
+				<label for="ornumber" class="control-label">OR Number</label><br>
+					<input type="text" name="ornumber" id="ornumber" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($ornumber) ? $ornumber : ''; ?>" placeholder="(Optional)" readonly/>
+			</div>	
+			<div class="form-group col-6">
+				<label for="total_amount" class="control-label">Amount Paid</label>
+				<input type="currency" name="total_amount" id="total_amount" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($total_amount) ? $total_amount : ''; ?>"  readonly/>
+			</div>
+		</div>
 	</form>
 </div>
 <script>
 
-	$(function(){
-        $('#payment_method').select2({
-            placeholder:"Select Payment Method",
-            width:'100%',
-            containerCssClass:'form-control form-control-sm rounded-0'
-        })
-		$('#payment_type').select2({
-            placeholder:"Select Payment Type",
-            width:'100%',
-            containerCssClass:'form-control form-control-sm rounded-0'
-        })
-		$("#cheque_number").prop( "disabled", true );
-	})
-	$(document).ready(function(){
-		$('#product-form').submit(function(e){
-			e.preventDefault();
-            var _this = $(this)
-			 $('.err-msg').remove();
-			start_loader();
-			$.ajax({
-				url:_base_url_+"classes/Master.php?f=save_product",
-				data: new FormData($(this)[0]),
-                cache: false,
-                contentType: false,
-                processData: false,
-                method: 'POST',
-                type: 'POST',
-                dataType: 'json',
-				error:err=>{
-					console.log(err)
-					alert_toast("An error occured",'error');
-					end_loader();
-				},
-				success:function(resp){
-					if(typeof resp =='object' && resp.status == 'success'){
-						location.reload()
-					}else if(resp.status == 'failed' && !!resp.msg){
-                        var el = $('<div>')
-                            el.addClass("alert alert-danger err-msg").text(resp.msg)
-                            _this.prepend(el)
-                            el.show('slow')
-                            $("html, body,.modal").scrollTop(0);
-                            end_loader()
-                    }else{
-						alert_toast("An error occured",'error');
-						end_loader();
-					}
-				}
-			})
+$(document).ready(function(){
+		$('.back-to-list').click(function(){
+				uni_modal("<i class='fa fa-eye'></i> Payments History","payment/view_payments.php?id=<?=$trans_id?>", 'modal-xl')
+				$('#uni_modal #cancel').show();
 		})
-
 	})
 </script>

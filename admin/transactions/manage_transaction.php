@@ -279,10 +279,23 @@ if(isset($_GET['id'])){
                                         <option value="" disabled <?= !isset($mechanic_id) ? "selected" : "" ?>></option>
                                         <option value="" <?= isset($mechanic_id) && in_array($mechanic_id,[null,""]) ? "selected" : "" ?>>Unset</option>
                                         <?php 
-                                        $mechanic_qry = $conn->query("SELECT *,concat(firstname,' ', coalesce(concat(middlename,' '),''), lastname) as `name` FROM `mechanic_list` where delete_flag = 0 and `status` = 1 ".(isset($mechanic_id) && !is_null($mechanic_id) ? " or id = '{$mechanic_id}' " : '')." order by `name` asc");
+                                        $mechanic_qry = $conn->query("SELECT m.*
+                                        ,concat(firstname, ' ', coalesce(concat(middlename, ' '),''), lastname) as `name`
+                                        , MAX(IF(t.`status` <2, t.code, '')) recent_tran
+                                        , MAX(IF(t.`status` <2, t.id, '')) recent_id
+                                        , SUM(IF(t.`status` =2, 1, 0)) accomplished
+                                        , SUM(IF(t.`status` =0, 1, 0)) pending
+                                        , SUM(IF(t.`status` =1, 1, 0)) onprogress
+                                                from `mechanic_list` m
+                                                LEFT JOIN `transaction_list` t ON t.mechanic_id=m.id ". (isset($id)? ' AND t.id<>'.$id:'') ."
+                                                where delete_flag = 0 and m.`status` = 1 ".(isset($mechanic_id) && !is_null($mechanic_id) ? " or m.id = '{$mechanic_id}' " : '')."
+                                                GROUP BY m.id
+                                                order by `name` asc");
                                         while($row = $mechanic_qry->fetch_array()):
                                         ?>
-                                        <option value="<?= $row['id'] ?>" <?= isset($mechanic_id) && $mechanic_id == $row['id'] ? "selected" : "" ?>><?= $row['name'] ?></option>
+                                        <option value="<?= $row['id'] ?>" <?= isset($mechanic_id) && $mechanic_id == $row['id'] ? "selected" : "" ?>>
+                                            <?= $row['name'].' [ On-Progress: '.$row['onprogress'].' | Pendings: '.$row['pending'].' ]'?>
+                                        </option>
                                         <?php endwhile; ?>
                                     </select>
                                 </div>

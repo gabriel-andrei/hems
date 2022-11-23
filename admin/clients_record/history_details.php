@@ -1,7 +1,10 @@
 <?php 
 require_once('../../config.php');
 if(isset($_GET['id'])){
-    $qry = $conn->query("SELECT * FROM `transaction_list` where id = '{$_GET['id']}' ");
+    $qry = $conn->query("SELECT t.*, SUM(p.total_amount) payments FROM `transaction_list` t 
+        LEFT JOIN payment_list p ON t.id=p.transaction_id
+        where t.id = '{$_GET['id']}'
+        group by t.id ");
     if($qry->num_rows > 0){
         $res = $qry->fetch_array();
         foreach($res as $k => $v){
@@ -9,6 +12,7 @@ if(isset($_GET['id'])){
                 $$k = $v;
             }
         }
+        $balance = $amount - $payments;
         $date_created = date("m/d/Y", strtotime($date_created));  
         
         if(isset($mechanic_id) && is_numeric($mechanic_id)){
@@ -34,6 +38,9 @@ if(isset($_GET['id'])){
     .bg-light-blue {
   		background-color: #cae8ff;
 	}
+    .hidden {
+        display: none;
+    }
 </style>
 <div class="content py-3">
     <div class="card card-outline card-blue rounded-0 shadow  m-1">
@@ -46,18 +53,10 @@ if(isset($_GET['id'])){
         <div class="card-body">
             <div class="container-fluid" id="printout">
                 <div class="row mb-0">
-                    <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Transaction Code</b></div>
+                    <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Invoice Number</b></div>
                     <div class="col-9 py-1 px-2 border mb-0"><?= isset($code) ? $code : '' ?></div>
-                    <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Transaction Date</b></div>
+                    <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Date</b></div>
                     <div class="col-9 py-1 px-2 border mb-0"><?= isset($date_created) ? $date_created : '' ?></div>
-                    <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Client Name</b></div>
-                    <div class="col-9 py-1 px-2 border mb-0"><?= isset($client_name) ? $client_name : '' ?></div>
-                    <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Contact #</b></div>
-                    <div class="col-9 py-1 px-2 border mb-0"><?= isset($contact) ? $contact : '' ?></div>
-                    <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Email</b></div>
-                    <div class="col-9 py-1 px-2 border mb-0"><?= isset($email) ? $email : '' ?></div>
-                    <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Address</b></div>
-                    <div class="col-9 py-1 px-2 border mb-0"><?= isset($address) ? $address : '' ?></div>
                     <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Status</b></div>
                     <div class="col-9 py-1 px-2 border mb-0">
                         <?php 
@@ -73,14 +72,21 @@ if(isset($_GET['id'])){
                                 echo '<span class="">Done</span>';
                                 break;
                             case 3:
-                                echo '<span class="">Paid</span>';
-                                break;
-                            case 4:
                                 echo '<span class="">Cancelled</span>';
                                 break;
                         }
+                        if ($balance ==0)
+                        echo ' | Fully Paid';
                         ?>
                     </div>
+                    <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Client Name</b></div>
+                    <div class="col-9 py-1 px-2 border mb-0"><?= isset($client_name) ? $client_name : '' ?></div>
+                    <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Contact #</b></div>
+                    <div class="col-9 py-1 px-2 border mb-0"><?= isset($contact) ? $contact : '' ?></div>
+                    <!-- <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Email</b></div>
+                    <div class="col-9 py-1 px-2 border mb-0"><?= ''// isset($email) ? $email : '' ?></div>
+                    <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Address</b></div>
+                    <div class="col-9 py-1 px-2 border mb-0"><?= ''// isset($address) ? $address : '' ?></div> -->
                     <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Assigned Machinist</b></div>
                     <div class="col-9 py-1 px-2 border mb-0"><?= isset($mechanic_name) ? $mechanic_name : '' ?></div>
                     <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Prepared By</b></div>

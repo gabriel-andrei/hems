@@ -37,22 +37,22 @@
 				<tbody>
 					<?php
 					$i = 1;
-						$qry = $conn->query("SELECT t.*, COALESCE(SUM(p.total_amount)) payment
+						$qry = $conn->query("SELECT t.*, COALESCE(SUM(p.total_amount), 0) payment, t.amount-COALESCE(SUM(p.total_amount), 0) balance
 						FROM `transaction_list` t LEFT JOIN payment_list p ON t.id=p.transaction_id
-						where t.`status` > 0 
 						GROUP BY t.id
+						HAVING t.`status`=1 OR (t.status >0 AND t.amount-COALESCE(SUM(p.total_amount), 0) > 0)
 						order by unix_timestamp(t.date_updated) desc ");
 						while($row = $qry->fetch_assoc()):
-							$balance = $row['amount']-$row['payment'];
+							$balance = $row['balance'];
 					?>
 						<tr>
 							<td class="text-center"><?php echo $i++; ?></td>
 							<td class="text-center"><p class="m-0 truncate-1"><?= $row['client_name'] ?></p></td>
 							<td class="text-center"><p class="m-0 truncate-1"><?= $row['code'] ?></p></td>
 							<td class="text-center"><?= number_format($row['amount'],2) ?></td>
-							<td class="text-center"><?= number_format($balance,2) ?></td>
+							<td class="text-center"><?= ($balance==0? 'Fully Paid' : number_format($balance,2)) ?></td>
 							<td class="text-center">
-								<?php
+							<?php
 								switch($row['status']){
 									case 0:
 										echo '<span class="">Pending</span>';
@@ -64,9 +64,6 @@
 										echo '<span class="">Done</span>';
 										break;
 									case 3:
-										echo '<span class="">Paid</span>';
-										break;
-									case 4:
 										echo '<span class="">Cancelled</span>';
 										break;
 								}
@@ -138,7 +135,7 @@
                                 <?php endif; ?>
                             </td>
 							<td align="center">
-								<a class="btn btn-default border btn-md rounded-pill edit_data" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class=""></span> View</a>
+								<a class="btn btn-default border btn-md rounded-pill view_payment_details" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class=""></span> View</a>
 							</td>
 						</tr>
 					<?php endwhile; ?>
@@ -163,10 +160,12 @@
 		})
 		$('.view_payments').click(function(){
 			uni_modal("<i class='fa fa-eye'></i> Payments History","payment/view_payments.php?id="+$(this).attr('data-id'), 'modal-xl')
+			$('#uni_modal #submit').hide();
 		})
-		// $('.edit_data').click(function(){
-		// 	uni_modal("<i class='fa fa-edit'></i> View Payment Details","payment/manage_payment.php?id="+$(this).attr('data-id'))
-		// })
+		$('.view_payment_details').click(function(){
+			uni_modal("<i class='fa fa-edit'></i> View Payment Details","payment/manage_payment.php?source='list'&id="+$(this).attr('data-id'))
+			$('#uni_modal #submit').hide();
+		})
 	})
 	
 </script>

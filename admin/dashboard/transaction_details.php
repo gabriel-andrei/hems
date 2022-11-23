@@ -1,4 +1,5 @@
 <?php 
+require_once('../../config.php');
 if(isset($_GET['id'])){
     $qry = $conn->query("SELECT t.*, SUM(p.total_amount) payments FROM `transaction_list` t 
         LEFT JOIN payment_list p ON t.id=p.transaction_id
@@ -42,12 +43,9 @@ if(isset($_GET['id'])){
     }
 </style>
 <div class="content py-3">
-    <div class="card card-outline card-blue rounded-0 shadow">
+    <div class="card card-outline card-blue rounded-0 shadow  m-1">
         <div class="card-header">
-            <h4 class="card-title">Transaction Details: </h4>
-            <div class="card-tools">
-                <a href="./?page=transactions" class="btn btn-default border btn-md rounded-pill"><i class="fa fa-angle-left"></i> Back to List</a>
-            </div>
+            <h4 class="card-title">Transaction Details: <b><?= isset($code) ? $code : "" ?></b></h4>
         </div>
         <div class="card-body">
             <div class="container-fluid" id="printout">
@@ -92,7 +90,6 @@ if(isset($_GET['id'])){
                     <div class="col-9 py-1 px-2 border mb-0"><?= isset($user_name) ? $user_name : '' ?></div>
                 </div>
                 <div class="clear-fix mb-2"></div>
-                
                 <?php 
                     $ts_qry = $conn->query("SELECT ts.*, s.service as `service` , s.service_sub, s.cylinder FROM `transaction_services` ts inner join `service_list` s on ts.service_id = s.id where ts.`transaction_id` = '{$id}' ");
                     $count = mysqli_num_rows($ts_qry);
@@ -213,84 +210,11 @@ if(isset($_GET['id'])){
                 <?php endif; ?>
             </div>
             <hr>
-                                
-            <div class="row justify-content-center">
-                <button class="btn btn-primary bg-gradient-blue border col-lg-3 col-md-4 col-sm-12 col-xs-12 rounded-pill" id="update_status" type="button">Update Status</button>
-                <a class="btn btn-primary bg-gradient-primary border col-lg-3 col-md-4 col-sm-12 col-xs-12 rounded-pill" href="./?page=transactions/manage_transaction&id=<?= isset($id) ? $id : '' ?>"><i class="fa fa-edit"></i> Edit</a>
-                <button class="btn btn-light bg-gradient-light border col-lg-3 col-md-4 col-sm-12 col-xs-12 rounded-pill" id="print"><i class="fa fa-print"></i> Print</button>
-            </div>
         </div>
     </div>
 </div>
-<noscript id="print-header">
-    <div class="d-flex w-100">
-        <div class="col-2 text-center">
-            <img style="height:.8in;width:.8in!important;object-fit:cover;object-position:center center" src="<?= validate_image($_settings->info('logo')) ?>" alt="" class="w-100 img-thumbnail rounded-circle">
-        </div>
-        <div class="col-8 text-center">
-            <div style="line-height:1em">
-                <h4 class="text-center"><?= $_settings->info('name') ?></h4>
-                <h3 class="text-center"><b>Transaction Invoice</b></h3>
-            </div>
-        </div>
-    </div>
-    <hr>
-</noscript>
 <script>
-$(function(){
-    $('#print').click(function(){
-        var head = $('head').clone()
-        var p = $('#printout').clone()
-        var phead = $($('noscript#print-header').html()).clone()
-        var el = $('<div>')
-        el.append(head)
-        el.find('title').text("Transaction Invoice-Print View")
-        el.append(phead)
-        el.append(p)
-        el.find('.bg-gradient-blue').css({'background':'#001f3f linear-gradient(180deg, #26415c, #001f3f) repeat-x !important','color':'#fff'})
-        el.find('.bg-gradient-secondary').css({'background':'#6c757d linear-gradient(180deg, #828a91, #6c757d) repeat-x !important','color':'#fff'})
-        el.find('.hidden').css({'display': 'none'})
-        el.find('tr.bg-gradient-blue').attr('style',"color:#000")
-        el.find('tr.bg-gradient-secondary').attr('style',"color:#000")
-        start_loader();
-        var nw = window.open("", "_blank", "width="+($(window).width() * .8)+", height="+($(window).height() * .8)+", left="+($(window).width() * .1)+", top="+($(window).height() * .1))
-                 nw.document.write(el.html())
-                 nw.document.close()
-                 setTimeout(()=>{
-                     nw.print()
-                     setTimeout(()=>{
-                        nw.close()
-                        end_loader()
-                     },300)
-                 },500)
-    })
-    $('#update_status').click(function(){
-        uni_modal("Update Transaction Status", "transactions/update_status.php?id=<?= isset($id) ? $id : '' ?>")
-    })
-    $('#delete_transaction').click(function(){
-        _conf("Are you sure to delete this transaction permanently?","delete_transaction",[])
-    })
-})
-function delete_transaction($id){
-		start_loader();
-		$.ajax({
-			url:_base_url_+"classes/Master.php?f=delete_transaction",
-			method:"POST",
-			data:{id: '<?= isset($id) ? $id : "" ?>'},
-			dataType:"json",
-			error:err=>{
-				console.log(err)
-				alert_toast("An error occured.",'error');
-				end_loader();
-			},
-			success:function(resp){
-				if(typeof resp== 'object' && resp.status == 'success'){
-					location.replace('./?page=transactions');
-				}else{
-					alert_toast("An error occured.",'error');
-					end_loader();
-				}
-			}
-		})
-	}
+
+	$(document).ready(function(){
+	})
 </script>

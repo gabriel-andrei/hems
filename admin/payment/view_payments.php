@@ -13,7 +13,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 <div class="card card-primary m-1">
 	<div class="card-body">
         <div class="container-fluid">
-			<table class="table table-hover table-striped table-bordered">
+			<table class="table table-hover table-striped table-bordered mb-0">
 				<colgroup>
 					<col width="5%">
 					<col width="10%">
@@ -39,7 +39,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 					$i = 1;
 						$qry = $conn->query("SELECT * FROM `payment_list` 
 							WHERE transaction_id={$id}
-							order by `date_created` desc ");
+							order by `date_created` asc ");
 						while($row = $qry->fetch_assoc()):
 					?>
 						<tr>
@@ -56,7 +56,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
                                 <?php endif; ?>
                             </td>
 							<td align="center">
-								<a class="btn btn-default border btn-md rounded-pill edit_data" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class=""></span> View</a>
+								<a class="btn btn-default border btn-md rounded-pill payment_details" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class=""></span> View</a>
 							</td>
 						</tr>
 					<?php endwhile; ?>
@@ -67,14 +67,9 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 <script>
 
 	$(document).ready(function(){
-		
-		$('#trans-table').dataTable({
-			columnDefs: [
-					{ orderable: false, targets: [5] }
-			],
-			order:[0,'asc']
-		});
-		// $('.dataTable td,.dataTable th').addClass('py-1 px-2 align-middle')
-		
+		$('.payment_details').click(function(){
+			uni_modal("<i class='fa fa-edit'></i> View Payment Details","payment/manage_payment.php?id="+$(this).attr('data-id'))
+			$('#uni_modal #cancel').hide();
+		})
 	})
 </script>

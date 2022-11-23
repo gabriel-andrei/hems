@@ -57,7 +57,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary border btn-md rounded-pill" id='submit' onclick="$('#uni_modal form').submit()">Save</button>
-        <button type="button" class="btn btn-default border btn-md rounded-pill" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-default border btn-md rounded-pill" id='cancel' data-dismiss="modal">Cancel</button>
       </div>
       </div>
     </div>
