@@ -41,7 +41,7 @@ if(isset($_GET['id'])){
 <div class="content py-3">
     <div class="card card-outline card-blue rounded-0 shadow">
         <div class="card-header">
-            <h4 class="card-title">Transaction Details: <b><?= isset($code) ? $code : "" ?></b></h4>
+            <h4 class="card-title">Transaction Details: </h4>
             <div class="card-tools">
                 <a href="./?page=transactions" class="btn btn-default border btn-md rounded-pill"><i class="fa fa-angle-left"></i> Back to List</a>
             </div>
@@ -49,11 +49,11 @@ if(isset($_GET['id'])){
         <div class="card-body">
             <div class="container-fluid" id="printout">
                 <div class="row mb-0">
-                    <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Transaction Code</b></div>
+                    <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Invoice Number</b></div>
                     <div class="col-9 py-1 px-2 border mb-0"><?= isset($code) ? $code : '' ?></div>
-                    <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Transaction Date</b></div>
+                    <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Date</b></div>
                     <div class="col-9 py-1 px-2 border mb-0"><?= isset($date_created) ? $date_created : '' ?></div>
-                    <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Transaction Status</b></div>
+                    <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Status</b></div>
                     <div class="col-9 py-1 px-2 border mb-0">
                         <?php 
                         $status = isset($status) ? $status : '';
