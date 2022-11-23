@@ -56,7 +56,8 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 					<input type="number" id="payment" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($payment) ? $payment : ''; ?>"  readonly/>
 			</div>	
 		</div>
-	
+		<input type="hidden" name="balance" id="balance" class="form-control " value="<?php echo isset($amount) ? $amount : '' ?>"/>
+
 		<div class="row">
 			<div class="form-group col-6">
 				<label for="payment_type" class="control-label">Payment Type</label>
