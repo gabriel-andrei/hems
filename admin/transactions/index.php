@@ -5,7 +5,7 @@
 <?php endif;?>
 <div class="card card-outline card-primary">
 	<div class="card-header">
-		<h3 class="card-title">List of Transactions</h3>
+		<h3 class="card-title">Transactions</h3>
 		<div class="card-tools">
 			<a href="./?page=transactions/manage_transaction" id="create_new" class="btn btn-primary border btn-md rounded-pill"><span class=""></span>  Create New</a>
 		</div>
@@ -19,7 +19,6 @@
 					<col width="25%">
 					<col width="20%">
 					<col width="10%">
-					<col width="10%">
 					<col width="5%">
 				</colgroup>
 				<thead>
@@ -27,7 +26,6 @@
 						<th class="text-center">#</th>
 						<th class="text-center">Client Name</th>
 						<th class="text-center">Code</th>
-						<th class="text-center">Amount</th>
 						<th class="text-center">Status</th>
 						<th class="text-center">Action</th>
 					</tr>
@@ -46,7 +44,6 @@
 							<td class="text-center"><?php echo $i++; ?></td>
 							<td class="text-center"><p class="m-0 truncate-1"><?= $row['client_name'] ?></p></td>
 							<td class="text-center"><p class="m-0 truncate-1"><?= $row['code'] ?></p></td>
-							<td class="text-center"><?= format_num($row['amount']) ?></td>
 							<td class="text-center">
 								<?php
 								switch($row['status']){
@@ -84,7 +81,7 @@
 		
 		$('.table').dataTable({
 			columnDefs: [
-					{ orderable: false, targets: [5] }
+					{ orderable: false, targets: [4] }
 			],
 			order:[0,'asc']
 		});

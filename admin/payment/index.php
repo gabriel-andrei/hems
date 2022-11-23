@@ -8,7 +8,7 @@
 </style>
 <div class="card card-outline card-primary">
 	<div class="card-header">
-		<h3 class="card-title">Transactions</h3>
+		<h3 class="card-title">Pending Payments</h3>
 	</div>
 	<div class="card-body">
 		<div class="container-fluid">
@@ -16,7 +16,7 @@
 			<table class="table table-hover table-striped table-bordered">
 				<colgroup>
 					<col width="5%">
-					<col width="25%">
+					<col width="20%">
 					<col width="20%">
 					<col width="10%">
 					<col width="10%">
@@ -40,6 +40,7 @@
 						$qry = $conn->query("SELECT t.*, COALESCE(SUM(p.total_amount)) payment
 						FROM `transaction_list` t LEFT JOIN payment_list p ON t.id=p.transaction_id
 						where t.`status` > 0 
+						GROUP BY t.id
 						order by unix_timestamp(t.date_updated) desc ");
 						while($row = $qry->fetch_assoc()):
 							$balance = $row['amount']-$row['payment'];
@@ -96,20 +97,20 @@
 			<table class="table table-hover table-striped table-bordered">
 				<colgroup>
 					<col width="5%">
-					<col width="10%">
-					<col width="10%">
 					<col width="20%">
 					<col width="10%">
 					<col width="10%">
-					<col width="5%">
-					<col width="5%">
+					<col width="10%">
+					<col width="10%">
+					<col width="10%">
+					<col width="10%">
 				</colgroup>
 				<thead>
 					<tr>
 						<th class="text-center">#</th>
+						<th class="text-center">Client Name</th>
 						<th class="text-center">Date</th>
 						<th class="text-center">OR Number</th>
-						<th class="text-center">Client Name</th>
 						<th class="text-center">Payment</th>
 						<th class="text-center">Balance</th>
 						<th class="text-center">Status</th>
@@ -124,11 +125,11 @@
 					?>
 						<tr>
 							<td class="text-center"><?php echo $i++; ?></td>
+							<td class="text-center"><?php echo $row['client_name'] ?></td>
 							<td class="text-center"><?php echo $row['date_created'] ?></td>
 							<td class="text-center"><?php echo $row['ornumber'] ?></td>
-							<td class="text-center"><?php echo $row['client_name'] ?></td>
-							<td class="text-center"><?php echo $row['total_amount'] ?></td>
-							<td class="text-center"><?php echo $row['balance'] ?></td>
+							<td class="text-center"><?php echo format_num($row['total_amount']) ?></td>
+							<td class="text-center"><?php echo format_num($row['balance']) ?></td>
 							<td class="text-center">
                                 <?php if($row['status'] == 1): ?>
                                     <span class="">Active</span>

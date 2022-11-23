@@ -1,3 +1,24 @@
+11-19
+> Payment
+    -- repositioned the Remaining Balance up in the Pay Now
+
+11-18
+> Payment
+    -- renamed "Transactions" into Pending Payments
+    -- turned OR Number into optional
+> Database
+    -- fixed service and products typo
+    -- removed image_path from product_list
+> Transactions
+    -- renamed "List of Transactions" into Transactions
+    -- removed the amount column
+    -- removed the paid option in Update Transaction Status (Transaction status should be labeled as paid when the balance is zero)
+    -- removed the done option in Update Transaction Status
+> Inventory
+    -- removed the delete option from action the button
+    -- removed the Status from Update Product Details
+    -- new interface for add stock
+
 11-17
 > Database
     -- added unit and lowstock fields to product_list table

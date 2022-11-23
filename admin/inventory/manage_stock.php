@@ -29,6 +29,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 		</div>
 	</form>
 </div>
+
 <script>
 	$(document).ready(function(){
 		$('#inventory-form').submit(function(e){

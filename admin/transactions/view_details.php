@@ -65,12 +65,6 @@ if(isset($_GET['id'])){
                                 echo '<span class="">On-Progress</span>';
                                 break;
                             case 2:
-                                echo '<span class="">Done</span>';
-                                break;
-                            case 3:
-                                echo '<span class="">Paid</span>';
-                                break;
-                            case 4:
                                 echo '<span class="">Cancelled</span>';
                                 break;
                         }
@@ -127,9 +121,7 @@ if(isset($_GET['id'])){
                             </tbody>
                             <tfoot>
                                 <tr class="bg-gradient-secondary">
-                                    <th class="text-center"></th>
-                                    <th class="text-center"></th>
-                                    <th class="text-center">Total</th>
+                                    <th colspan="3" class="text-center">Total</th>
                                     <th class="text-center" id="service_total"><?= isset($service_amount) ? format_num($service_amount): 0 ?></th>
                                 </tr>
                             </tfoot>
@@ -169,7 +161,7 @@ if(isset($_GET['id'])){
                                 <tr>
                                     <td class="text-center"><?= $row['product'] ?></td>
                                     <td class="text-center"><?= $row['qty'] ?></td>
-                                    <td class="text-center product_price"><?= $row['price'] ?></td>
+                                    <td class="text-center product_price"><?= format_num($row['price']) ?></td>
                                     <td class="text-center product_total"><?= format_num($row['price'] * $row['qty']) ?></td>
                                 </tr>
                             <?php endwhile; ?>

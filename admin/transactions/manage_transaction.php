@@ -90,8 +90,7 @@ if(isset($_GET['id'])){
                                         <div class="col">
                                             <div class="form-group mb-0">
                                                 <label for="service_sel" class="control-label">Service</label>
-                                                <select name="service_sel" id="service_sel" class="form-control form-control-sm rounded-0" 
-                                                 >
+                                                <select name="service_sel" id="service_sel" class="form-control form-control-sm rounded-0" >
                                                     <option value="" selected></option>
                                                     <?php
                                                     $service_qry = $conn->query("SELECT DISTINCT `service` FROM `service_list` where delete_flag = 0 and `status` = 1 order by `service`");

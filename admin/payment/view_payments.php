@@ -2,7 +2,7 @@
 
 require_once('../../config.php');
 if(isset($_GET['id']) && $_GET['id'] > 0){
-    $qry = $conn->query("SELECT c.* from `clients_record`  c where c.id = '{$_GET['id']}' ");
+    $qry = $conn->query("SELECT c.* from `transaction_list`  c where c.id = '{$_GET['id']}' ");
     if($qry->num_rows > 0){
         foreach($qry->fetch_assoc() as $k => $v){
             $$k=$v;
