@@ -40,7 +40,7 @@
                       </a>
                     </li>
                     <li class="nav-item dropdown">
-                      <a href="<?php echo base_url ?>admin/?page=inventory" class="nav-link nav-inventory">
+                      <a href="<?php echo base_url ?>admin/?page=inventory" class="nav-link nav-inventory nav-inventory_view_details">
                         <i class="nav-icon fas fa-clipboard-check"></i>
                         <p style="font-size: 16px">
                           Inventory
@@ -48,7 +48,7 @@
                       </a>
                     </li>
                     <li class="nav-item dropdown">
-                      <a href="<?php echo base_url ?>admin/?page=transactions" class="nav-link nav-transactions">
+                      <a href="<?php echo base_url ?>admin/?page=transactions" class="nav-link nav-transactions nav-transactions_manage_transaction">
                       <!-- <a href="<?php echo base_url ?>admin/?page=transactions/manage_transaction" class="nav-link nav-transactions-manage_transaction"> -->
                         <i class="nav-icon fas fa-clipboard-list"></i>
                         <p style="font-size: 16px">
@@ -101,7 +101,7 @@
                       </a>
                     </li>
                     <li class="nav-item dropdown">
-                      <a href="<?php echo base_url ?>admin/?page=user" class="nav-link nav-user">
+                      <a href="<?php echo base_url ?>admin/?page=user" class="nav-link nav-user nav-user_manage_user">
                         <i class="nav-icon fas fa-users-cog"></i>
                         <p style="font-size: 16px">
                           User List
