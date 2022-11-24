@@ -33,7 +33,7 @@
 						<th class="text-center">Transactions</th>
 						<th class="text-center">Latest J.O.</th>
 						<!-- <th class="text-center">Engine Model</th> -->
-						<th class="text-center">Action</th>
+						<th class="text-center">History</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -54,17 +54,7 @@
 							<td class="text-center"><?php echo $row['trans'] ?></td>
 							<td class="text-center"><?php echo $row['latest'] ?></td>
 							<td align="center">
-								 <button type="button" class="btn btn-default border btn-md rounded-pill btn-sm dropdown-toggle dropdown-icon" data-toggle="dropdown">
-				                  		Action
-				                    <span class="sr-only">Toggle Dropdown</span>
-				                  </button>
-				                  <div class="dropdown-menu" role="menu">
-									<a class="dropdown-item view_data" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-eye text-dark"></span> View</a>
-				                    <div class="dropdown-divider"></div>
-									<a class="dropdown-item edit_data" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-edit text-success"></span> Edit</a>
-				                    <div class="dropdown-divider"></div>
-										<a class="dropdown-item view_history" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-list text-primary"></span> Transaction History</a>
-				                  </div>
+							<a class="btn btn-default border btn-md rounded-pill view_history" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class=""></span> View</a>
 							</td>
 						</tr>
 					<?php endwhile; ?>

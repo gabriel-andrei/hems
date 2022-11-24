@@ -48,7 +48,7 @@
                       </a>
                     </li>
                     <li class="nav-item dropdown">
-                      <a href="<?php echo base_url ?>admin/?page=transactions" class="nav-link nav-transactions nav-transactions_manage_transaction">
+                      <a href="<?php echo base_url ?>admin/?page=transactions" class="nav-link nav-transactions nav-transactions_manage_transaction nav-transactions_view_details">
                       <!-- <a href="<?php echo base_url ?>admin/?page=transactions/manage_transaction" class="nav-link nav-transactions-manage_transaction"> -->
                         <i class="nav-icon fas fa-clipboard-list"></i>
                         <p style="font-size: 16px">

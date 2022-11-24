@@ -238,7 +238,7 @@ if(isset($_GET['id'])){
                                                 $product_total += ($row['price'] * $row['qty']);
                                         ?>
                                             <tr>
-                                                <td class="text-center "><?= $row['engine_model']  ?></td>
+                                                <td class="text-center"><?=$row['engine_model']  ?></td>
                                                 <td class="text-center">
                                                     <input class="product_id" type="hidden" name="product_id[]" value="<?= $row['product_id'] ?>">
                                                     <input class="product_sub_price" type="hidden" name="product_price[]" value="<?= $row['price'] ?>">

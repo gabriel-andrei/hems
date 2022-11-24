@@ -153,13 +153,15 @@ if(isset($_GET['id'])){
                         <div class="clear-fix mb-2"></div>
                         <table class="table table-striped table-bordered" id="product-list">
                             <colgroup>
-                                <col width="45%">
-                                <col width="15%">
+                                <col width="30%">
+                                <col width="30%">
                                 <col width="20%">
-                                <col width="20%">
+                                <col width="10%">
+                                <col width="10%">
                             </colgroup>
                             <thead>
                                 <tr class="bg-light-blue">
+                                    <th class="text-center">Engine Model</th>
                                     <th class="text-center">Item Name</th>
                                     <th class="text-center">Qty</th>
                                     <th class="text-center">Price</th>
@@ -174,6 +176,7 @@ if(isset($_GET['id'])){
                                     $product_total += ($row['price'] * $row['qty']);
                             ?>
                                 <tr>
+                                    <td class="text-center "><?= $engine_model ?></td>
                                     <td class="text-center"><?= $row['product'] ?></td>
                                     <td class="text-center"><?= $row['qty'] ?></td>
                                     <td class="text-center product_price"><?= format_num($row['price']) ?></td>
@@ -184,7 +187,7 @@ if(isset($_GET['id'])){
                         
                             <tfoot>
                                 <tr class="bg-gradient-secondary">
-                                    <th colspan="3" class="text-center">Total</th>
+                                    <th colspan="4" class="text-center">Total</th>
                                     <th class="text-center" id="product_total"><?= isset($product_total) ? format_num($product_total): 0 ?></th>
                                 </tr>
                             </tfoot>

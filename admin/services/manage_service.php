@@ -50,7 +50,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 			<label for="status" class="control-label">Status</label>
 			<select name="status" id="status" class="form-control form-control-sm rounded-0" required>
 			<option value="1" <?php echo isset($status) && $status == 1 ? 'selected' : '' ?>>Available</option>
-			<option value="0" <?php echo isset($status) && $status == 0 ? 'selected' : '' ?>>Inactive</option>
+			<option value="0" <?php echo isset($status) && $status == 0 ? 'selected' : '' ?>>Not Available</option>
 			</select>
 		</div>
 	</form>

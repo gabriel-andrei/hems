@@ -1,3 +1,14 @@
+
+11.24
+> Service List
+    - changed Inactive to Not Available
+
+> Clients Record>Action
+    - removed view option from action
+    - removed edit option from action
+    - changed the action button into View
+
+
 11.23
 > Database
     - added tbl_status to hold the definition of transaction status codes
