@@ -232,7 +232,7 @@ if(isset($_GET['id'])){
         </div>
         <div class="col-8 text-center">
             <div style="line-height:1em">
-                <h4 class="text-center"><?= $_settings->info('name') ?></h4>
+                <h4 class="text-center"><p>Hatulan Engineering and Machine Shop</p></h4>
                 <h3 class="text-center"><b>Transaction Invoice</b></h3>
             </div>
         </div>

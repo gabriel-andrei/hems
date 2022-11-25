@@ -16,10 +16,9 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 			<table id="trans-table" class="table table-hover table-striped table-bordered">
 				<colgroup>
 					<col width="5%">
-					<col width="10%">
-					<col width="10%">
 					<col width="15%">
-					<col width="10%">
+					<col width="15%">
+					<col width="15%">
 					<col width="10%">
 					<col width="10%">
 					<col width="5%">
@@ -28,9 +27,8 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 					<tr>
 						<th class="text-center">#</th>
 						<th class="text-center">Date</th>
-						<th class="text-center">Code</th>
 						<th class="text-center">Vehicle Type</th>
-						<th class="text-center">Engine</th>
+						<th class="text-center">Machinist</th>
 						<th class="text-center">Amount</th>
 						<th class="text-center">Status</th>
 						<th class="text-center">Action</th>
@@ -47,9 +45,8 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 						<tr>
 							<td class="text-center"><?php echo $i++; ?></td>
 							<td class="text-center"><p class="m-0 truncate-1"><?= $row['date_created'] ?></p></td>
-							<td class="text-center"><p class="m-0 truncate-1"><?= $row['code'] ?></p></td>
 							<td class="text-center"><p class="m-0 truncate-1"><?= $row['vehicle_type'] ?></p></td>
-							<td class="text-center"><p class="m-0 truncate-1"><?= $row['engine_model'] ?></p></td>
+							<td class="text-center"><p class="m-0 truncate-1"><?= $row[''] ?></p></td>
 							<td class="text-center"><?= format_num($row['amount']) ?></td>
 							<td class="text-center">
 								<?php

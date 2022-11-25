@@ -1,4 +1,19 @@
+11.25
+> Service List>Action
+    - removed the delete option
+    - changed the action button into edit
 
+> Clients Record>View
+    - removed code and engine
+    - added machinist
+
+> Services>Edit
+    - removed description from edit
+
+> Settings
+    - added login background picture
+
+    
 11.24
 > Service List
     - changed Inactive to Not Available
