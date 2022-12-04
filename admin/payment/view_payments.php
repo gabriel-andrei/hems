@@ -52,7 +52,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
                                 <?php if($row['status'] == 1): ?>
                                     <span class="">Active</span>
                                 <?php else: ?>
-                                    <span class="">Inactive</span>
+                                    <span class="">Cancelled</span>
                                 <?php endif; ?>
                             </td>
 							<td align="center">

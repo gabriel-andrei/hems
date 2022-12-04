@@ -1,8 +1,9 @@
 <?php 
 require_once('../../config.php');
 if(isset($_GET['id'])){
-    $qry = $conn->query("SELECT t.*, SUM(p.total_amount) payments FROM `transaction_list` t 
+    $qry = $conn->query("SELECT t.*, SUM(p.total_amount) payments, s.status_desc FROM `transaction_list` t 
         LEFT JOIN payment_list p ON t.id=p.transaction_id
+        LEFT JOIN tbl_status s ON s.status_id=t.status
         where t.id = '{$_GET['id']}'
         group by t.id ");
     if($qry->num_rows > 0){
@@ -59,22 +60,7 @@ if(isset($_GET['id'])){
                     <div class="col-9 py-1 px-2 border mb-0"><?= isset($date_created) ? $date_created : '' ?></div>
                     <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Status</b></div>
                     <div class="col-9 py-1 px-2 border mb-0">
-                        <?php 
-                        $status = isset($status) ? $status : '';
-                        switch($status){
-                            case 0:
-                                echo '<span class="">Pending</span>';
-                                break;
-                            case 1:
-                                echo '<span class="">On-Progress</span>';
-                                break;
-                            case 2:
-                                echo '<span class="">Done</span>';
-                                break;
-                            case 3:
-                                echo '<span class="">Cancelled</span>';
-                                break;
-                        }
+                        <?php echo $status_desc;
                         if ($balance ==0)
                         echo ' | Fully Paid';
                         ?>
@@ -83,10 +69,12 @@ if(isset($_GET['id'])){
                     <div class="col-9 py-1 px-2 border mb-0"><?= isset($client_name) ? $client_name : '' ?></div>
                     <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Contact #</b></div>
                     <div class="col-9 py-1 px-2 border mb-0"><?= isset($contact) ? $contact : '' ?></div>
-                    <!-- <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Email</b></div>
-                    <div class="col-9 py-1 px-2 border mb-0"><?= ''// isset($email) ? $email : '' ?></div>
+                    <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Email</b></div>
+                    <div class="col-9 py-1 px-2 border mb-0"><?= isset($email) ? $email : '' ?></div>
+                    <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>TIN Number</b></div>
+                    <div class="col-9 py-1 px-2 border mb-0"><?= isset($tin_number) ? $tin_number : '' ?></div>
                     <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Address</b></div>
-                    <div class="col-9 py-1 px-2 border mb-0"><?= ''// isset($address) ? $address : '' ?></div> -->
+                    <div class="col-9 py-1 px-2 border mb-0"><?= isset($address) ? $address : '' ?></div>
                     <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Assigned Machinist</b></div>
                     <div class="col-9 py-1 px-2 border mb-0"><?= isset($mechanic_name) ? $mechanic_name : '' ?></div>
                     <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Prepared By</b></div>
@@ -130,9 +118,7 @@ if(isset($_GET['id'])){
                             </tbody>
                             <tfoot>
                                 <tr class="bg-gradient-secondary">
-                                    <th class="text-center"></th>
-                                    <th class="text-center"></th>
-                                    <th class="text-center">Total</th>
+                                    <th colspan="3" class="text-right">Total</th>
                                     <th class="text-center" id="service_total"><?= isset($service_amount) ? format_num($service_amount): 0 ?></th>
                                 </tr>
                             </tfoot>
@@ -148,13 +134,15 @@ if(isset($_GET['id'])){
                         <div class="clear-fix mb-2"></div>
                         <table class="table table-striped table-bordered" id="product-list">
                             <colgroup>
-                                <col width="45%">
+                                <col width="15%">
+                                <col width="35%">
                                 <col width="15%">
                                 <col width="20%">
                                 <col width="20%">
                             </colgroup>
                             <thead>
                                 <tr class="bg-light-blue">
+                                    <th class="text-center">Engine Model</th>
                                     <th class="text-center">Item Name</th>
                                     <th class="text-center">Qty</th>
                                     <th class="text-center">Price</th>
@@ -165,11 +153,12 @@ if(isset($_GET['id'])){
                             <tbody>
                             <?php 
                                 $product_total = 0;
-                                $tp_qry = $conn->query("SELECT tp.*, p.name as `product` FROM `transaction_products` tp inner join `product_list` p on tp.product_id = p.id where tp.`transaction_id` = '{$id}' ");
+                                $tp_qry = $conn->query("SELECT tp.*, p.name as `product`, p.engine_model FROM `transaction_products` tp inner join `product_list` p on tp.product_id = p.id where tp.`transaction_id` = '{$id}' ");
                                 while($row = $tp_qry->fetch_assoc()):
                                     $product_total += ($row['price'] * $row['qty']);
                             ?>
                                 <tr>
+                                    <td class="text-center"><?= $row['engine_model'] ?></td>
                                     <td class="text-center"><?= $row['product'] ?></td>
                                     <td class="text-center"><?= $row['qty'] ?></td>
                                     <td class="text-center product_price"><?= $row['price'] ?></td>
@@ -180,7 +169,7 @@ if(isset($_GET['id'])){
                         
                             <tfoot>
                                 <tr class="bg-gradient-secondary">
-                                    <th colspan="3" class="text-center">Total</th>
+                                    <th colspan="4" class="text-right">Total</th>
                                     <th class="text-center" id="product_total"><?= isset($product_total) ? format_num($product_total): 0 ?></th>
                                 </tr>
                             </tfoot>

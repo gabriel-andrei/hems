@@ -36,6 +36,57 @@ if(isset($_GET['id'])){
                     <form action="" id="transaction-form">
                         <input type="hidden" name="id" value="<?= isset($id) ? $id : '' ?>">
                         <input type="hidden" name="amount" value="<?= isset($amount) ? $amount : '' ?>">
+                        
+                        <div class="row">
+                            <div class="col-lg-11 col-md-12 col-sm-12 col-xs-12">
+                                <div class="form-group mb-3">
+                                    <label for="client_name" class="control-label">Client</label>
+                                    <select name="client_id" id="client_id" class="form-control form-control rounded-0">
+                                        <OPTGROUP LABEL="">
+                                            <option value="" >New Client Record</option>
+                                        </OPTGROUP>
+                                        <?php 
+                                        $mechanic_qry = $conn->query("SELECT m.*
+                                                from `clients_record` m
+                                                LEFT JOIN `transaction_list` t ON t.client_id=m.id ". (isset($id)? ' AND t.id<>'.$id:'') ."
+                                                ".(isset($client_id) && !is_null($client_id) ? " where m.id = '{$client_id}' " : '')."
+                                                GROUP BY m.id
+                                                order by m.address, m.`client_name` asc");
+                                        $changed_group = false;
+                                        $last_address = "";
+                                        while($row = $mechanic_qry->fetch_array()):
+                                            if ($last_address != $row['address']){
+                                                $last_address = $row['address'];
+                                                $changed_group = true;
+                                            }else  $changed_group = false;
+                                        ?>
+                                            <option value="" >New Client</option>
+                                            <?php if($changed_group): ?>
+                                                <OPTGROUP LABEL="<?=$last_address;?>">
+                                            <?php endif; ?>
+                                                <option value="<?= $row['id'] ?>" <?= isset($client_id) && $client_id == $row['id'] ? "selected" : "" ?>
+                                                    data-name="<?=$row['client_name']?>"
+                                                     data-contact="<?=$row['contact']?>"
+                                                     data-address="<?=$row['address']?>"
+                                                      data-email="<?=$row['email']?>"
+                                                       data-tin="<?=$row['tin_number']?>"
+                                                >
+                                                    <?= $row['client_name'].' [ Contact: '.$row['contact'].' | Email: '.$row['email'].' | TIN: '.$row['tin_number'].' ]'?>
+                                                </option>
+                                            <?php if($changed_group): ?>
+                                                </OPTGROUP>
+                                            <?php endif; ?>
+                                        <?php endwhile; ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+                                <div class="form-group mb-1">
+                                    <label for="chk_update_client" class="control-label text-center">Update Record</label>
+                                    <input type="checkbox" name="chk_update_client_exclude" id="chk_update_client" class="form-control form-control-sm rounded-0" value="true" > 
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="form-group mb-3">
@@ -45,16 +96,22 @@ if(isset($_GET['id'])){
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                 <div class="form-group mb-3">
                                     <label for="contact" class="control-label">Client Contact #</label>
                                     <input type="text" name="contact" id="contact" class="form-control form-control-sm rounded-0" value="<?= isset($contact) ? $contact : "" ?>" required="required">
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                 <div class="form-group mb-3">
                                     <label for="email" class="control-label">Client Email</label>
                                     <input type="email" name="email" id="email" class="form-control form-control-sm rounded-0" value="<?= isset($email) ? $email : "" ?>" required="required">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <div class="form-group mb-3">
+                                    <label for="tin_number" class="control-label">Client Tin Number</label>
+                                    <input type="text" name="tin_number" id="tin_number" class="form-control form-control-sm rounded-0" value="<?= isset($tin_number) ? $tin_number : "" ?>" required="required">
                                 </div>
                             </div>
                         </div>
@@ -76,7 +133,8 @@ if(isset($_GET['id'])){
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group mb-3">
                                     <label for="engine_model" class="control-label">Engine Model</label>
-                                    <input type="engine_model" name="engine_model" id="engine_model" class="form-control form-control-sm rounded-0" value="<?= isset($engine_model) ? $engine_model : "" ?>" required="required">
+                                    <input type="engine_model" name="engine_model" id="engine_model" class="form-control form-control-sm rounded-0" value="<?= isset($engine_model) ? $engine_model : "" ?>" required="required"
+                                     maxlength="16" minlength="16">
                                 </div>          
                             </div>
                         </div>
@@ -290,12 +348,25 @@ if(isset($_GET['id'])){
                                                 LEFT JOIN `transaction_list` t ON t.mechanic_id=m.id ". (isset($id)? ' AND t.id<>'.$id:'') ."
                                                 where delete_flag = 0 and m.`status` = 1 ".(isset($mechanic_id) && !is_null($mechanic_id) ? " or m.id = '{$mechanic_id}' " : '')."
                                                 GROUP BY m.id
-                                                order by `name` asc");
-                                        while($row = $mechanic_qry->fetch_array()):
+                                                order by SUM(IF(t.`status` =1, 1, 0)) ASC, SUM(IF(t.`status` =0, 1, 0)) ASC, `name` asc");
+                                        
+                                                $changed_group = false;
+                                                while($row = $mechanic_qry->fetch_array()):
+                                                    if ($last_onprogress != $row['onprogress']){
+                                                        $last_onprogress = $row['onprogress'];
+                                                        $changed_group = true;
+                                                    }else  $changed_group = false;
                                         ?>
-                                        <option value="<?= $row['id'] ?>" <?= isset($mechanic_id) && $mechanic_id == $row['id'] ? "selected" : "" ?>>
-                                            <?= $row['name'].' [ On-Progress: '.$row['onprogress'].' | Pendings: '.$row['pending'].' ]'?>
-                                        </option>
+                                        
+                                        <?php if($changed_group): ?>
+                                                <OPTGROUP LABEL="On-Progress: <?=$last_onprogress;?>">
+                                            <?php endif; ?>
+                                                <option value="<?= $row['id'] ?>" <?= isset($mechanic_id) && $mechanic_id == $row['id'] ? "selected" : "" ?>>
+                                                    <?= $row['name'].' [ Pendings: '.$row['pending'].' ]'?>
+                                                </option>
+                                            <?php if($changed_group): ?>
+                                                </OPTGROUP>
+                                            <?php endif; ?>
                                         <?php endwhile; ?>
                                     </select>
                                 </div>
@@ -384,6 +455,28 @@ if(isset($_GET['id'])){
         calc_total_amount()
     }
     $(function(){
+        $('select#client_id').select2({
+            placeholder:"Select Client Records",
+            width:'100%',
+            containerCssClass:'form-control form-control-sm rounded-0'
+        })
+        $('select#client_id').change(function(){
+            if ($('select#client_id').val() == '')
+                $('input#chk_update_client').prop('checked', false);
+            else
+                $('input#chk_update_client').prop('checked', true);
+
+            var name=$("select#client_id option:selected").attr('data-name');
+            var address=$("select#client_id option:selected").attr('data-address');
+            var contact=$("select#client_id option:selected").attr('data-contact');
+            var email=$("select#client_id option:selected").attr('data-email');
+            var tin=$("select#client_id option:selected").attr('data-tin');
+            $('input#client_name').val(name);
+            $('input#address').val(address);
+            $('input#contact').val(contact);
+            $('input#email').val(email);
+            $('input#tin_number').val(tin);
+        })
         $('select#mechanic_id').select2({
             placeholder:"Select Machinist",
             width:'100%',

@@ -340,7 +340,8 @@ Class Master extends DBConnection {
 		$data = !empty($code)? " `code`='{$code}' " :"";
 		foreach($_POST as $k =>$v){
 			if(!in_array($k,array('id')) && !is_array($_POST[$k]) 
-				&& !$this->endsWith($k, '_sel')){
+				&& !$this->endsWith($k, '_sel')
+				&& !$this->endsWith($k, '_exclude')){
 				if(!empty($data)) $data .=",";
 				$v = $this->conn->real_escape_string($v);
 				$data .= " `{$k}`='{$v}' ";
@@ -351,7 +352,7 @@ Class Master extends DBConnection {
 		}else{
 			$sql = "UPDATE `transaction_list` set {$data} where id = '{$id}' ";
 		}
-		
+
 		$save = $this->conn->query($sql);
 		if($save){
 			$tid = !empty($id) ? $id : $this->conn->insert_id;
@@ -363,23 +364,30 @@ Class Master extends DBConnection {
 				$resp['msg'] = " Transaction successfully updated.";
 
 			if(empty($id)){
-				$result = $this->conn->query("SELECT id FROM clients_record 
-					WHERE client_name='{$client_name}' AND contact='{$contact}' AND address='{$address}'");
-				$row = $result->fetch_assoc();
-				if($row){
-					$cid = $row['id'];
-					$sql = "UPDATE `transaction_list` SET client_id='{$cid}'  where id = '{$tid}'  ";
-					$this->conn->query($sql);
-				}else{
-					$sql = " INSERT INTO `clients_record` ( `date_created`, `trans_ref`, `client_name`, `contact`, `address`, `engine_model`) 
-						VALUES ( CURRENT_TIMESTAMP(), '{$tid}', '{$client_name}', '{$contact}', '{$address}', '{$engine_model}') ";
-					if($this->conn->query($sql)){
-						$cid = $this->conn->insert_id;
+				if(empty($client_id)){
+					$result = $this->conn->query("SELECT id FROM clients_record WHERE tin_number='{$tin_number}'");
+					$row = $result->fetch_assoc();
+					if($row){
+						$cid = $row['id'];
 						$sql = "UPDATE `transaction_list` SET client_id='{$cid}'  where id = '{$tid}'  ";
 						$this->conn->query($sql);
+					}else{
+						$sql = " INSERT INTO `clients_record` ( `date_created`, `trans_ref`, `client_name`, `contact`, `email`, `tin_number`, `address`, `engine_model`) 
+							VALUES ( CURRENT_TIMESTAMP(), '{$tid}', '{$client_name}', '{$contact}', '{$email}', '{$tin_number}', '{$address}', '{$engine_model}') ";
+						if($this->conn->query($sql)){
+							$cid = $this->conn->insert_id;
+							$sql = "UPDATE `transaction_list` SET client_id='{$cid}'  where id = '{$tid}'  ";
+							$this->conn->query($sql);
+						}
 					}
+					$resp['msg'] .= " Client record successfully created.";
 				}
-
+			}
+			if(isset($_POST['chk_update_client_exclude']) && $chk_update_client_exclude){
+				$sql = "UPDATE `clients_record` SET client_name='{$client_name}', address='{$address}'
+					, contact='{$contact}', email='{$email}', tin_number='{$tin_number}', engine_model='{$engine_model}' where id = '{$client_id}'  ";
+				$this->conn->query($sql);
+				$resp['msg'] .= " Client record successfully updated.";
 			}
 			if(isset($service_id)){
 				$data = "";
@@ -453,12 +461,22 @@ Class Master extends DBConnection {
 			$resp['error'] = $this->conn->error;
 		}
 		return json_encode($resp);
-
 	}
+
 	function update_status(){
 		extract($_POST);
 		$update = $this->conn->query("UPDATE `transaction_list` set `status` = '{$status}' where id = '{$id}'");
 		if($update){
+			$sql = "INSERT INTO `trans_status_logs` (`trans_id`, `new_status`, `from_status`, `date_effect`, `user_id`, `date_changed`) 
+				VALUES ('{$id}', '{$status}', '{$old_status}', '{$date_effect}', '{$user_id}', CURRENT_TIMESTAMP());";
+			$this->conn->query($sql);
+			if($status == 3){ // cancelled; should cancel also the transaction payments
+				$sql = "UPDATE payment_list SET status=0 WHERE transaction_id='{$id}'";
+				$this->conn->query($sql);
+			}else{
+				$sql = "UPDATE payment_list SET status=1 WHERE transaction_id='{$id}'";
+				$this->conn->query($sql);
+			}
 			$resp['status'] = 'success';
 		}else{
 			$resp['status'] = 'failed';

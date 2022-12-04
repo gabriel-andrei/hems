@@ -1,3 +1,30 @@
+12.04
+> Database
+    - added 'tin_number' field in transaction_list table
+    - added 'tin_number', email field in clients_record table
+> Transaction
+    - added entry for tin_number of clients
+    - changed the uniquiness of client records to tin number
+    - added dropdown to browse client records grouped by address
+    - auto-fill client details of the transaction with the selected client record details
+    - added checkbox if user wants to update the selected client record with the new client details in the transaction
+> Client Records> View History
+    - added engine model column to list
+> Client Records> View History > View Details
+    - added engine model column to list of products
+    - shows complete client details
+> General
+    - displaying of transaction status is defined by the records from the `tbl_status` table
+> Payments
+    - fixed bug in Save button not showing; this is due to Payments action button hides it, but Pay Now does not shows it again
+> Payments>PayNow
+    - fixed bug, this is due to the amount value is being used as balance, not the amount-payments value
+> Daily Sales Report
+    - reformat list to follow the sent report template
+    - reformat print report and follows the report template
+    TODO: Daily Service Report
+
+
 11.25
 > Service List>Action
     - removed the delete option

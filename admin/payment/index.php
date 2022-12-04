@@ -131,7 +131,7 @@
                                 <?php if($row['status'] == 1): ?>
                                     <span class="">Active</span>
                                 <?php else: ?>
-                                    <span class="">Inactive</span>
+                                    <span class="">Cancelled</span>
                                 <?php endif; ?>
                             </td>
 							<td align="center">
@@ -157,6 +157,7 @@
 
 		$('.pay_now').click(function(){
 			uni_modal("<i class='fa fa-plus'></i> Add Payment","payment/pay_now.php?id="+$(this).attr('data-id'))
+			$('#uni_modal #submit').show();
 		})
 		$('.view_payments').click(function(){
 			uni_modal("<i class='fa fa-eye'></i> Payments History","payment/view_payments.php?id="+$(this).attr('data-id'), 'modal-xl')

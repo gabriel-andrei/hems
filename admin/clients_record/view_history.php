@@ -19,6 +19,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 					<col width="15%">
 					<col width="15%">
 					<col width="15%">
+					<col width="20%">
 					<col width="10%">
 					<col width="10%">
 					<col width="5%">
@@ -28,6 +29,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 						<th class="text-center">#</th>
 						<th class="text-center">Date</th>
 						<th class="text-center">Vehicle Type</th>
+						<th class="text-center">Engine Model</th>
 						<th class="text-center">Machinist</th>
 						<th class="text-center">Amount</th>
 						<th class="text-center">Status</th>
@@ -37,8 +39,9 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 				<tbody>
 					<?php
 					$i = 1;
-						$qry = $conn->query("SELECT t.*, concat(firstname, ' ', lastname) mechanic FROM `transaction_list` t 
+						$qry = $conn->query("SELECT t.*, concat(firstname, ' ', lastname) mechanic, s.status_desc FROM `transaction_list` t 
 						LEFT JOIN mechanic_list m ON m.id=mechanic_id
+						LEFT JOIN tbl_status s ON s.status_id=t.status
 						where client_id={$id} order by unix_timestamp(t.date_updated) desc ");
 						while($row = $qry->fetch_assoc()):
 					?>
@@ -46,29 +49,10 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 							<td class="text-center"><?php echo $i++; ?></td>
 							<td class="text-center"><p class="m-0 truncate-1"><?= $row['date_created'] ?></p></td>
 							<td class="text-center"><p class="m-0 truncate-1"><?= $row['vehicle_type'] ?></p></td>
-							<td class="text-center"><p class="m-0 truncate-1"><?= $row[''] ?></p></td>
+							<td class="text-center"><p class="m-0 truncate-1"><?= $row['engine_model'] ?></p></td>
+							<td class="text-center"><p class="m-0 truncate-1"><?= $row['mechanic'] ?></p></td>
 							<td class="text-center"><?= format_num($row['amount']) ?></td>
-							<td class="text-center">
-								<?php
-								switch($row['status']){
-									case 0:
-										echo '<span class="">Pending</span>';
-										break;
-									case 1:
-										echo '<span class="">On-Progress</span>';
-										break;
-									case 2:
-										echo '<span class="">Done</span>';
-										break;
-									case 3:
-										echo '<span class="">Paid</span>';
-										break;
-									case 4:
-										echo '<span class="">Cancelled</span>';
-										break;
-								}
-								?>
-                            </td>
+							<td class="text-center"><p class="m-0 truncate-1"><?= $row['status_desc'] ?></p></td>
 							<td align="center">
 								<a class="btn btn-default border btn-md rounded-pill history_details" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class=""></span> View</a>
 							</td>

@@ -34,9 +34,13 @@
 					<?php
 					$i = 1;
 						if($_settings->userdata('type') == 3):
-						$qry = $conn->query("SELECT * FROM `transaction_list` where tech_id = '{$_settings->userdata('id')}' order by unix_timestamp(date_updated) desc ");
+						$qry = $conn->query("SELECT t.*, s.status_desc FROM `transaction_list` t
+							LEFT JOIN tbl_status s ON s.status_id=t.status
+							where tech_id = '{$_settings->userdata('id')}' order by unix_timestamp(date_updated) desc ");
 						else:
-						$qry = $conn->query("SELECT * FROM `transaction_list` order by unix_timestamp(date_updated) desc ");
+						$qry = $conn->query("SELECT t.*, s.status_desc FROM `transaction_list` t
+							LEFT JOIN tbl_status s ON s.status_id=t.status
+							order by unix_timestamp(date_updated) desc ");
 						endif;
 						while($row = $qry->fetch_assoc()):
 					?>
@@ -44,24 +48,7 @@
 							<td class="text-center"><?php echo $i++; ?></td>
 							<td class="text-center"><p class="m-0 truncate-1"><?= $row['client_name'] ?></p></td>
 							<td class="text-center"><p class="m-0 truncate-1"><?= $row['code'] ?></p></td>
-							<td class="text-center">
-								<?php
-								switch($row['status']){
-									case 0:
-										echo '<span class="">Pending</span>';
-										break;
-									case 1:
-										echo '<span class="">On-Progress</span>';
-										break;
-									case 2:
-										echo '<span class="">Done</span>';
-										break;
-									case 3:
-										echo '<span class="">Cancelled</span>';
-										break;
-								}
-								?>
-                            </td>
+							<td class="text-center"><p class="m-0 truncate-1"><?= $row['status_desc'] ?></p></td>
 							<td align="center">
 								<a class="btn btn-default border btn-md rounded-pill" href="?page=transactions/view_details&id=<?php echo $row['id'] ?>"><span class=""></span> View</a>
 							</td>

@@ -27,14 +27,20 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 
 		</div>	
 		<div class="form-group">
+			<label for="email" class="control-label">Email</label><br>
+				<input type="text" name="email" id="email" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($email) ? $email : ''; ?>" <?=(isset($_GET['update'])?'required':'readonly')?> />
+		</div>	
+		<div class="form-group">
 			<label for="contact" class="control-label">Contact Number</label><br>
 				<input type="text" name="contact" id="contact" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($contact) ? $contact : ''; ?>" <?=(isset($_GET['update'])?'required':'readonly')?> />
-
+		</div>	
+		<div class="form-group">
+			<label for="tin_number" class="control-label">Tin Number</label><br>
+				<input type="text" name="tin_number" id="tin_number" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($tin_number) ? $tin_number : ''; ?>" <?=(isset($_GET['update'])?'required':'readonly')?> />
 		</div>	
 		<div class="form-group">
 			<label for="address" class="control-label">Address</label><br>
 				<input type="text" name="address" id="contact" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($address) ? $address : ''; ?>" <?=(isset($_GET['update'])?'required':'readonly')?> />
-
 		</div>	
 		<div class="form-group">
 			<label for="engine_model" class="control-label">Engine Model</label>

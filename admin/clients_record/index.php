@@ -18,6 +18,7 @@
 					<col width="5%">
 					<col width="20%">
 					<col width="10%">
+					<col width="10%">
 					<col width="20%">
 					<!-- <col width="15%"> -->
 					<col width="5%">
@@ -29,6 +30,7 @@
 						<th class="text-center">#</th>
 						<th class="text-center">Client Name</th>
 						<th class="text-center">Contact #</th>
+						<th class="text-center">TIN #</th>
 						<th class="text-center">Address</th>
 						<th class="text-center">Transactions</th>
 						<th class="text-center">Latest J.O.</th>
@@ -49,6 +51,7 @@
 							<td class="text-center"><?php echo $i++; ?></td>
 							<td class="text-center"><?php echo $row['client_name'] ?></td>
 							<td class="text-center"><?php echo $row['contact'] ?></td>
+							<td class="text-center"><?php echo $row['tin_number'] ?></td>
 							<td class="text-center"><?php echo $row['address'] ?></td>
 							<!-- <td class="text-center"><?php // echo $row['engine_model'] ?></td> -->
 							<td class="text-center"><?php echo $row['trans'] ?></td>

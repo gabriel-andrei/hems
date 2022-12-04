@@ -1,7 +1,8 @@
 <?php 
 if(isset($_GET['id'])){
-    $qry = $conn->query("SELECT t.*, SUM(p.total_amount) payments FROM `transaction_list` t 
+    $qry = $conn->query("SELECT t.*, SUM(p.total_amount) payments, s.status_desc FROM `transaction_list` t 
         LEFT JOIN payment_list p ON t.id=p.transaction_id
+        LEFT JOIN tbl_status s ON s.status_id=t.status
         where t.id = '{$_GET['id']}'
         group by t.id ");
     if($qry->num_rows > 0){
@@ -58,22 +59,7 @@ if(isset($_GET['id'])){
                     <div class="col-9 py-1 px-2 border mb-0"><?= isset($date_created) ? $date_created : '' ?></div>
                     <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Status</b></div>
                     <div class="col-9 py-1 px-2 border mb-0">
-                        <?php 
-                        $status = isset($status) ? $status : '';
-                        switch($status){
-                            case 0:
-                                echo '<span class="">Pending</span>';
-                                break;
-                            case 1:
-                                echo '<span class="">On-Progress</span>';
-                                break;
-                            case 2:
-                                echo '<span class="">Done</span>';
-                                break;
-                            case 3:
-                                echo '<span class="">Cancelled</span>';
-                                break;
-                        }
+                        <?php echo $status_desc;
                         if ($balance ==0)
                         echo ' | Fully Paid';
                         ?>
@@ -82,6 +68,8 @@ if(isset($_GET['id'])){
                     <div class="col-9 py-1 px-2 border mb-0"><?= isset($client_name) ? $client_name : '' ?></div>
                     <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Contact #</b></div>
                     <div class="col-9 py-1 px-2 border mb-0"><?= isset($contact) ? $contact : '' ?></div>
+                    <!-- <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>TIN Number</b></div>
+                    <div class="col-9 py-1 px-2 border mb-0"><?= ''// isset($tin_number) ? $tin_number : '' ?></div> -->
                     <!-- <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Email</b></div>
                     <div class="col-9 py-1 px-2 border mb-0"><?= ''// isset($email) ? $email : '' ?></div>
                     <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Address</b></div>
