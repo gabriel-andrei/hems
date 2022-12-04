@@ -133,8 +133,7 @@ if(isset($_GET['id'])){
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group mb-3">
                                     <label for="engine_model" class="control-label">Engine Model</label>
-                                    <input type="engine_model" name="engine_model" id="engine_model" class="form-control form-control-sm rounded-0" value="<?= isset($engine_model) ? $engine_model : "" ?>" required="required"
-                                     maxlength="16" minlength="16">
+                                    <input type="engine_model" name="engine_model" id="engine_model" class="form-control form-control-sm rounded-0" value="<?= isset($engine_model) ? $engine_model : "" ?>" required="required">
                                 </div>          
                             </div>
                         </div>
@@ -249,7 +248,7 @@ if(isset($_GET['id'])){
                                                         , coalesce((SELECT SUM(quantity) FROM `inventory_list` where product_id = product_list.id),0) available
                                                         , coalesce((SELECT SUM(tp.qty) FROM `transaction_products` tp 
                                                             inner join `transaction_list` tl on tp.transaction_id = tl.id 
-                                                            where tp.product_id = product_list.id and tl.status != 4),0) used
+                                                            where tp.product_id = product_list.id and tl.status != 3),0) used
                                                         FROM `product_list` where delete_flag = 0 and `status` = 1  GROUP BY id HAVING available-used > 0 ".(isset($id) ? " or id = '{$id}' " : "")."  ) a order by `engine_model`");
                                                     while($row = $product_qry->fetch_assoc()):
                                                     ?>
@@ -460,11 +459,16 @@ if(isset($_GET['id'])){
             width:'100%',
             containerCssClass:'form-control form-control-sm rounded-0'
         })
+        $('input#chk_update_client').prop('disabled', true);
         $('select#client_id').change(function(){
-            if ($('select#client_id').val() == '')
+            if ($('select#client_id').val() == ''){
                 $('input#chk_update_client').prop('checked', false);
-            else
+                $('input#chk_update_client').prop('disabled', true);
+            }
+            else{
                 $('input#chk_update_client').prop('checked', true);
+                $('input#chk_update_client').prop('disabled', false);
+            }
 
             var name=$("select#client_id option:selected").attr('data-name');
             var address=$("select#client_id option:selected").attr('data-address');

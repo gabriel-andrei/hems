@@ -1,3 +1,12 @@
+12.05-MORNING 
+> General
+    - fixed condition of used stocks if a transaction is cancelled, determined as 4 that should be 3
+> Daily Sales Report
+    - modified condition regarding cancelled transactions
+    - modified query to detect and show the products of a transaction if the transaction record is fully paid
+> Daily Services Report
+    - followed the template and query conditions of daily sales report
+
 12.04
 > Database
     - added 'tin_number' field in transaction_list table

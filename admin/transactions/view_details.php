@@ -131,7 +131,10 @@ if(isset($_GET['id'])){
                 </div>
                 </div>
                 <?php 
-                    $tp_qry = $conn->query("SELECT tp.*, p.name as `product` FROM `transaction_products` tp inner join `product_list` p on tp.product_id = p.id where tp.`transaction_id` = '{$id}' ");
+                    $tp_qry = $conn->query("SELECT tp.*, p.name as `product` , p.engine_model
+                        FROM `transaction_products` tp 
+                        inner join `product_list` p on tp.product_id = p.id 
+                        where tp.`transaction_id` = '{$id}' ");
                     $count = mysqli_num_rows($tp_qry);
                     ?>
                 <div class="row <?= $count==0? 'hidden':''?>">                        
@@ -164,7 +167,7 @@ if(isset($_GET['id'])){
                                     $product_total += ($row['price'] * $row['qty']);
                             ?>
                                 <tr>
-                                    <td class="text-center "><?= $engine_model ?></td>
+                                    <td class="text-center "><?=  $row['engine_model'] ?></td>
                                     <td class="text-center"><?= $row['product'] ?></td>
                                     <td class="text-center"><?= $row['qty'] ?></td>
                                     <td class="text-center product_price"><?= format_num($row['price']) ?></td>

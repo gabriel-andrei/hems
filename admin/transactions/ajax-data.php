@@ -27,8 +27,8 @@ if(isset($_POST['type'])){
             , coalesce((SELECT SUM(quantity) FROM `inventory_list` where product_id = product_list.id),0) available
             , coalesce((SELECT SUM(tp.qty) FROM `transaction_products` tp 
                             inner join `transaction_list` tl on tp.transaction_id = tl.id 
-                            where tp.product_id = product_list.id and tl.status != 4),0) used
-            FROM `product_list` where engine_model='{$value}' AND delete_flag = 0 and `status` = 1  ".(isset($id) ? " or id = '{$id}' " : "")." GROUP BY name HAVING available-used > 0 order by `engine_model`");
+                            where tp.product_id = product_list.id and tl.status != 3),0) used
+            FROM `product_list` where engine_model='{$value}' AND delete_flag = 0 and `status` = 1 GROUP BY name HAVING available-used > 0 order by `engine_model`");
         if ($result && $result->num_rows > 0){
             while($row = $result->fetch_assoc()){
                 echo '<option value="'.$row['id'].'" data-price="'.$row['price'].'" >'.$row['name'].' @ ₱'.number_format($row['price'], 2).'</option>';
