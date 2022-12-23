@@ -344,7 +344,10 @@ Class Master extends DBConnection {
 				&& !$this->endsWith($k, '_exclude')){
 				if(!empty($data)) $data .=",";
 				$v = $this->conn->real_escape_string($v);
-				$data .= " `{$k}`='{$v}' ";
+				if($k == 'client_id' && empty($v))
+					$data .= " `{$k}`=NULL ";
+				else
+					$data .= " `{$k}`='{$v}' ";
 			}
 		}
 		if(empty($id)){
@@ -380,6 +383,7 @@ Class Master extends DBConnection {
 							$this->conn->query($sql);
 						}
 					}
+					$client_id = $cid;
 					$resp['msg'] .= " Client record successfully created.";
 				}
 			}

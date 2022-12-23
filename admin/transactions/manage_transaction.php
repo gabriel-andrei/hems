@@ -357,6 +357,7 @@ if(isset($_GET['id'])){
                                                     }else  $changed_group = false;
                                         ?>
                                         
+                                        
                                         <?php if($changed_group): ?>
                                                 <OPTGROUP LABEL="On-Progress: <?=$last_onprogress;?>">
                                             <?php endif; ?>
