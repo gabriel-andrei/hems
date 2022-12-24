@@ -49,8 +49,18 @@
 							<td class="text-center"><p class="m-0 truncate-1"><?= $row['client_name'] ?></p></td>
 							<td class="text-center"><p class="m-0 truncate-1"><?= $row['code'] ?></p></td>
 							<td class="text-center"><p class="m-0 truncate-1"><?= $row['status_desc'] ?></p></td>
+							
 							<td align="center">
-								<a class="btn btn-default border btn-md rounded-pill" href="?page=transactions/view_details&id=<?php echo $row['id'] ?>"><span class=""></span> View</a>
+								 <button type="button" class="btn btn-default border btn-md rounded-pill btn-sm dropdown-toggle dropdown-icon" data-toggle="dropdown">
+				                  		Action
+				                    <span class="sr-only">Toggle Dropdown</span>
+				                  </button>
+				                  <div class="dropdown-menu" role="menu">
+									<a class="dropdown-item view_details" href="./?page=transactions/view_details&id=<?= $row['id'] ?>" data-id="<?php $row['id'] ?>"><span class="fa fa-eye text-primary"></span> View</a>
+
+				                    <div class="dropdown-divider"></div>
+				                    <a class="dropdown-item update_status" href="./?page=transactions/update_status&id=<?= $row['id'] ?>" data-id="<?php $row['id']?>"><span class="fa fa-edit text-primary"></span>Update Status</a>
+				                  </div>
 							</td>
 						</tr>
 					<?php endwhile; ?>
@@ -62,7 +72,6 @@
 </div>
 <script>
 	$(document).ready(function(){
-		
 		$('.table').dataTable({
 			columnDefs: [
 					{ orderable: false, targets: [4] }

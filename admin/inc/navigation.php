@@ -70,7 +70,7 @@
                       <a href="<?php echo base_url ?>admin/?page=reports/daily_sales_report" class="nav-link nav-reports_daily_sales_report">
                         <i class="nav-icon far fa-circle"></i>
                         <p style="font-size: 16px">
-                          Daily Sales Report
+                          Sales Report
                         </p>
                       </a>
                     </li>
@@ -78,7 +78,7 @@
                       <a href="<?php echo base_url ?>admin/?page=reports/daily_service_report" class="nav-link nav-reports_daily_service_report">
                         <i class="nav-icon far fa-circle"></i>
                         <p style="font-size: 16px">
-                          Daily Service Report
+                          Service Report
                         </p>
                       </a>
                     </li>
