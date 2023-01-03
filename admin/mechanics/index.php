@@ -16,14 +16,14 @@
 				<colgroup>
 					<col width="5%">
 					<col width="30%">
-					<col width="15%">
+					<!-- <col width="15%"> -->
 					<col width="5%">
 				</colgroup>
 				<thead>
 					<tr>
 						<th class="text-center">#</th>
 						<th class="text-center">Name</th>
-						<th class="text-center">Status</th>
+						<!-- <th class="text-center">Status</th> -->
 						<th class="text-center">Action</th>
 					</tr>
 				</thead>
@@ -36,13 +36,13 @@
 						<tr>
 							<td class="text-center py-1 px-2 align-middle"><?php echo $i++; ?></td>
 							<td class="text-center py-1 px-2 align-middle"><?php echo $row['name'] ?></td>
-							<td class="text-center py-1 px-2 align-middle">
+							<!-- <td class="text-center py-1 px-2 align-middle">
                                 <?php if($row['status'] == 1): ?>
                                     <span class="">Active</span>
                                 <?php else: ?>
                                     <span class="">Inactive</span>
                                 <?php endif; ?>
-                            </td>
+                            </td> -->
 							<td align="center">
 								 <button type="button" class="btn btn-default border btn-sm rounded-pill dropdown-toggle dropdown-icon" data-toggle="dropdown">
 				                  		Action
@@ -77,7 +77,7 @@
 		})
 		$('.table').dataTable({
 			columnDefs: [
-					{ orderable: false, targets: [3] }
+					{ orderable: false, targets: [2] }
 			],
 			order:[0,'asc']
 		});

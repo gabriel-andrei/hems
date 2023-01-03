@@ -91,7 +91,7 @@ if(isset($_GET['id'])){
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="form-group mb-3">
                                     <label for="client_name" class="control-label">Client Full Name</label>
-                                    <input type="text" name="client_name" id="client_name" class="form-control form-control-sm rounded-0" value="<?= isset($client_name) ? $client_name : "" ?>" required="required">
+                                    <input type="text" name="client_name" id="client_name" class="form-control form-control-sm rounded-0" value="<?= isset($client_name) ? $client_name : "" ?>" readonly/>
                                 </div>
                             </div>
                         </div>
@@ -99,7 +99,7 @@ if(isset($_GET['id'])){
                             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                 <div class="form-group mb-3">
                                     <label for="contact" class="control-label">Client Contact #</label>
-                                    <input type="text" name="contact" id="contact" class="form-control form-control-sm rounded-0" value="<?= isset($contact) ? $contact : "" ?>" required="required">
+                                    <input type="text" name="contact" id="contact" class="form-control form-control-sm rounded-0" value="<?= isset($contact) ? $contact : "" ?>" readonly/>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
@@ -119,7 +119,7 @@ if(isset($_GET['id'])){
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="form-group mb-3">
                                     <label for="address" class="control-label">Address</label>
-                                    <input type="text" name="address" id="address" class="form-control form-control-sm rounded-0" value="<?= isset($address) ? $address : "" ?>" required="required">
+                                    <input type="text" name="address" id="address" class="form-control form-control-sm rounded-0" value="<?= isset($address) ? $address : "" ?>" readonly/>
                                 </div>
                             </div>
                         </div>
@@ -391,11 +391,13 @@ if(isset($_GET['id'])){
             </div>
             <div class="card-footer py-2 text-right">
                 <button class="btn btn-primary border btn-md rounded-pill" form="transaction-form">Save Transaction</button>
-                <?php if(!isset($id)): ?>
+                <a class="btn btn-default border btn-md rounded-pill" href="./?page=transactions">Cancel</a>
+
+                <!-- <?php if(!isset($id)): ?>
                 <a class="btn btn-default border btn-md rounded-pill" href="./?page=transactions">Cancel</a>
                 <?php else: ?>
                 <a class="btn btn-default border btn-md rounded-pill" href="./?page=transactions/view_details&id=<?= $id ?>">Cancel</a>
-                <?php endif; ?> 
+                <?php endif; ?> -->
             </div>
         </div>
     </div>

@@ -2,6 +2,8 @@
 1.03
 > TRANSACTIONS > CREATE NEW
     - Made Vehicle Type and Engine Model a dropdown
+> TRANSACTIONS
+    - Removed the Update Status button
 > DASHBOARD
     - Removed gif 
 > PAYMENT
@@ -17,6 +19,8 @@
 > CLIENTS RECORD > VIEW > VIEW
     - Removed tin number from the grid
     - Changed "Total Payable Amount" into “Total Amount” 
+> MACHINIST 
+    - Removed the status column
 
 12.05-MORNING 
 > General
