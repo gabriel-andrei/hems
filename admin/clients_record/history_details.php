@@ -71,8 +71,8 @@ if(isset($_GET['id'])){
                     <div class="col-9 py-1 px-2 border mb-0"><?= isset($contact) ? $contact : '' ?></div>
                     <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Email</b></div>
                     <div class="col-9 py-1 px-2 border mb-0"><?= isset($email) ? $email : '' ?></div>
-                    <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>TIN Number</b></div>
-                    <div class="col-9 py-1 px-2 border mb-0"><?= isset($tin_number) ? $tin_number : '' ?></div>
+                    <!-- <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>TIN Number</b></div> -->
+                    <!-- <div class="col-9 py-1 px-2 border mb-0"><?= isset($tin_number) ? $tin_number : '' ?></div> -->
                     <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Address</b></div>
                     <div class="col-9 py-1 px-2 border mb-0"><?= isset($address) ? $address : '' ?></div>
                     <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Assigned Machinist</b></div>
@@ -179,7 +179,7 @@ if(isset($_GET['id'])){
                 </div>
                 <hr>
                 <div class="clear-fix mb-3"></div>
-                <h4 class="text-black text-right">Total Payable Amount: <b id="amount"><?= isset($amount) ? format_num($amount) : "0.00" ?></b></h4>
+                <h4 class="text-black text-right">Total Amount: <b id="amount"><?= isset($amount) ? format_num($amount) : "0.00" ?></b></h4>
             </div>
             <hr>
         </div>

@@ -1,4 +1,5 @@
 <?php
+require_once('../../config.php');
 
 if(isset($_GET['id']) && $_GET['id'] > 0){
     $qry = $conn->query("SELECT *
@@ -100,6 +101,8 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 
     $(document).ready(function(){
 		$('.table').dataTable({
+			stateSave: true,
+    		"bDestroy": true,
 			columnDefs: [
 					{ orderable: false, targets: [2] }
 			],

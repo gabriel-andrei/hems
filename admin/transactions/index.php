@@ -56,10 +56,11 @@
 				                    <span class="sr-only">Toggle Dropdown</span>
 				                  </button>
 				                  <div class="dropdown-menu" role="menu">
-									<a class="dropdown-item view_details" href="./?page=transactions/view_details&id=<?= $row['id'] ?>" data-id="<?php $row['id'] ?>"><span class="fa fa-eye text-primary"></span> View</a>
+									<a class="dropdown-item view_details" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-eye text-primary"></span> View</a>
 
 				                    <div class="dropdown-divider"></div>
-				                    <a class="dropdown-item update_status" href="./?page=transactions/update_status&id=<?= $row['id'] ?>" data-id="<?php $row['id']?>"><span class="fa fa-edit text-primary"></span>Update Status</a>
+									<a class="dropdown-item update_status" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-edit text-primary"></span> Update Status</a>
+
 				                  </div>
 							</td>
 						</tr>
@@ -79,6 +80,16 @@
 			order:[0,'asc']
 		});
 		$('.dataTable td,.dataTable th').addClass('py-1 px-2 align-middle')
+
+		$('.view_details').click(function(){
+			uni_modal("<i class='fa fa-edit'></i> Transaction Details","transactions/view_details.php?source='list'&id="+$(this).attr('data-id'), 'modal-xl')
+			$('#uni_modal #submit').hide();
+		})
+
+		$('.update_status').click(function(){
+			uni_modal("<i class='fa fa-edit'></i> Update Status","transactions/update_status.php?source='list'&id="+$(this).attr('data-id'))
+			$('#uni_modal #submit').show();
+		})
 	})
 	
 </script>
