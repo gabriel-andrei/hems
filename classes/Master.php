@@ -490,6 +490,23 @@ Class Master extends DBConnection {
 			$this->settings->set_flashdata('success', 'Transaction\'s Status has been updated successfully.');
 		return json_encode($resp);
 	}
+
+	function update_price(){
+		extract($_POST);
+		$update = $this->conn->query("UPDATE `service_list` set `price` = '{$price}' where id = '{$id}'");
+		if($update){
+			$sql = "INSERT INTO `service_price_logs` (`serv_id`, `new_price`, `from_price`, `date_effect`, `user_id`, `date_changed`) 
+				VALUES ('{$id}', '{$price}', '{$old_price}', '{$date_effect}', '{$user_id}', CURRENT_TIMESTAMP());";
+			$this->conn->query($sql);
+			$resp['status'] = 'success';
+		}else{
+			$resp['status'] = 'failed';
+			$resp['msg'] = "Service's price has failed to update.";
+		}
+		if($resp['status'] == 'success')
+			$this->settings->set_flashdata('success', 'Service\'s price has been updated successfully.');
+		return json_encode($resp);
+	}
 }
 
 $Master = new Master();
@@ -534,6 +551,9 @@ switch ($action) {
 	break;
 	case 'update_status':
 		echo $Master->update_status();
+	break;
+	case 'update_price':
+		echo $Master->update_price();
 	break;
 	default:
 		// echo $sysset->index();

@@ -2,6 +2,7 @@
 > Database (Applied to local copy of database)
     - set default value as null for field 'description' of product_list table
     - set default value as null for field 'description' of service_list table
+    - created 'service_price_logs' table
 > Clients Record > History > View
     - removed displaying of transaction number beside the "Transaction Details:" header
 > Transactions
@@ -22,8 +23,8 @@
     - Services and Products can only be edited if the client hasn’t paid yet
 > Payment 
     - In the payment history, transaction number should be displayed instead of name
-
-
+> Services
+    - 
 
 
 1.03
