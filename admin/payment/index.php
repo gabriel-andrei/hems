@@ -26,7 +26,7 @@
 				<thead>
 					<tr>
 						<th class="text-center">#</th>
-						<th class="text-center">Transaction Code</th>
+						<th class="text-center">Invoice Number</th>
 						<th class="text-center">Client Name</th>
 						<th class="text-center">Amount</th>
 						<th class="text-center">Balance</th>
@@ -104,7 +104,7 @@
 				<thead>
 					<tr>
 						<th class="text-center">#</th>
-						<th class="text-center">Transaction Code</th>
+						<th class="text-center">Invoice Number</th>
 						<th class="text-center">Date</th>
 						<th class="text-center">OR Number</th>
 						<th class="text-center">Payment</th>
