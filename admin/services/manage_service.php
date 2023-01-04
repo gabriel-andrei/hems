@@ -49,6 +49,41 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 			<option value="0" <?php echo isset($status) && $status == 0 ? 'selected' : '' ?>>Not Available</option>
 			</select>
 		</div>
+		<hr/>
+		<div class="">
+		<label for="" class="">Price History</label>
+        
+            <table class="table table-striped table-bordered" id="product-list">
+                <colgroup>
+                <col width="15%">
+                <col width="30%">
+                </colgroup>
+                    <thead>
+                        <tr class="bg-light-blue">
+                            <th class="text-center">Date/Time</th>
+                            <th class="text-center">Price</th>
+                        </tr>
+                    </thead>
+                <tbody>
+                    <!-- <?php 
+                        $tp_qry = $conn->query("SELECT l.*, new.status_desc as new_status_desc, old.status_desc as old_status_desc
+                        FROM trans_status_logs l
+                        LEFT JOIN tbl_status new ON l.new_status=new.status_id
+                        LEFT JOIN tbl_status old ON l.from_status=old.status_id
+                        where trans_id = '{$id}' 
+                        ORDER BY l.date_effect DESC");
+                            while($row = $tp_qry->fetch_assoc()):
+                            ?>
+                                <tr>
+                                    <td class="text-center"><?=$row['old_status_desc']  ?></td>
+                                    <td class="text-center"><?=$row['new_status_desc']  ?></td>
+                                    <td class="text-center"><?=$row['date_effect']  ?></td>
+                                </tr>
+                             <?php endwhile; ?> -->
+                </tbody>
+            </table>
+    </div>
+</div>
 	</form>
 </div>
 <script>
