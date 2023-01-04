@@ -1,3 +1,26 @@
+1.04
+> Database (Applied to local copy of database)
+    - set default value as null for field 'description' of product_list table
+    - set default value as null for field 'description' of service_list table
+> Transactions
+    - All completed transactions (Done, Cancelled) should not be displayed, 
+    once the transaction is done it must only be accessed from client’s record transaction history
+    - Transaction number should be displayed instead of name
+    - Default view of the transaction must be in all on progress and pending
+    - Added an action button for 'Pay Now' 
+> Clients Record > History > View
+    - removed displaying of transaction number beside the "Transaction Details:" header
+> Transactins > Create New
+    - modified select input for machinist to be this format: Gabriel Andrei [ Remaining Transactions: 2 ]
+    - remoed the update record checkbox, and set the function as always update client record
+> Transactins > View
+    - fixed bugs when viewing transactions and pressing cancel of the modal
+    - hidden the 'Back to List' button when viewing details from a modal
+> Transactins > Edit
+    - set required client details to readonly
+    - Services and Products can only be edited if the client hasn’t paid yet
+
+
 
 1.03
 > TRANSACTIONS > CREATE NEW

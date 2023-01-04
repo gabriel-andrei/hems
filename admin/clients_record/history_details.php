@@ -46,7 +46,7 @@ if(isset($_GET['id'])){
 <div class="content py-3">
     <div class="card card-outline card-blue rounded-0 shadow  m-1">
         <div class="card-header">
-            <h4 class="card-title">Transaction Details: <b><?= isset($code) ? $code : "" ?></b></h4>
+            <h4 class="card-title">Transaction Details: </h4>
             <div class="card-tools">
 				<a class="btn btn-default border btn-md rounded-pill back-to-list" href="javascript:void(0)" data-id="<?php echo $client_id ?>"><i class="fa fa-angle-left"></i> Back to List</a>
             </div>

@@ -1,6 +1,9 @@
 <?php 
 if(isset($_GET['id'])){
-    $qry = $conn->query("SELECT * FROM `transaction_list` where id = '{$_GET['id']}' ");
+    $qry = $conn->query("SELECT t.* , COALESCE(SUM(p.total_amount), 0) payments
+    FROM `transaction_list` t 
+    LEFT JOIN payment_list p ON t.id=p.transaction_id
+    where t.id = '{$_GET['id']}' ");
     if($qry->num_rows > 0){
         $res = $qry->fetch_array();
         foreach($res as $k => $v){
@@ -11,6 +14,8 @@ if(isset($_GET['id'])){
     }else{
         echo '<script> alert("Unknown Transaction\'s ID."); location.replace("./?page=transactions"); </script>';
     }
+}else{
+    $payments = 0;
 }
 ?>
 <style>
@@ -38,10 +43,10 @@ if(isset($_GET['id'])){
                         <input type="hidden" name="amount" value="<?= isset($amount) ? $amount : '' ?>">
                         
                         <div class="row">
-                            <div class="col-lg-11 col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="form-group mb-3">
                                     <label for="client_name" class="control-label">Client</label>
-                                    <select name="client_id" id="client_id" class="form-control form-control rounded-0">
+                                    <select name="client_id" id="client_id" class="form-control form-control rounded-0" <?= isset($id) ? "disabled" : "" ?>>
                                         <OPTGROUP LABEL="">
                                             <option value="" >New Client Record</option>
                                         </OPTGROUP>
@@ -80,18 +85,13 @@ if(isset($_GET['id'])){
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
-                                <div class="form-group mb-1">
-                                    <label for="chk_update_client" class="control-label text-center">Update Record</label>
-                                    <input type="checkbox" name="chk_update_client_exclude" id="chk_update_client" class="form-control form-control-sm rounded-0" value="true" > 
-                                </div>
-                            </div>
+                                <input type="hidden" name="chk_update_client_exclude" id="chk_update_client" class="form-control form-control-sm rounded-0" value="true" > 
                         </div>
                         <div class="row">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="form-group mb-3">
                                     <label for="client_name" class="control-label">Client Full Name</label>
-                                    <input type="text" name="client_name" id="client_name" class="form-control form-control-sm rounded-0" value="<?= isset($client_name) ? $client_name : "" ?>" readonly/>
+                                    <input type="text" name="client_name" id="client_name" class="form-control form-control-sm rounded-0" value="<?= isset($client_name) ? $client_name : "" ?>"  <?= isset($id) ? "readonly" : "" ?>/>
                                 </div>
                             </div>
                         </div>
@@ -99,19 +99,19 @@ if(isset($_GET['id'])){
                             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                 <div class="form-group mb-3">
                                     <label for="contact" class="control-label">Client Contact #</label>
-                                    <input type="text" name="contact" id="contact" class="form-control form-control-sm rounded-0" value="<?= isset($contact) ? $contact : "" ?>" readonly/>
+                                    <input type="text" name="contact" id="contact" class="form-control form-control-sm rounded-0" value="<?= isset($contact) ? $contact : "" ?>"  <?= isset($id) ? "readonly" : "" ?>/>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                 <div class="form-group mb-3">
                                     <label for="email" class="control-label">Client Email</label>
-                                    <input type="email" name="email" id="email" class="form-control form-control-sm rounded-0" value="<?= isset($email) ? $email : "" ?>" required="required">
+                                    <input type="email" name="email" id="email" class="form-control form-control-sm rounded-0" value="<?= isset($email) ? $email : "" ?>" required="required" >
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                 <div class="form-group mb-3">
                                     <label for="tin_number" class="control-label">Client Tin Number</label>
-                                    <input type="text" name="tin_number" id="tin_number" class="form-control form-control-sm rounded-0" value="<?= isset($tin_number) ? $tin_number : "" ?>" required="required">
+                                    <input type="text" name="tin_number" id="tin_number" class="form-control form-control-sm rounded-0" value="<?= isset($tin_number) ? $tin_number : "" ?>" required="required" >
                                 </div>
                             </div>
                         </div>
@@ -119,7 +119,7 @@ if(isset($_GET['id'])){
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="form-group mb-3">
                                     <label for="address" class="control-label">Address</label>
-                                    <input type="text" name="address" id="address" class="form-control form-control-sm rounded-0" value="<?= isset($address) ? $address : "" ?>" readonly/>
+                                    <input type="text" name="address" id="address" class="form-control form-control-sm rounded-0" value="<?= isset($address) ? $address : "" ?>"  <?= isset($id) ? "readonly" : "" ?> />
                                 </div>
                             </div>
                         </div>
@@ -157,6 +157,7 @@ if(isset($_GET['id'])){
                                 <fieldset class="px-2 py-1 border">
                                     <legend class="w-auto px-3">Services</legend>
                                     <div class="row align-items-end">
+                                    <?php if($payments == 0): ?>
                                         <div class="col">
                                             <div class="form-group mb-0">
                                                 <label for="service_sel" class="control-label">Service</label>
@@ -190,6 +191,7 @@ if(isset($_GET['id'])){
                                         <div class="col">
                                             <button class="btn btn-primary border btn-sm rounded-pill" type="button" id="add_service" disabled=""><i class=""></i> Add</button>
                                         </div>
+                                    <?php endif; ?>
                                     </div>
                                     <div class="clear-fix mb-2"></div>
                                     <table class="table table-striped table-bordered" id="service-list">
@@ -227,7 +229,9 @@ if(isset($_GET['id'])){
                                                 <td class="text-center service_cylinder_name"><?= $row['cylinder'] ?></td>
                                                 <td class="text-center service_price"><?= format_num($row['price']) ?></td>
                                                 <td class="text-center">
+                                                    <?php if($payments == 0): ?>
                                                     <button class="btn btn-outline-danger btn-sm rounded-0 rem-service" type="button"><i class="fa fa-trash"></i></button>
+                                                    <?php endif; ?>
                                                 </td>        
                                             </tr>
                                             <?php endwhile; ?>
@@ -250,6 +254,7 @@ if(isset($_GET['id'])){
                                 <fieldset class="px-2 py-1 border">
                                     <legend class="w-auto px-3">Products</legend>
                                     <div class="row align-items-end">
+                                        <?php if($payments == 0): ?>
                                         <div class="col">
                                             <div class="form-group mb-0">
                                                 <label for="engine_model_sel" class="control-label">Select Engine Model</label>
@@ -280,6 +285,7 @@ if(isset($_GET['id'])){
                                         <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                                             <button class="btn btn-primary border btn-sm rounded-pill" type="button" id="add_product" disabled=""><i class=""></i> Add</button>
                                         </div>
+                                        <?php endif; ?>
                                     </div>
                                     <div class="clear-fix mb-2"></div>
                                     <table class="table table-striped table-bordered" id="product-list">
@@ -314,10 +320,13 @@ if(isset($_GET['id'])){
                                                     <input class="product_sub_price" type="hidden" name="product_price[]" value="<?= $row['price'] ?>">
                                                     <span class="product_name"><?= $row['product'] ?></span>
                                                 </td>
-                                                <td class="text-center"><input type="number" min="1" class="form-control form-control-sm rounded-0 text-center" name="product_qty[]" value="<?= $row['qty'] ?>"></td>
+                                                <td class="text-center"><input type="number" min="1" class="form-control form-control-sm rounded-0 text-center" name="product_qty[]" value="<?= $row['qty'] ?>" <?= ($payments == 0)? '':'readonly'?> ></td>
+                                                
                                                 <td class="text-center product_price"><?= format_num($row['price']) ?></td>
                                                 <td class="text-center">
+                                                    <?php if($payments == 0): ?>
                                                     <button class="btn btn-outline-danger btn-sm rounded-0 rem-product" type="button"><i class="fa fa-trash"></i></button>
+                                                    <?php endif; ?>
                                                 </td>
                                             </tr>
                                         <?php endwhile; ?>
@@ -350,36 +359,19 @@ if(isset($_GET['id'])){
                                         <option value="" <?= isset($mechanic_id) && in_array($mechanic_id,[null,""]) ? "selected" : "" ?>>Unset</option>
                                         <?php 
                                         $mechanic_qry = $conn->query("SELECT m.*
-                                        ,concat(firstname, ' ', coalesce(concat(middlename, ' '),''), lastname) as `name`
-                                        , MAX(IF(t.`status` <2, t.code, '')) recent_tran
-                                        , MAX(IF(t.`status` <2, t.id, '')) recent_id
-                                        , SUM(IF(t.`status` =2, 1, 0)) accomplished
-                                        , SUM(IF(t.`status` =0, 1, 0)) pending
-                                        , SUM(IF(t.`status` =1, 1, 0)) onprogress
+                                        , concat(firstname, ' ', coalesce(concat(middlename, ' '),''), lastname) as `name`
+                                        , SUM(IF(t.`status` =1 OR t.`status` =0 , 1, 0)) remaining
                                                 from `mechanic_list` m
                                                 LEFT JOIN `transaction_list` t ON t.mechanic_id=m.id ". (isset($id)? ' AND t.id<>'.$id:'') ."
                                                 where delete_flag = 0 and m.`status` = 1 ".(isset($mechanic_id) && !is_null($mechanic_id) ? " or m.id = '{$mechanic_id}' " : '')."
                                                 GROUP BY m.id
-                                                order by SUM(IF(t.`status` =1, 1, 0)) ASC, SUM(IF(t.`status` =0, 1, 0)) ASC, `name` asc");
+                                                order by `name` asc");
                                         
-                                                $changed_group = false;
                                                 while($row = $mechanic_qry->fetch_array()):
-                                                    if ($last_onprogress != $row['onprogress']){
-                                                        $last_onprogress = $row['onprogress'];
-                                                        $changed_group = true;
-                                                    }else  $changed_group = false;
                                         ?>
-                                        
-                                        
-                                        <?php if($changed_group): ?>
-                                                <OPTGROUP LABEL="On-Progress: <?=$last_onprogress;?>">
-                                            <?php endif; ?>
-                                                <option value="<?= $row['id'] ?>" <?= isset($mechanic_id) && $mechanic_id == $row['id'] ? "selected" : "" ?>>
-                                                    <?= $row['name'].' [ Pendings: '.$row['pending'].' ]'?>
-                                                </option>
-                                            <?php if($changed_group): ?>
-                                                </OPTGROUP>
-                                            <?php endif; ?>
+                                            <option value="<?= $row['id'] ?>" <?= isset($mechanic_id) && $mechanic_id == $row['id'] ? "selected" : "" ?>>
+                                                <?= $row['name'].' [ Remaining Transactions: '.$row['remaining'].' ]'?>
+                                            </option>
                                         <?php endwhile; ?>
                                     </select>
                                 </div>
@@ -475,15 +467,20 @@ if(isset($_GET['id'])){
             width:'100%',
             containerCssClass:'form-control form-control-sm rounded-0'
         })
-        $('input#chk_update_client').prop('disabled', true);
+        // $('input#chk_update_client').prop('disabled', true);
         $('select#client_id').change(function(){
             if ($('select#client_id').val() == ''){
-                $('input#chk_update_client').prop('checked', false);
-                $('input#chk_update_client').prop('disabled', true);
+                // $('input#chk_update_client').prop('checked', false);
+                // $('input#chk_update_client').prop('disabled', true);
+
+                $('input#chk_update_client').val(false);
+                
             }
             else{
-                $('input#chk_update_client').prop('checked', true);
-                $('input#chk_update_client').prop('disabled', false);
+                // $('input#chk_update_client').prop('checked', true);
+                // $('input#chk_update_client').prop('disabled', false);
+                
+                $('input#chk_update_client').val(true);
             }
 
             var name=$("select#client_id option:selected").attr('data-name');

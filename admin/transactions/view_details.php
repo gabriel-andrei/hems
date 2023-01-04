@@ -1,5 +1,9 @@
 <?php 
-require_once('../../config.php');
+if(isset($_SERVER['HTTP_X_REQUESTED_WITH']))
+    require_once('../../config.php');
+else
+    require_once('../config.php');
+
 if(isset($_GET['id'])){
     $qry = $conn->query("SELECT t.*, SUM(p.total_amount) payments, s.status_desc FROM `transaction_list` t 
         LEFT JOIN payment_list p ON t.id=p.transaction_id
@@ -48,7 +52,9 @@ if(isset($_GET['id'])){
         <div class="card-header">
             <h4 class="card-title">Transaction Details: </h4>
             <div class="card-tools">
-                <a href="./?page=transactions" class="btn btn-default border btn-md rounded-pill"><i class="fa fa-angle-left"></i> Back to List</a>
+                <?php if(!isset($_SERVER['HTTP_X_REQUESTED_WITH'])): ?>
+                <a href="./?page=transactions" id="btn-back" class="btn btn-default border btn-md rounded-pill"><i class="fa fa-angle-left"></i> Back to List</a>
+                <?php endif; ?>
             </div>
         </div>
         <div class="card-body">
@@ -263,10 +269,10 @@ $(function(){
     $('#update_status').click(function(){
         uni_modal("Update Transaction Status", "transactions/update_status.php?id=<?= isset($id) ? $id : '' ?>")
     })
-    $('.view_details').click(function(){
-			uni_modal("<i class='fa fa-edit'></i> Transaction Details","transactions/view_details.php?source='list'&id="+$(this).attr('data-id'), 'modal-xl')
-			$('#uni_modal #submit').hide();
-	})
+    // $('.view_details').click(function(){
+	// 		uni_modal("<i class='fa fa-edit'></i> Transaction Details","transactions/view_details.php?source='list'&id="+$(this).attr('data-id'), 'modal-xl')
+	// 		$('#uni_modal #submit').hide();
+	// })
     $('#delete_transaction').click(function(){
         _conf("Are you sure to delete this transaction permanently?","delete_transaction",[])
     })
