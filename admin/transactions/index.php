@@ -58,6 +58,7 @@
 					?>
 						<tr>
 							<td class="text-center"><?php echo $i++; ?></td>
+							<td class="text-center"><p class="m-0 truncate-1"><?= $row['client_name'] ?></p></td>
 							<td class="text-center"><p class="m-0 truncate-1"><?= $row['code'] ?></p></td>
 							<td class="text-center"><p class="m-0 truncate-1"><?= $row['status_desc'] ?></p></td>
 							<td class="text-center"><?= ($balance==0? 'Fully Paid' : number_format($balance,2)) ?></td>
