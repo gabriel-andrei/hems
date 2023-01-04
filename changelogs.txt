@@ -24,7 +24,12 @@
 > Payment 
     - In the payment history, transaction number should be displayed instead of name
 > Services
-    - 
+    - Add filter dropdowns for service and sub categories
+    - add action button to update price
+> Services > Edit
+    - fixed viewing of price history list
+> Services > Update Price
+    - enables updating and adding record in the price history
 
 
 1.03
