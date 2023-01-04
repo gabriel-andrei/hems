@@ -1,3 +1,15 @@
+12.16
+> Database
+    - set default value as null for field 'description' of product_list table
+    - set default value as null for field 'description' of service_list table
+> transactions
+    - fixed saving of new client record
+> Inventory
+    - fixed saving of products
+> Services
+    - fixed saving of service
+
+
 12.05-MORNING 
 > General
     - fixed condition of used stocks if a transaction is cancelled, determined as 4 that should be 3
