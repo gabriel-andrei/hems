@@ -54,7 +54,7 @@ if(isset($_GET['id'])){
         <div class="card-body">
             <div class="container-fluid" id="printout">
                 <div class="row mb-0">
-                    <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Invoice Number</b></div>
+                    <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Transaction Code</b></div>
                     <div class="col-9 py-1 px-2 border mb-0"><?= isset($code) ? $code : '' ?></div>
                     <div class="col-3 py-1 px-2 border border-blue bg-light-blue mb-0"><b>Date</b></div>
                     <div class="col-9 py-1 px-2 border mb-0"><?= isset($date_created) ? $date_created : '' ?></div>

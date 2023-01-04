@@ -16,16 +16,17 @@
 			<table class="table table-hover table-striped table-bordered">
 				<colgroup>
 					<col width="5%">
+					<col width="10%">
+
 					<col width="25%">
-					<col width="20%">
 					<col width="10%">
 					<col width="5%">
 				</colgroup>
 				<thead>
 					<tr>
 						<th class="text-center">#</th>
+						<th class="text-center">Transaction Code</th>
 						<th class="text-center">Client Name</th>
-						<th class="text-center">Code</th>
 						<th class="text-center">Status</th>
 						<th class="text-center">Action</th>
 					</tr>
@@ -46,8 +47,9 @@
 					?>
 						<tr>
 							<td class="text-center"><?php echo $i++; ?></td>
-							<td class="text-center"><p class="m-0 truncate-1"><?= $row['client_name'] ?></p></td>
 							<td class="text-center"><p class="m-0 truncate-1"><?= $row['code'] ?></p></td>
+
+							<td class="text-center"><p class="m-0 truncate-1"><?= $row['client_name'] ?></p></td>
 							<td class="text-center"><p class="m-0 truncate-1"><?= $row['status_desc'] ?></p></td>
 							
 							<td align="center">
