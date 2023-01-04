@@ -115,7 +115,8 @@
 				<tbody>
 				<?php 
 					$i = 1;
-						$qry = $conn->query("SELECT * FROM `payment_list` order by `date_created` desc ");
+						$qry = $conn->query("SELECT p.*, t.code FROM `payment_list` p
+						LEFT JOIN transaction_list t ON t.id=p.transaction_id order by `date_created` desc ");
 						while($row = $qry->fetch_assoc()):
 					?>
 						<tr>
