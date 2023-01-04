@@ -1,4 +1,5 @@
 <?php 
+require_once('../../config.php');
 if(isset($_GET['id'])){
     $qry = $conn->query("SELECT t.*, SUM(p.total_amount) payments, s.status_desc FROM `transaction_list` t 
         LEFT JOIN payment_list p ON t.id=p.transaction_id
@@ -208,9 +209,10 @@ if(isset($_GET['id'])){
             </div>
             <hr>
                                 
-            <div class="row justify-content-center">
-                <button class="btn btn-primary bg-gradient-blue border col-lg-3 col-md-4 col-sm-12 col-xs-12 rounded-pill" id="update_status" type="button">Update Status</button>
+            <div class="row justify-content-center ">
+                <!-- <button class="btn btn-primary bg-gradient-blue border col-lg-3 col-md-4 col-sm-12 col-xs-12 rounded-pill" id="update_status" type="button">Update Status</button> -->
                 <a class="btn btn-primary bg-gradient-primary border col-lg-3 col-md-4 col-sm-12 col-xs-12 rounded-pill" href="./?page=transactions/manage_transaction&id=<?= isset($id) ? $id : '' ?>"><i class="fa fa-edit"></i> Edit</a>
+                
                 <button class="btn btn-light bg-gradient-light border col-lg-3 col-md-4 col-sm-12 col-xs-12 rounded-pill" id="print"><i class="fa fa-print"></i> Print</button>
             </div>
         </div>
@@ -261,6 +263,10 @@ $(function(){
     $('#update_status').click(function(){
         uni_modal("Update Transaction Status", "transactions/update_status.php?id=<?= isset($id) ? $id : '' ?>")
     })
+    $('.view_details').click(function(){
+			uni_modal("<i class='fa fa-edit'></i> Transaction Details","transactions/view_details.php?source='list'&id="+$(this).attr('data-id'), 'modal-xl')
+			$('#uni_modal #submit').hide();
+	})
     $('#delete_transaction').click(function(){
         _conf("Are you sure to delete this transaction permanently?","delete_transaction",[])
     })

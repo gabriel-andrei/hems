@@ -1,4 +1,5 @@
 <?php
+require_once('../../config.php');
 
 if(isset($_GET['id']) && $_GET['id'] > 0){
     $qry = $conn->query("SELECT *
@@ -25,7 +26,8 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 	<div class="card-header">
 		<h3 class="card-title">Product Details</h3>
 		<div class="card-tools">
-            <button class="btn btn-primary border btn-md rounded-pill" type="button" id="create_new"><i class=""></i> Add Stock</button>
+			<a class="btn btn-primary border btn-md rounded-pill add_stock" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-plus text-dark"></span> Add Stock</a>
+
             <a class="btn btn-default border btn-md rounded-pill" href="./?page=inventory" ><i class="fa fa-angle-left"></i> Back To List</a>
         </div>
 	</div>
@@ -90,8 +92,9 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 
 <script>
     $(function(){
-        $('#create_new').click(function(){
-            uni_modal('<i class="far fa-plus-square"></i> Add New Stock', 'inventory/manage_stock.php?product_id=<?= isset($id) ? $id : '' ?>')
+        $('.add_stock').click(function(){
+			uni_modal("<i class='fa fa-plus-square'></i> Add New Stock","inventory/manage_stock.php?id="+$(this).attr('data-id'), 'modal-xl')
+			$('#uni_modal #submit').show();
         })
         $('.edit_data').click(function(){
             uni_modal('<i class="far fa-edit-square"></i> Edit Stock', 'inventory/manage_stock.php?product_id=<?= isset($id) ? $id : '' ?>&id='+$(this).attr('data-id'))
@@ -100,6 +103,8 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 
     $(document).ready(function(){
 		$('.table').dataTable({
+			stateSave: true,
+    		"bDestroy": true,
 			columnDefs: [
 					{ orderable: false, targets: [2] }
 			],

@@ -1,3 +1,27 @@
+
+1.03
+> TRANSACTIONS > CREATE NEW
+    - Made Vehicle Type and Engine Model a dropdown
+> TRANSACTIONS
+    - Removed the Update Status button
+> DASHBOARD
+    - Removed gif 
+> PAYMENT
+    - Removed the status column
+    - Changed the word “Pending Payments” into “Transaction Payments”
+> SERVICE LIST 
+    - Removed date and status 
+> DAILY SALES AND SERVICE REPORTS > Print
+    - Replaced “As of” to “For”
+    - Removed the word “Daily” from Daily Sales Reports and Daily Service Reports
+> CLIENTS RECORD 
+    - Removed tin number from the table
+> CLIENTS RECORD > VIEW > VIEW
+    - Removed tin number from the grid
+    - Changed "Total Payable Amount" into “Total Amount” 
+> MACHINIST 
+    - Removed the status column
+
 12.16
 > Database
     - set default value as null for field 'description' of product_list table

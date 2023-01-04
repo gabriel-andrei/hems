@@ -23,8 +23,8 @@
 			<table class="table table-hover table-striped table-bordered" id="list">
 				<colgroup>
 					<col width="5%">
-					<col width="15%">
-					<col width="15%">
+					<!-- <col width="15%"> -->
+					<!-- <col width="15%"> -->
 					<col width="25%">
 					<col width="15%">
 					<col width="10%">
@@ -33,8 +33,8 @@
 				<thead>
 					<tr>
 						<th class="text-center">#</th>
-						<th class="text-center">Date</th>
-						<th class="text-center">Avatar</th>
+						<!--<th class="text-center">Date</th> -->
+						<!-- <th class="text-center">Avatar</th> -->
 						<th class="text-center">Name</th>
 						<th class="text-center">Username</th>
 						<th class="text-center">Type</th>
@@ -49,10 +49,10 @@
 					?>
 						<tr>
 							<td class="text-center"><?php echo $i++; ?></td>
-							<td class="text-center"><?php echo date("Y-m-d H:i",strtotime($row['date_updated'])) ?></td>
-							<td class="text-center">
+							<!-- <td class="text-center"><?php echo date("Y-m-d H:i",strtotime($row['date_updated'])) ?></td> -->
+							<!-- <td class="text-center">
                                 <img src="<?= validate_image($row['avatar']) ?>" alt="" class="img-thumbnail rounded-circle user-avatar">
-                            </td>
+                            </td> -->
 							<td class="text-center"><?php echo $row['name'] ?></td>
 							<td class="text-center"><?php echo $row['username'] ?></td>
 							<td class="text-center">
@@ -70,7 +70,8 @@
 				                    <span class="sr-only">Toggle Dropdown</span>
 				                  </button>
 				                  <div class="dropdown-menu" role="menu">
-				                    <a class="dropdown-item" href="./?page=user/manage_user&id=<?= $row['id'] ?>"><span class="fa fa-edit text-dark"></span> Edit</a>
+									<a class="dropdown-item manage_user" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-edit text-primary"></span> Edit</a>
+
 				                    <div class="dropdown-divider"></div>
 				                    <a class="dropdown-item delete_data" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-trash text-danger"></span> Delete</a>
 				                  </div>
@@ -89,10 +90,16 @@
 		})
 		$('.table').dataTable({
 			columnDefs: [
-					{ orderable: false, targets: [6] }
+					{ orderable: false, targets: [4] }
 			],
 			order:[0,'asc']
 		});
+
+		$('.manage_user').click(function(){
+			uni_modal("<i class='fa fa-edit'></i> Transaction Details","user/manage_user.php?source='list'&id="+$(this).attr('data-id'), 'modal-xl')
+			$('#uni_modal #submit').hide();
+		})
+
 		$('.dataTable td,.dataTable th').addClass('py-1 px-2 align-middle')
 	})
 	function delete_user($id){

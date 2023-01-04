@@ -81,7 +81,8 @@
 				                    <span class="sr-only">Toggle Dropdown</span>
 				                  </button>
 				                  <div class="dropdown-menu" role="menu">
-									<a class="dropdown-item new_stock" href="./?page=inventory/view_details&id=<?= $row['id'] ?>" data-id="<?php echo $row['id'] ?>"><span class="fa fa-plus text-dark"></span> Add Stock</a>
+									<a class="dropdown-item new_stock" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-plus text-primary"></span> Add Stock</a>
+
 				                    <div class="dropdown-divider"></div>
 				                    <a class="dropdown-item edit_data" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-edit text-primary"></span> Edit</a>
 				                  </div>
@@ -99,7 +100,8 @@
 			uni_modal("<i class='fa fa-plus'></i> Add New Product","inventory/manage_product.php")
 		})
 		$('.new_stock').click(function(){
-			uni_modal("<i class='fa fa-plus'></i> Add New Stock","inventory/view_details.php")
+			uni_modal("<i class='fa fa-plus'></i> Add New Stock","inventory/view_details.php?id="+$(this).attr('data-id'), 'modal-xl')
+			$('#uni_modal #submit').hide();
 		})
 		$('.edit_data').click(function(){
 			uni_modal("<i class='fa fa-edit'></i> Update Product Details","inventory/manage_product.php?id="+$(this).attr('data-id'))

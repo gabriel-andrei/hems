@@ -1,4 +1,5 @@
 <?php 
+require_once('../../config.php');
 if(isset($_GET['id'])){
     $user = $conn->query("SELECT * FROM users where id ='{$_GET['id']}' ");
     foreach($user->fetch_array() as $k =>$v){
@@ -11,7 +12,7 @@ if(isset($_GET['id'])){
 	alert_toast("<?php echo $_settings->flashdata('success') ?>",'success')
 </script>
 <?php endif;?>
-<div class="card card-outline rounded-0 card-navy">
+<div class="card card-outline rounded-0 card-primary">
 	<div class="card-body">
 		<div class="container-fluid">
 			<div id="msg"></div>
@@ -57,12 +58,10 @@ if(isset($_GET['id'])){
 		</div>
 	</div>
 	<div class="card-footer">
-			<div class="col-md-12">
 				<div class="row">
-					<button class="btn btn-sm btn-primary rounded-0 mr-3" form="manage-user">Save User Details</button>
-					<a href="./?page=user" class="btn btn-sm btn-default border rounded-0" form="manage-user"><i class="fa fa-angle-left"></i> Cancel</a>
+					<button class="btn btn-primary border btn-md rounded-pill" form="manage-user">Save User Details</button>
+					<a href="./?page=user" class="btn btn-default border btn-md rounded-pill" form="manage-user"><i class=""></i> Cancel</a>
 				</div>
-			</div>
 		</div>
 </div>
 <style>

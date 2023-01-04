@@ -235,7 +235,8 @@
                     </a>
                 </div>
                 <?php endif;?>
-              <div class="text-center h4" style="padding-top: 25px;">
+              <img class="card-img-top align-self-center" style="width: 8rem;height: 8rem;" src="<?php echo base_url ?>dist/img/gif/<?= $row['recent_tran']==''?'standby':'working'?>.gif" alt="Card image cap">
+              <div class="text-center h4">
                 <?= $row['name']?>
               </div>
               <hr/>

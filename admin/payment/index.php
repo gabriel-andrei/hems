@@ -8,7 +8,7 @@
 </style>
 <div class="card card-outline card-primary">
 	<div class="card-header">
-		<h3 class="card-title">Pending Payments</h3>
+		<h3 class="card-title">Transaction Payments</h3>
 	</div>
 	<div class="card-body">
 		<div class="container-fluid">
@@ -95,8 +95,7 @@
 				<colgroup>
 					<col width="5%">
 					<col width="20%">
-					<col width="10%">
-					<col width="10%">
+					<col width="20%">
 					<col width="10%">
 					<col width="10%">
 					<col width="10%">
@@ -110,7 +109,6 @@
 						<th class="text-center">OR Number</th>
 						<th class="text-center">Payment</th>
 						<th class="text-center">Balance</th>
-						<th class="text-center">Status</th>
 						<th class="text-center">Action</th>
 					</tr>
 				</thead>
@@ -127,13 +125,7 @@
 							<td class="text-center"><?php echo $row['ornumber'] ?></td>
 							<td class="text-center"><?php echo format_num($row['total_amount']) ?></td>
 							<td class="text-center"><?php echo format_num($row['balance']) ?></td>
-							<td class="text-center">
-                                <?php if($row['status'] == 1): ?>
-                                    <span class="">Active</span>
-                                <?php else: ?>
-                                    <span class="">Cancelled</span>
-                                <?php endif; ?>
-                            </td>
+							
 							<td align="center">
 								<a class="btn btn-default border btn-md rounded-pill view_payment_details" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class=""></span> View</a>
 							</td>
