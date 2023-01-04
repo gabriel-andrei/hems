@@ -68,13 +68,14 @@
 				                    <span class="sr-only">Toggle Dropdown</span>
 				                  </button>
 				                  <div class="dropdown-menu" role="menu">
-								  	<?php if($balance != 0 ): ?>
+								  	
+									<a class="dropdown-item view_details" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-eye text-primary"></span> View</a>
+				                    <div class="dropdown-divider"></div>
+									<?php if($balance != 0 ): ?>
 										<a class="dropdown-item pay_now" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>">
 										<span class="fa fa-cash-register text-primary"></span> Pay Now</a>
 										<div class="dropdown-divider"></div>
 									<?php endif; ?>
-									<a class="dropdown-item view_details" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-eye text-primary"></span> View</a>
-				                    <div class="dropdown-divider"></div>
 									<a class="dropdown-item update_status" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-edit text-primary"></span> Update Status</a>
 				                  </div>
 							</td>
