@@ -217,7 +217,7 @@ if(isset($_GET['id'])){
                                 
             <div class="row justify-content-center ">
                 <!-- <button class="btn btn-primary bg-gradient-blue border col-lg-3 col-md-4 col-sm-12 col-xs-12 rounded-pill" id="update_status" type="button">Update Status</button> -->
-                <a class="btn btn-primary bg-gradient-primary border col-lg-3 col-md-4 col-sm-12 col-xs-12 rounded-pill" href=""><i class="fa fa-credit-card"></i> Pay</a>
+                <!-- <a class="btn btn-primary bg-gradient-primary border col-lg-3 col-md-4 col-sm-12 col-xs-12 rounded-pill" href=""><i class="fa fa-credit-card"></i> Pay</a> -->
 
                 <a class="btn btn-primary bg-gradient-primary border col-lg-3 col-md-4 col-sm-12 col-xs-12 rounded-pill" href="./?page=transactions/manage_transaction&id=<?= isset($id) ? $id : '' ?>"><i class="fa fa-edit"></i> Edit</a>
                 
