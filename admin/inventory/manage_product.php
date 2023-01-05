@@ -63,6 +63,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
             width:'100%',
             containerCssClass:'form-control form-control-sm rounded-0'
         })
+	
 	})
 	$(document).ready(function(){
 		$('#product-form').submit(function(e){

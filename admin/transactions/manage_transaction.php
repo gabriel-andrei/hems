@@ -372,6 +372,7 @@ if(isset($_GET['id'])){
                                             <option value="<?= $row['id'] ?>" <?= isset($mechanic_id) && $mechanic_id == $row['id'] ? "selected" : "" ?>>
                                                 <?= $row['name'].' [ Remaining Transactions: '.$row['remaining'].' ]'?>
                                             </option>
+
                                         <?php endwhile; ?>
                                     </select>
                                 </div>
