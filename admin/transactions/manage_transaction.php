@@ -99,7 +99,7 @@ if(isset($_GET['id'])){
                             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                 <div class="form-group mb-3">
                                     <label for="contact" class="control-label">Client Contact #</label>
-                                    <input type="text" name="contact" id="contact" class="form-control form-control-sm rounded-0" value="<?= isset($contact) ? $contact : "" ?>"  <?= isset($id) ? "readonly" : "" ?>/>
+                                    <input type="text" name="contact" id="contact" class="form-control form-control-sm rounded-0" value="<?= isset($contact) ? $contact : "" ?>"  <?= isset($id) ? "readonly" : "" ?> maxlength="11" minlength="11"/>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
@@ -365,7 +365,7 @@ if(isset($_GET['id'])){
                                                 LEFT JOIN `transaction_list` t ON t.mechanic_id=m.id ". (isset($id)? ' AND t.id<>'.$id:'') ."
                                                 where delete_flag = 0 and m.`status` = 1 ".(isset($mechanic_id) && !is_null($mechanic_id) ? " or m.id = '{$mechanic_id}' " : '')."
                                                 GROUP BY m.id
-                                                order by `name` asc");
+                                                order by SUM(IF(t.`status` =1 OR t.`status` =0 , 1, 0)) asc, `name`");
                                         
                                                 while($row = $mechanic_qry->fetch_array()):
                                         ?>

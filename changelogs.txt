@@ -1,4 +1,12 @@
-1.04
+01.05
+> Transactins > View
+    - hides edit button when the transaction is tagged as Done or Cancelled
+> Transactins > Manage
+    - changed sorting order of machinists to per remaining transactions
+    - client's contact number should be 11 digits
+    
+
+01.04
 > Database (Applied to local copy of database)
     - set default value as null for field 'description' of product_list table
     - set default value as null for field 'description' of service_list table
