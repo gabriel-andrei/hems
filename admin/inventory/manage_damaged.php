@@ -14,6 +14,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 <div class="container-fluid">
 	<form action="" id="inventory-form">
 		<input type="hidden" name ="id" value="">
+        <input type="hidden" name="user_id" value="<?= $_settings->userdata('id') ?>">
 		<input type="hidden" name ="product_id" value="<?php echo isset($id) ? $id : (isset($_GET['id']) ? $_GET['id'] : '') ?>">
 		
 		<div class="form-group">
@@ -29,8 +30,19 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 			<input type="text" name="unit" id="unit" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($unit) ? $unit : ''; ?>"  required/>
 		</div>
 		<div class="form-group">
-			<label for="stock_date" class="control-label">Stock-In Date</label>
-			<input type="date" name="stock_date" id="stock_date" class="form-control form-control-sm rounded-0 text-right" value="<?php echo isset($stock_date) ? date("Y-m-d", strtotime($stock_date)) : ""; ?>" max="<?= date("Y-m-d") ?>"  required/>
+			<label for="inventory_id" class="control-label">Select Stock Batch</label>
+			<select name="inventory_id" id="inventory_id" class="form-control form-control-sm rounded-0" required >
+				<?php
+					$service_qry = $conn->query("SELECT  id, stock_date 
+						,  CONCAT(RIGHT(CONCAT('0000', product_id), 4),'-', RIGHT(CONCAT('00000', id), 5)) code
+						FROM `inventory_list` 
+						WHERE product_id ='{$id}'
+						order by `stock_date` desc, id desc 
+						LIMIT 20");
+					while($row = $service_qry->fetch_assoc()): ?>
+				<option value="<?= $row['id'] ?>" ><?= $row['code']?> [ Stock Date: <?= $row['stock_date']?> ]</option>
+				<?php endwhile; ?>
+			</select>
 		</div>
 	</form>
 </div>
@@ -40,10 +52,10 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 		$('#inventory-form').submit(function(e){
 			e.preventDefault();
             var _this = $(this)
-			 $('.err-msg').remove();
+			$('.err-msg').remove();
 			start_loader();
 			$.ajax({
-				url:_base_url_+"classes/Master.php?f=save_inventory",
+				url:_base_url_+"classes/Master.php?f=save_damaged",
 				data: new FormData($(this)[0]),
                 cache: false,
                 contentType: false,

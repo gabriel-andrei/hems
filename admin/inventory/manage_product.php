@@ -39,8 +39,12 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 			</select>
 		</div>
 		<div class="form-group">
-			<label for="price" class="control-label">Price</label>
+			<label for="price" class="control-label">Selling Price</label>
 			<input type="number" min="1" name="price" id="price" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($price) ? $price : ''; ?>"  required/>
+		</div>
+		<div class="form-group">
+			<label for="base_price" class="control-label">Base Price</label>
+			<input type="number" min="1" name="base_price" id="base_price" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($base_price) ? $base_price : ''; ?>"  required/>
 		</div>
 		<div class="row">
 			<div class="form-group col-6">

@@ -257,6 +257,38 @@ Class Master extends DBConnection {
 			$this->settings->set_flashdata('success',$resp['msg']);
 			return json_encode($resp);
 	}
+	function save_damaged(){
+		extract($_POST);
+		$data = "";
+		foreach($_POST as $k =>$v){
+			if(!in_array($k,array('id'))){
+				if(!empty($data)) $data .=",";
+				$v = $this->conn->real_escape_string($v);
+				$data .= " `{$k}`='{$v}' ";
+			}
+		}
+		if(empty($id)){
+			$sql = "INSERT INTO `inventory_damaged` set {$data} ";
+		}else{
+			$sql = "UPDATE `inventory_damaged` set {$data} where id = '{$id}' ";
+		}
+			$save = $this->conn->query($sql);
+		if($save){
+			$bid = !empty($id) ? $id : $this->conn->insert_id;
+			$resp['status'] = 'success';
+			if(empty($id))
+				$resp['msg'] = "New damaged item has been saved successfully.";
+			else
+				$resp['msg'] = " Damaged item record has been updated successfully.";
+			
+		}else{
+			$resp['status'] = 'failed';
+			$resp['err'] = $this->conn->error."[{$sql}]";
+		}
+		if($resp['status'] == 'success')
+			$this->settings->set_flashdata('success',$resp['msg']);
+			return json_encode($resp);
+	}
 	function save_inventory(){
 		extract($_POST);
 		$data = "";
@@ -554,6 +586,9 @@ switch ($action) {
 	break;
 	case 'update_price':
 		echo $Master->update_price();
+	break;
+	case 'save_damaged':
+		echo $Master->save_damaged();
 	break;
 	default:
 		// echo $sysset->index();

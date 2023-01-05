@@ -1,10 +1,28 @@
 01.05
+> Database (local only)
+    - created 'inventory_damaged' table
 > Transactins > View
     - hides edit button when the transaction is tagged as Done or Cancelled
 > Transactins > Manage
     - changed sorting order of machinists to per remaining transactions
     - client's contact number should be 11 digits
-    
+> Inventory
+    - removed stock status column
+    - colored the whole row if low-in-stock
+    - sorting of records according to low-in-stock first
+    - added action button for 'Add Damaged'
+    - modified query for available stocks to adopt the damaged items
+> Inventory > Add Damaged
+    - added a new modal to save damaged items of a stock batch
+> Inventory > Add Stock
+    - modified the table of Stocks history and added a column for total number of damaged recorded
+    - modified table to display batch-code that is formatted as: 
+        Batch code format: {product_id}-{inventory_id}
+        ex: 0032-00024
+> Dashboard
+    - modified query for Low-in-stock items to adopt the damaged items
+
+
 
 01.04
 > Database (Applied to local copy of database)

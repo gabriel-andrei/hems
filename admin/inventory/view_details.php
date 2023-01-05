@@ -26,21 +26,23 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 	<div class="card-header">
 		<h3 class="card-title">Product Details</h3>
 		<div class="card-tools">
-			<a class="btn btn-primary border btn-md rounded-pill add_stock" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-plus text-dark"></span> Add Stock</a>
+			<a class="btn btn-primary border btn-md rounded-pill add_stock" href="javascript:void(0)" data-id="<?php echo $id ?>"><span class="fa fa-plus text-dark"></span> Add Stock</a>
 
-            <a class="btn btn-default border btn-md rounded-pill" href="./?page=inventory" ><i class="fa fa-angle-left"></i> Back To List</a>
+            <!-- <a class="btn btn-default border btn-md rounded-pill" href="./?page=inventory" ><i class="fa fa-angle-left"></i> Back To List</a> -->
         </div>
 	</div>
     <div class="card-body">
             <div class="container-fluid" id="printout">
                 <div class="row mb-0">
-                    <div class="col-4 py-1 px-2 border border-blue text-center bg-light-blue mb-0"><b>Product Name</b></div>
-                    <div class="col-4 py-1 px-2 border border-blue text-center bg-light-blue mb-0"><b>Price</b></div>
-					<div class="col-4 py-1 px-2 border border-blue text-center bg-light-blue mb-0"><b>Available Stock</b></div>
+                    <div class="col-3 py-1 px-2 border border-blue text-center bg-light-blue mb-0"><b>Product Name</b></div>
+                    <div class="col-3 py-1 px-2 border border-blue text-center bg-light-blue mb-0"><b>Base Price</b></div>
+                    <div class="col-3 py-1 px-2 border border-blue text-center bg-light-blue mb-0"><b>Selling Price</b></div>
+					<div class="col-3 py-1 px-2 border border-blue text-center bg-light-blue mb-0"><b>Available Stock</b></div>
 
-					<div class="col-4 py-1 px-2 border text-center mb-0"><?= isset($name) ? $name : '' ?></div>
-                    <div class="col-4 py-1 px-2 border text-center mb-0"><?= isset($price) ? $price : '' ?></div>
-                    <div class="col-4 py-1 px-2 border text-center mb-0"><?= isset($available) ? $available : '' ?></div>
+					<div class="col-3 py-1 px-2 border text-center mb-0"><?= isset($name) ? $name : '' ?></div>
+                    <div class="col-3 py-1 px-2 border text-center mb-0"><?= isset($base_price) ? $base_price : '' ?></div>
+                    <div class="col-3 py-1 px-2 border text-center mb-0"><?= isset($price) ? $price : '' ?></div>
+                    <div class="col-3 py-1 px-2 border text-center mb-0"><?= isset($available) ? $available : '' ?></div>
             </div>
         </div>
     </div>
@@ -56,31 +58,43 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
         <div class="container-fluid">
 			<table class="table table-hover table-striped table-bordered">
 				<colgroup>
-					<col width="50%">
-					<col width="25%">
+					<col width="20%">
+					<col width="30%">
+					<col width="20%">
+					<col width="20%">
 					<col width="10%">
 				</colgroup>
 				<thead>
 					<tr>
+						<th class="text-center">Batch Code</th>
 						<th class="text-center">Stock-In Date</th>
                         <th class="text-center">Quantity</th>
+                        <th class="text-center">Damaged</th>
 						<th class="text-center">Unit</th>
 					</tr>
 				</thead>
 				<tbody>
                             <?php 
-                                $inv_qry = $conn->query("SELECT * FROM `inventory_list` where product_id = '{$id}' order by unix_timestamp(`stock_date`) asc ");
+                                $inv_qry = $conn->query("SELECT i.*, COALESCE(SUM(d.quantity),0) damaged
+								,  CONCAT(RIGHT(CONCAT('0000', i.product_id), 4),'-', RIGHT(CONCAT('00000', i.id), 5)) code
+								FROM `inventory_list` i
+								LEFT JOIN inventory_damaged d ON d.inventory_id=i.id
+								where i.product_id = '{$id}' 
+								GROUP BY i.id
+								order by unix_timestamp(i.`stock_date`) asc ");
                                 while($row = $inv_qry->fetch_assoc()):
                             ?>
                             <tr>
+                                <td class="text-center"><?= ($row['code']) ?></td>
                                 <td class="text-center"><?= date("M d, Y", strtotime($row['stock_date'])) ?></td>
                                 <td class="text-center"><?= format_num($row['quantity']) ?></td>
+                                <td class="text-center"><?= format_num($row['damaged']) ?></td>
                                 <td class="text-center"><?= ($row['unit']) ?></td>
                             </tr>
                             <?php endwhile; ?>
                             <?php if($inv_qry->num_rows <= 0): ?>
                             <tr>
-                                <th class="py-1 text-center" colspan="3">No data</th>
+                                <th class="py-1 text-center" colspan="5">No data</th>
                             </tr>
                         <?php endif; ?>
                     </tbody>
@@ -93,7 +107,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 <script>
     $(function(){
         $('.add_stock').click(function(){
-			uni_modal("<i class='fa fa-plus-square'></i> Add New Stock","inventory/manage_stock.php?id="+$(this).attr('data-id'), 'modal-xl')
+			uni_modal("<i class='fa fa-plus-square'></i> Add New Stock","inventory/manage_stock.php?id="+$(this).attr('data-id'))
 			$('#uni_modal #submit').show();
         })
         $('.edit_data').click(function(){
