@@ -15,7 +15,7 @@
 	<div class="card-header">
 		<h3 class="card-title">List of Users</h3>
 		<div class="card-tools">
-			<a href="./?page=user/manage_user" id="create_new" class="btn btn-primary border btn-md rounded-pill"><span class=""></span>  Create New</a>
+			<a href="javascript:void(0)" id="create_new" class="btn btn-primary border btn-md rounded-pill manage_user"><span class=""></span>  Create New</a>
 		</div>
 	</div>
 	<div class="card-body">
@@ -70,7 +70,7 @@
 				                    <span class="sr-only">Toggle Dropdown</span>
 				                  </button>
 				                  <div class="dropdown-menu" role="menu">
-									<a class="dropdown-item manage_user" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-edit text-primary"></span> Edit</a>
+									<a class="dropdown-item edit_user" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-edit text-primary"></span> Edit</a>
 
 				                    <div class="dropdown-divider"></div>
 				                    <a class="dropdown-item delete_data" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-trash text-danger"></span> Delete</a>
@@ -95,11 +95,14 @@
 			order:[0,'asc']
 		});
 
-		$('.manage_user').click(function(){
-			uni_modal("<i class='fa fa-edit'></i> Transaction Details","user/manage_user.php?source='list'&id="+$(this).attr('data-id'), 'modal-xl')
+		$('.edit_user').click(function(){
+			uni_modal("<i class='fa fa-edit'></i> Transaction Details","user/edit_user.php?source='list'&id="+$(this).attr('data-id'), 'modal-xl')
 			$('#uni_modal #submit').hide();
 		})
-
+		$('.manage_user').click(function(){
+			uni_modal("<i class='fa fa-edit'></i> Transaction Details","user/manage_user.php", 'modal-xl')
+			$('#uni_modal #submit').hide();
+		})
 		$('.dataTable td,.dataTable th').addClass('py-1 px-2 align-middle')
 	})
 	function delete_user($id){

@@ -25,6 +25,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 			<label for="lastname" class="control-label">Last Name</label>
 			<input type="text" name="lastname" id="lastname" class="form-control form-control-sm rounded-0" value="<?php echo isset($lastname) ? $lastname : ''; ?>"  required/>
 		</div>
+		<!--
 		<div class="form-group">
 			<label for="status" class="control-label">Status</label>
 			<select name="status" id="status" class="form-control form-control-sm rounded-0" required>
@@ -32,6 +33,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 			<option value="0" <?php echo isset($status) && $status == 0 ? 'selected' : '' ?>>Inactive</option>
 			</select>
 		</div>
+		-->
 	</form>
 </div>
 <script>

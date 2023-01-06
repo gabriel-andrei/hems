@@ -26,7 +26,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
         </div>
     </form>
     <div class="">
-        <bold>Pricing History</bold>
+        <bold>Price History</bold>
         <hr/>
                                     <table class="table table-striped table-bordered" id="product-list">
                                         <colgroup>

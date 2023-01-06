@@ -17,10 +17,10 @@
 				<colgroup>
 					<col width="5%">
 					<col width="20%">
-					<col width="20%">
+					<col width="30%">
 					<col width="10%">
 					<col width="10%">
-					<col width="10%">
+					<!-- <col width="10%"> -->
 					<col width="10%">
 				</colgroup>
 				<thead>
@@ -30,7 +30,7 @@
 						<th class="text-center">Client Name</th>
 						<th class="text-center">Amount</th>
 						<th class="text-center">Balance</th>
-						<th class="text-center">Status</th>
+						<!-- <th class="text-center">Status</th> -->
 						<th class="text-center">Action</th>
 					</tr>
 				</thead>
@@ -51,8 +51,8 @@
 							<td class="text-center"><p class="m-0 truncate-1"><?= $row['client_name'] ?></p></td>
 							<td class="text-center"><?= number_format($row['amount'],2) ?></td>
 							<td class="text-center"><?= ($balance==0? 'Fully Paid' : number_format($balance,2)) ?></td>
-							<td class="text-center">
-							<?php
+							<!-- <td class="text-center">
+							 <?php
 								switch($row['status']){
 									case 0:
 										echo '<span class="">Pending</span>';
@@ -68,7 +68,7 @@
 										break;
 								}
 								?>
-                            </td>
+                            </td> -->
 							<td align="center">
 								<?php if($balance != 0 ): ?>
 									<a class="btn btn-default border btn-md rounded-pill pay_now" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class=""></span> Pay Now</a>

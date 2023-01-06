@@ -14,7 +14,7 @@
 	<div class="card-body">
         <div class="container-fluid">
 			<div class="row align-items-end mb-2">
-                                        <div class="col">
+                                        <div class="col-2">
                                             <div class="form-group mb-0">
                                                 <label for="service_sel" class="control-label">Select Service</label>
                                                 <select name="service_sel" id="service_sel" class="form-control form-control-sm rounded-0" >
@@ -29,7 +29,7 @@
                                             </div>
                                         </div>
                                         
-                                        <div class="col">
+                                        <div class="col-3">
                                             <div class="form-group mb-0">
                                                 <label for="service_sel_sub" class="control-label">Select Service Sub Category</label>
                                                 <?php if(isset($_GET['sub'])):?>
@@ -104,14 +104,13 @@
 							<td class="text-center"><?php echo $row['cylinder'] ?></td>
 							<td class="text-center"><?php echo $row['price'] ?></td>
 							<td align="center">
-									
 								<button type="button" class="btn btn-default border btn-md rounded-pill btn-sm dropdown-toggle dropdown-icon" data-toggle="dropdown"> 
 									Action <span class="sr-only">Toggle Dropdown</span>
 								</button>
 								<div class="dropdown-menu" role="menu">
-									<a class="dropdown-item edit_data" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-eye text-primary"></span> Edit</a>
+									<a class="dropdown-item edit_data" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-edit text-primary"></span> Edit</a>
 									<div class="dropdown-divider"></div>
-									<a class="dropdown-item update_price" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-edit text-primary"></span> Update Price</a>
+									<a class="dropdown-item update_price" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-dollar-sign text-primary"></span> Update Price</a>
 								</div>
 							</td>
 						</tr>
@@ -128,7 +127,7 @@
 		}) */
 
 		$('.update_price').click(function(){
-			uni_modal("<i class='fa fa-edit'></i> Update Price","services/update_price.php?source='list'&id="+$(this).attr('data-id'))
+			uni_modal("<i class='fa fa-dollar-sign'></i> Update Price","services/update_price.php?source='list'&id="+$(this).attr('data-id'))
 			$('#uni_modal #submit').show();
 		})
 		$('.service_sub').click(function(){
@@ -208,7 +207,7 @@
 					success:function(resp){
 						if(resp != ''){
 							$("#service_sel_sub").empty();
-							$("#service_sel_sub").prop( "disabled", false );
+							 $("#service_sel_sub").prop( "disabled", false );
 
 							$("#reload-list").prop( "disabled", false );
 
