@@ -74,7 +74,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 				<input type="text" name="unit" id="unit" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($unit) ? $unit : ''; ?>"  required/>
 			</div>
 			<div class="form-group col-6">
-				<label for="lowstock" class="control-label">Low On Stock (Threshold Value)</label>
+				<label for="lowstock" class="control-label">Low Stock (Lowest Limit Value)</label>
 				<input type="number" min="1" name="lowstock" id="lowstock" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($lowstock) ? $lowstock : ''; ?>"  required/>
 			</div>
 		</div>
