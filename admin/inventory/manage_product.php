@@ -39,12 +39,34 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 			</select>
 		</div>
 		<div class="form-group">
-			<label for="price" class="control-label">Selling Price</label>
-			<input type="number" min="1" name="price" id="price" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($price) ? $price : ''; ?>"  required/>
-		</div>
-		<div class="form-group">
 			<label for="base_price" class="control-label">Base Price</label>
 			<input type="number" min="1" name="base_price" id="base_price" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($base_price) ? $base_price : ''; ?>"  required/>
+		</div>
+		<div class="row">
+			<div class="form-group col-6">
+				<label for="unit" class="control-label">Selling Price %</label>
+				<input type="text" name="percentage" id="percentage" disabled="disabled" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($percentage) ? $percentage : ''; ?>"  required/>
+			</div>
+			<div class="form-group col-6">
+				<label for="" class="control-label">%</label>
+				<select name="percentage" id="percentage" disabled="disabled" class="form-control form-control-sm rounded-0" required>
+				<option value="" disabled selected></option>
+				<option value="5" <?php echo isset($percentage) ? 'selected' : '' ?>>5%</option>
+				<option value="10" <?php echo isset($percentage) ? 'selected' : '' ?>>10%</option>
+				<option value="15" <?php echo isset($percentage) ? 'selected' : '' ?>>15%</option>
+				<option value="20" <?php echo isset($percentage) ? 'selected' : '' ?>>20%</option>
+				<option value="25" <?php echo isset($percentage) ? 'selected' : '' ?>>25%</option>
+				<option value="30" <?php echo isset($percentage) ? 'selected' : '' ?>>30%</option>
+				<option value="40" <?php echo isset($percentage) ? 'selected' : '' ?>>40%</option>
+				<option value="50" <?php echo isset($percentage) ? 'selected' : '' ?>>50%</option>
+				<option value="60" <?php echo isset($percentage) ? 'selected' : '' ?>>60%</option>
+				<option value="70" <?php echo isset($percentage) ? 'selected' : '' ?>>70%</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="price" class="control-label">Selling Price</label>
+			<input type="number" min="1" name="price" id="price" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($price) ? $price : ''; ?>"  required/>
 		</div>
 		<div class="row">
 			<div class="form-group col-6">
@@ -52,7 +74,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 				<input type="text" name="unit" id="unit" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($unit) ? $unit : ''; ?>"  required/>
 			</div>
 			<div class="form-group col-6">
-				<label for="lowstock" class="control-label">Low Stock Value</label>
+				<label for="lowstock" class="control-label">Low On Stock (Threshold Value)</label>
 				<input type="number" min="1" name="lowstock" id="lowstock" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($lowstock) ? $lowstock : ''; ?>"  required/>
 			</div>
 		</div>
