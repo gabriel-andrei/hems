@@ -14,6 +14,13 @@
     - modified selection of service name, added New Service Name option, shows input for custom service name if ever selected
 > Transaction > Manage
     - adopted the total damaged items in fetching the available products
+> Reports Service
+    - set Daily Report as default view
+    - added daily, weekly, monthly, yearly, best selling report formats
+> Reports Sales
+    - set Daily Report as default view
+    - added daily, weekly, monthly, yearly, best selling report formats
+
 
 01.05
 > Database (local only)
