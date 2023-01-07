@@ -9,11 +9,12 @@
     - added Custom option in Profit percentage selection, shows input for custom percentage if ever selected
 > Transaction
     - show Pay Now action button only if transaction status is Not Pending or Cancelled
+    - fixed bug in condition for showing Pay Now action button
 > Services > Manage
     - modified selection of service name, added New Service Name option, shows input for custom service name if ever selected
 > Transaction > Manage
     - adopted the total damaged items in fetching the available products
-    
+
 01.05
 > Database (local only)
     - created 'inventory_damaged' table

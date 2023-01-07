@@ -71,7 +71,7 @@
 								  	
 									<a class="dropdown-item view_details" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-eye text-primary"></span> View</a>
 				                    <div class="dropdown-divider"></div>
-									<?php if($balance != 0 && ($status > 0 && $status < 3) ): ?>
+									<?php if($balance != 0 && ($row['status'] > 0 && $row['status'] < 3) ): ?>
 										<a class="dropdown-item pay_now" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>">
 										<span class="fa fa-cash-register text-primary"></span> Pay Now</a>
 										<div class="dropdown-divider"></div>
