@@ -1,9 +1,12 @@
 01.07
 > Inventory
     - fixed preload bug when viewing Edit modal after viewing Add Stock modal
+    - fixed sorting of records, should be low-in-stock first then by available stocks
 > Inventory > Manage
     - added javascript functionality to detect base price and compute percentage of profit
     - auto compute selling price
+    - removed profit amount
+    - added Custom option in Profit percentage selection, shows input for custom percentage if ever selected
 > Transaction
     - show Pay Now action button only if transaction status is Not Pending or Cancelled
 

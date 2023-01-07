@@ -57,7 +57,8 @@
 							LEFT JOIN transaction_products t ON p.id=t.product_id 
 							where p.delete_flag = 0 
 							GROUP BY p.id
-							order by COALESCE(SUM(i.quantity),0) asc,  p.`name` asc");
+							order by IF(COALESCE(SUM(i.quantity),0) - COALESCE(SUM(d.quantity),0) > lowstock,1,0) asc
+								, COALESCE(SUM(i.quantity),0) - COALESCE(SUM(d.quantity),0) asc,  p.`name` asc");
 						while($row = $qry->fetch_assoc()):
 							$lowstock = $row['lowstock'];
 							$available = $row['stocks']-$row['sold'];
