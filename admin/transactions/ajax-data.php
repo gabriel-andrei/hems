@@ -24,7 +24,7 @@ if(isset($_POST['type'])){
     } else if ($type == 'engine_model'){
         $id = $conn->real_escape_string($_POST['id']);
         $result = $conn->query("SELECT id, name, price
-            , coalesce((SELECT SUM(quantity) FROM `inventory_list` where product_id = product_list.id),0) available
+            , coalesce((SELECT COALESCE(SUM(i.quantity),0)- COALESCE(SUM(d.quantity),0) FROM `inventory_list` i LEFT JOIN `inventory_damaged` d ON d.product_id=i.product_id AND i.id=d.inventory_id where i.product_id = product_list.id),0) available
             , coalesce((SELECT SUM(tp.qty) FROM `transaction_products` tp 
                             inner join `transaction_list` tl on tp.transaction_id = tl.id 
                             where tp.product_id = product_list.id and tl.status != 3),0) used
