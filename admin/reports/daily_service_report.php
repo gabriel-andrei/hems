@@ -16,6 +16,19 @@
                         <div class="row align-items-end">
                             <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
+                                    <label for="filter" class="control-label">Filter by</label>
+                                    <select name="filtertype" id="filtertype" class="form-control form-control-sm rounded-0" required>
+                                        <option value="" disabled selected></option>
+                                        <option value="daily" <?php echo isset($filtertype) ? 'selected' : '' ?>>Daily</option>
+                                        <option value="weekly" <?php echo isset($filtertype) ? 'selected' : '' ?>>Weekly</option>
+                                        <option value="monthly" <?php echo isset($filtertype) ? 'selected' : '' ?>>Monthly</option>
+                                        <option value="yearly" <?php echo isset($filtertype) ? 'selected' : '' ?>>Yearly</option>
+                                        <option value="best_selling" <?php echo isset($filtertype) ? 'selected' : '' ?>>Best Selling</option>
+                                        </select>                                
+                                    </div>
+                                </div>
+                            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                                <div class="form-group">
                                     <label for="date" class="control-label">Choose Date</label>
                                     <input type="date" class="form-control form-control-sm rounded-0" name="date" id="date" value="<?= date("Y-m-d", strtotime($date)) ?>" required="required">
                                 </div>
@@ -138,6 +151,11 @@
 		$('#filter-form').submit(function(e){
             e.preventDefault()
             location.href = "./?page=reports/daily_service_report&"+$(this).serialize()
+        })
+        $('#filtertype').select2({
+            placeholder:"Choose Filter",
+            width:'100%',
+            containerCssClass:'form-control form-control-sm rounded-0'
         })
         $('#print').click(function(){
             var h = $('head').clone()
