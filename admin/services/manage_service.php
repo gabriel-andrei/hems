@@ -14,13 +14,29 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 	<form action="" id="service-form">
 		<input type="hidden" name ="id" value="<?php echo isset($id) ? $id : '' ?>">
 		<div class="form-group">
-			<label for="service" class="control-label">Service</label>
-			<select name="service" id="service" class="form-control form-control-sm rounded-0" required>
-			<option value="Cylinder Head" <?php echo isset($service) ? 'selected' : '' ?>>Cylinder Head</option>
-			<option value="Engine Block" <?php echo isset($service) ? 'selected' : '' ?>>Engine Block</option>
-			<option value="Crankshaft" <?php echo isset($service) ? 'selected' : '' ?>>Crankshaft</option>
-			<option value="Connecting Rod" <?php echo isset($service) ? 'selected' : '' ?>>Connecting Rod</option>
+			<label for="select_service" class="control-label">Service Name</label>
+			<select id="select_service" class="form-control form-control rounded-0" >
+				<OPTGROUP LABEL="">
+					<option value="" >New Service Name</option>
+				</OPTGROUP>
+				<OPTGROUP LABEL="Records">
+					<?php 
+						$mechanic_qry = $conn->query("SELECT distinct `service`
+							from `service_list` 
+							order by 1 asc");
+						while($row = $mechanic_qry->fetch_array()):
+						?>
+					<option value="<?= $row['service'] ?>" <?= isset($service) && $service == $row['service'] ? "selected" : "" ?> >
+					<?= $row['service']?>
+					</option>
+					<?php endwhile; ?>
+				</OPTGROUP>
 			</select>
+		</div>
+		<div class="form-group group-service">
+			<label for="percentage" class="control-label">Specify Service Name</label>
+			<input type="service" min="0" name="service" id="service" 
+				class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($service) ? $service : ''; ?>"  required/>
 		</div>
 		<div class="form-group">
 			<label for="service_sub" class="control-label">Service Sub Category</label>
@@ -92,6 +108,27 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 	</form>
 </div>
 <script>
+		<?php if(isset($service)):?>
+			$('.group-service').hide();
+		<?php else:?>
+			$('.group-service').show();
+		<?php endif;?>
+		
+		$('#service-form #select_service').change(function(e){
+			var select = $('#select_service').val();
+			if(select == '' ){
+				$('.group-service').show();
+				$('#service').val('<?=isset($service) ? $service : ''?>');
+			}else{
+				$('.group-service').hide();
+				$('#service').val(select);
+			}
+		});
+        $('select#select_service').select2({
+            placeholder:"Select Service Name",
+            width:'100%',
+            containerCssClass:'form-control form-control-sm rounded-0'
+        })
 	$(document).ready(function(){
 		$('#service-form').submit(function(e){
 			e.preventDefault();

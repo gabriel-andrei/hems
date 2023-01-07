@@ -9,6 +9,8 @@
     - added Custom option in Profit percentage selection, shows input for custom percentage if ever selected
 > Transaction
     - show Pay Now action button only if transaction status is Not Pending or Cancelled
+> Services > Manage
+    - modified selection of service name, added New Service Name option, shows input for custom service name if ever selected
 
 01.05
 > Database (local only)
