@@ -1,3 +1,12 @@
+01.07
+> Inventory
+    - fixed preload bug when viewing Edit modal after viewing Add Stock modal
+> Inventory > Manage
+    - added javascript functionality to detect base price and compute percentage of profit
+    - auto compute selling price
+> Transaction
+    - show Pay Now action button only if transaction status is Not Pending or Cancelled
+
 01.05
 > Database (local only)
     - created 'inventory_damaged' table

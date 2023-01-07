@@ -110,7 +110,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 			uni_modal("<i class='fa fa-plus-square'></i> Add New Stock","inventory/manage_stock.php?id="+$(this).attr('data-id'))
 			$('#uni_modal #submit').show();
         })
-        $('.edit_data').click(function(){
+        $('.edit_stock').click(function(){
             uni_modal('<i class="far fa-edit-square"></i> Edit Stock', 'inventory/manage_stock.php?product_id=<?= isset($id) ? $id : '' ?>&id='+$(this).attr('data-id'))
         })
     })

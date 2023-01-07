@@ -78,7 +78,6 @@
 				                  <div class="dropdown-menu" role="menu">
 									<a class="dropdown-item new_stock" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-plus text-primary"></span> Add Stock</a>
 									<a class="dropdown-item new_damaged" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-trash text-primary"></span> Add Damaged</a>
-
 				                    <div class="dropdown-divider"></div>
 				                    <a class="dropdown-item edit_data" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-edit text-primary"></span> Edit</a>
 				                  </div>
@@ -94,24 +93,24 @@
 	$(document).ready(function(){
 		$('#create_new').click(function(){
 			uni_modal("<i class='fa fa-plus'></i> Add New Product","inventory/manage_product.php")
-		})
+		});
 		$('.new_stock').click(function(){
 			uni_modal("<i class='fa fa-plus'></i> Add New Stock","inventory/view_details.php?id="+$(this).attr('data-id'), 'modal-xl')
 			$('#uni_modal #submit').hide();
-		})
+		});
 		$('.edit_data').click(function(){
 			uni_modal("<i class='fa fa-edit'></i> Update Product Details","inventory/manage_product.php?id="+$(this).attr('data-id'))
-		})
+		});
         $('.new_damaged').click(function(){
 			uni_modal("<i class='fa fa-plus-square'></i> Add New Damaged","inventory/manage_damaged.php?id="+$(this).attr('data-id'))
 			$('#uni_modal #submit').show();
-        })
+        });
 		$('.table').dataTable({
 			columnDefs: [
 					{ orderable: false, targets: [4] }
 			],
 			order:[0,'asc']
 		});
-		$('.dataTable td,.dataTable th').addClass('py-1 px-2 align-middle')
+		$('.dataTable td,.dataTable th').addClass('py-1 px-2 align-middle');
 	})
 </script>

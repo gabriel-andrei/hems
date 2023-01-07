@@ -44,29 +44,30 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 		</div>
 		<div class="row">
 			<div class="form-group col-6">
-				<label for="unit" class="control-label">Selling Price %</label>
-				<input type="text" name="percentage" id="percentage" disabled="disabled" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($percentage) ? $percentage : ''; ?>"  required/>
+				<label for="" class="control-label">Profit Percentage</label>
+				<select name="percentage" id="percentage" <?=isset($base_price) && $base_price>0 ? '': 'disabled="disabled"' ?> class="form-control form-control-sm rounded-0" required>
+				<option value="" disabled selected></option>
+				<option value="5" <?php echo isset($percentage) && $percentage==5 ? 'selected' : '' ?>>5%</option>
+				<option value="10" <?php echo isset($percentage) && $percentage==10 ? 'selected' : '' ?>>10%</option>
+				<option value="15" <?php echo isset($percentage) && $percentage==15 ? 'selected' : '' ?>>15%</option>
+				<option value="20" <?php echo isset($percentage) && $percentage==20 ? 'selected' : '' ?>>20%</option>
+				<option value="25" <?php echo isset($percentage) && $percentage==25 ? 'selected' : '' ?>>25%</option>
+				<option value="30" <?php echo isset($percentage) && $percentage==30 ? 'selected' : '' ?>>30%</option>
+				<option value="40" <?php echo isset($percentage) && $percentage==40 ? 'selected' : '' ?>>40%</option>
+				<option value="50" <?php echo isset($percentage) && $percentage==50 ? 'selected' : '' ?>>50%</option>
+				<option value="60" <?php echo isset($percentage) && $percentage==60 ? 'selected' : '' ?>>60%</option>
+				<option value="70" <?php echo isset($percentage) && $percentage==70 ? 'selected' : '' ?>>70%</option>
+				</select>
 			</div>
 			<div class="form-group col-6">
-				<label for="" class="control-label">%</label>
-				<select name="percentage" id="percentage" disabled="disabled" class="form-control form-control-sm rounded-0" required>
-				<option value="" disabled selected></option>
-				<option value="5" <?php echo isset($percentage) ? 'selected' : '' ?>>5%</option>
-				<option value="10" <?php echo isset($percentage) ? 'selected' : '' ?>>10%</option>
-				<option value="15" <?php echo isset($percentage) ? 'selected' : '' ?>>15%</option>
-				<option value="20" <?php echo isset($percentage) ? 'selected' : '' ?>>20%</option>
-				<option value="25" <?php echo isset($percentage) ? 'selected' : '' ?>>25%</option>
-				<option value="30" <?php echo isset($percentage) ? 'selected' : '' ?>>30%</option>
-				<option value="40" <?php echo isset($percentage) ? 'selected' : '' ?>>40%</option>
-				<option value="50" <?php echo isset($percentage) ? 'selected' : '' ?>>50%</option>
-				<option value="60" <?php echo isset($percentage) ? 'selected' : '' ?>>60%</option>
-				<option value="70" <?php echo isset($percentage) ? 'selected' : '' ?>>70%</option>
-				</select>
+				<label for="percentage_amount" class="control-label">Profit Amount</label>
+				<input type="text" name="percentage_amount" id="percentage_amount" <?=isset($base_price) && $base_price>0 ? '': 'disabled="disabled"' ?> 
+					class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($percentage) ? $percentage : ''; ?>"  required readonly/>
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="price" class="control-label">Selling Price</label>
-			<input type="number" min="1" name="price" id="price" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($price) ? $price : ''; ?>"  required/>
+			<input type="number" min="1" name="price" id="price" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($price) ? $price : ''; ?>"  required readonly/>
 		</div>
 		<div class="row">
 			<div class="form-group col-6">
@@ -83,15 +84,36 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 </div>
 <script>
 	
-	$(function(){
+	$(document).ready(function(){
+		function computePrice(){
+			var base = $('#base_price').val() * 1;
+			var perc = $('#percentage').val() * 1;
+
+			var amount = (base * (perc/100)).toFixed(2);
+			$('#percentage_amount').val(amount);
+			var price = base + amount;
+			$('#price').val(price);
+		}
+		$('#product-form #percentage').change(function(e){
+            computePrice();
+		});
+		$('#product-form #base_price').change(function(e){
+			var base = $('#base_price').val();
+			if(base == 0 ){
+				$('#percentage').prop('disabled', true);
+				$('#percentage_sell').prop('disabled', true);
+			}else{
+				$('#percentage').prop('disabled', false);
+				$('#percentage_sell').prop('disabled', false);
+			}
+            computePrice();
+		});
+
         $('#engine_model').select2({
             placeholder:"Select Engine Model",
             width:'100%',
             containerCssClass:'form-control form-control-sm rounded-0'
-        })
-	
-	})
-	$(document).ready(function(){
+        });
 		$('#product-form').submit(function(e){
 			e.preventDefault();
             var _this = $(this)
@@ -120,11 +142,10 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
                             _this.prepend(el)
                             el.show('slow')
                             $("html, body,.modal").scrollTop(0);
-                            end_loader()
                     }else{
 						alert_toast("An error occured",'error');
-						end_loader();
 					}
+					end_loader();
 				}
 			})
 		})

@@ -77,11 +77,10 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
                             _this.prepend(el)
                             el.show('slow')
                             $("html, body,.modal").scrollTop(0);
-                            end_loader()
                     }else{
 						alert_toast("An error occured",'error');
-						end_loader();
 					}
+					end_loader();
 				}
 			})
 		})
