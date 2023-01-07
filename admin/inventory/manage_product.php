@@ -89,7 +89,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 			var base = $('#base_price').val() * 1;
 			var perc = $('#percentage').val() * 1;
 
-			var amount = (base * (perc/100)).toFixed(2);
+			var amount = (base * (perc/100)).toFixed(2) * 1;
 			$('#percentage_amount').val(amount);
 			var price = base + amount;
 			$('#price').val(price);
