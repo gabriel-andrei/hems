@@ -2,17 +2,19 @@
 				<colgroup>
 					<col width="5%">
 					<col width="10%">
-					<col width="15%">
-					<col width="20%">
+					<!-- <col width="15%"> -->
 					<col width="20%">
 					<col width="10%">
 					<col width="10%">
+					<col width="10%">
+					<col width="10%">
+
 				</colgroup>
 				<thead>
 					<tr>
 						<th class="text-center">#</th>
 						<th class="text-center">OR#/JO#</th>
-						<th class="text-center">Tin # of Customer</th>
+						<!-- <th class="text-center">Tin # of Customer</th> -->
 						<th class="text-center">Customer Name</th>
 						<th class="text-center">Particulars</th>
 						<th class="text-center">Amount</th>
@@ -44,7 +46,7 @@
 						<tr>
 							<td class="text-center"><?php echo $i++; ?></td>
 							<td class="text-center"><?= $row['code'] ?></td>
-							<td class="text-center"><?= $row['tin_number'] ?></td>
+							<!-- <td class="text-center"><?= $row['tin_number'] ?></td> -->
 							<td class="text-center"><?= $row['client_name'] ?></td>
 							<td class="text-center"><?= $row['product'] ?></td>
 							<td class="text-center"><?= format_num($row_amount,2) ?></td>
@@ -54,7 +56,7 @@
 					<?php endwhile; ?>
 				</tbody>
                 <tfoot>
-                    <th class="py-1 text-right" colspan="5">Grand Totals</th>
+                    <th class="py-1 text-right" colspan="4">Grand Totals</th>
                     <th class="py-1 text-center"><?= format_num($total_amount,2) ?></th>
                     <th class="py-1 text-center"><?= format_num($total_vat,2) ?></th>
                     <th class="py-1 text-center"><?= format_num($total,2) ?></th>

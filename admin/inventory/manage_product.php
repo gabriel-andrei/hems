@@ -28,15 +28,24 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 			<label for="name" class="control-label">Name</label>
 			<input type="text" name="name" id="name" class="form-control form-control-sm rounded-0" value="<?php echo isset($name) ? $name : ''; ?>"  required/>
 		</div>
-		<div class="form-group">
-			<label for="engine_model" class="control-label">Engine Model</label>
+		<div class="row">
+			<div class="form-group col-12">
+				<label for="engine_model" class="control-label">Engine Model</label>
 				<select name="engine_model" id="engine_model" class="form-control form-control-sm rounded-0" required>
-				<option value="" disabled selected></option>
-				<option value="4D56" <?php echo isset($engine_model) ? 'selected' : '' ?>>4D56</option>
-				<option value="4D33" <?php echo isset($engine_model) ? 'selected' : '' ?>>4D33</option>
-				<option value="4D32" <?php echo isset($engine_model) ? 'selected' : '' ?>>4D32</option>
+					<option value="" disabled selected></option>
+					<option value="4D56" <?php echo isset($engine_model) ? 'selected' : '' ?>>4D56</option>
+					<option value="4D33" <?php echo isset($engine_model) ? 'selected' : '' ?>>4D33</option>
+					<option value="4D32" <?php echo isset($engine_model) ? 'selected' : '' ?>>4D32</option>
+					</select>
 				</select>
-			</select>
+			</div>
+			
+			<!-- <div class="form-group col-6">
+				<label for="" class="control-label">&nbsp;</label>
+				<br/>
+				<input type="checkbox"name="status" id="status" class="form-check-input form-control form-control-sm rounded-0 w-100" data-on="Yes" data-off="No" data-bootstrap-switch value="status" <?php echo isset($status) && $status == 1 ? 'checked' : ''; ?>  />
+				<label for="status" class="form-check-label ml-1">Availability</label>
+			</div> -->
 		</div>
 		<div class="form-group">
 			<label for="base_price" class="control-label">Base Price</label>
@@ -79,6 +88,12 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 <script>
 	
 	$(document).ready(function(){
+
+		$("input[data-bootstrap-switch]").each(function(){
+			$(this).bootstrapSwitch();
+		})
+			$(".bootstrap-switch-handle-on").html('Available');
+			$(".bootstrap-switch-handle-off").html('Phased.Out');
 		function computePrice(){
 			var base = $('#base_price').val() * 1;
 			var perc = $('#percentage').val() * 1;
@@ -91,10 +106,10 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 		$('#product-form #base_price').change(function(e){
 			var base = $('#base_price').val();
 			if(base == 0 ){
-				$('#percentage').prop('disabled', true);
+				// $('#percentage').prop('disabled', true);
 				$('#select_percentage').prop('disabled', true);
 			}else{
-				$('#percentage').prop('disabled', false);
+				// $('#percentage').prop('disabled', false);
 				$('#select_percentage').prop('disabled', false);
 			}
             computePrice();
@@ -107,19 +122,21 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 		$('#product-form #select_percentage').change(function(e){
 			var select = $('#select_percentage').val();
 			if(select == 'custom' ){
-				$('.group-percentage').show();
+				// $('.group-percentage').show();
+				$('#percentage').prop('disabled', false);
 				$('#percentage').val(<?=isset($percentage) ? $percentage : ''?>);
 			}else{
-				$('.group-percentage').hide();
+				// $('.group-percentage').hide();
+				$('#percentage').prop('disabled', true);
 				$('#percentage').val(select);
 			}
             computePrice();
 		});
-		<?php if(isset($percentage) && $percentage%5 > 0):?>
-			$('.group-percentage').show();
-		<?php else:?>
-			$('.group-percentage').hide();
-		<?php endif;?>
+		// <?php if(isset($percentage) && $percentage%5 > 0):?>
+		// 	$('.group-percentage').show();
+		// <?php else:?>
+		// 	$('.group-percentage').hide();
+		// <?php endif;?>
 
         $('#engine_model').select2({
             placeholder:"Select Engine Model",

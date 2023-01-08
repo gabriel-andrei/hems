@@ -1,8 +1,8 @@
             <table class="table table-hover table-striped table-bordered">
 				<colgroup>
 					<col width="5%">
-					<col width="10%">
 					<col width="20%">
+					<col width="15%">
 					<col width="10%">
 					<col width="10%">
 					<col width="10%">
@@ -20,7 +20,7 @@
 				<tbody>
 					<?php 
 					
-					$sql = "SELECT report_date,COUNT(DISTINCT service_id) as services, SUM(price) as total FROM (
+					$sql = "SELECT report_date, COUNT(*) as services, SUM(price) as total FROM (
 								SELECT ts.*, DATE(tl.date_created) report_date
 									, tl.amount, (SELECT SUM(p.total_amount) payments
 										FROM payment_list p WHERE p.transaction_id=ts.transaction_id
@@ -44,7 +44,7 @@
 					?>
 						<tr>
 							<td class="text-center"><?php echo $i++; ?></td>
-							<td class="text-center"><?= date('M/d/Y', strtotime($row['report_date'])) ?></td>
+							<td class="text-center"><?= date('M d, Y', strtotime($row['report_date'])) ?></td>
 							<td class="text-center"><?= $row['services'] ?></td>
 							<td class="text-center"><?= format_num($row_amount,2) ?></td>
 							<td class="text-center"><?= format_num($vat_amount,2) ?></td>

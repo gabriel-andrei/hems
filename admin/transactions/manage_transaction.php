@@ -85,7 +85,7 @@ if(isset($_GET['id'])){
                                     </select>
                                 </div>
                             </div>
-                                <input type="hidden" name="chk_update_client_exclude" id="chk_update_client" class="form-control form-control-sm rounded-0" value="true" > 
+                            <input type="hidden" name="chk_update_client_exclude" id="chk_update_client" class="form-control form-control-sm rounded-0" value="true" > 
                         </div>
                         <div class="row">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -99,7 +99,7 @@ if(isset($_GET['id'])){
                             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                 <div class="form-group mb-3">
                                     <label for="contact" class="control-label">Client Contact #</label>
-                                    <input type="text" name="contact" id="contact" class="form-control form-control-sm rounded-0" value="<?= isset($contact) ? $contact : "" ?>"  <?= isset($id) ? "readonly" : "" ?> maxlength="11" minlength="11"/>
+                                    <input type="text" name="contact" id="contact" class="form-control form-control-sm rounded-0" value="<?= isset($contact) ? $contact : "" ?>"  <?= isset($id) ? "readonly" : "" ?>  data-inputmask="'mask': ['0999-999-9999']" data-mask/>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
@@ -111,7 +111,7 @@ if(isset($_GET['id'])){
                             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                 <div class="form-group mb-3">
                                     <label for="tin_number" class="control-label">Client Tin Number</label>
-                                    <input type="text" name="tin_number" id="tin_number" class="form-control form-control-sm rounded-0" value="<?= isset($tin_number) ? $tin_number : "" ?>" required="required" >
+                                    <input type="text" name="tin_number" id="tin_number" class="form-control form-control-sm rounded-0" value="<?= isset($tin_number) ? $tin_number : "" ?>" required="required"  data-inputmask="'mask': ['999-999-999-999']" data-mask>
                                 </div>
                             </div>
                         </div>
@@ -344,7 +344,25 @@ if(isset($_GET['id'])){
                             </div>
                         </div>
                         <div class="clear-fix mb-3"></div>
-                        <h4 class="text-black text-right">Total Payable Amount: <b id="amount"><?= isset($amount) ? format_num($amount) : "0.00" ?></b></h4>
+
+                        <div class="d-flex row">
+                            <div class="col-3 offset-7"><h4 class="text-black text-right">Total Amount:</h4></div>
+                            <div class="col-2"><h4 class="text-black text-right pr-2"> <b id="amount"><?= isset($amount) ? format_num($amount) : "0.00" ?></b></h4></div>
+                        </div>
+                        <?php if($payments>0):?>
+                        <div class="d-flex row">
+                                <div class="col-3 offset-7"><h4 class="text-black text-right">Total Payments:</h4></div>
+                                <div class="col-2"><h4 class="text-black text-right pr-2"> <b id="payments"><?= isset($payments) ? format_num($payments) : "0.00" ?></b></h4></div>
+                        </div>
+                        <div class="d-flex row">
+                                <hr class="col-5 offset-7"/>
+                        </div>
+                        <div class="d-flex row">
+                                <div class="col-3 offset-7"><h4 class="text-black text-right">Balance:</h4></div>
+                                <div class="col-2"><h4 class="text-black text-right pr-2"> <b id="balance"><?= isset($balance) ? number_format($balance, 2) : "0.00" ?></b></h4></div>
+                        </div>
+                        <?php endif; ?>
+
                         <hr>
                         <?php if($_settings->userdata('type') == 3 && !isset($id)): ?>
                             <input type="hidden" name="mechanic_id" value="<?= $_settings->userdata('id') ?>">
@@ -354,18 +372,18 @@ if(isset($_GET['id'])){
                             <legend>Assign</legend>
                             <div class="row">
                                 <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-                                    <select name="mechanic_id" id="mechanic_id" class="form-control form-control rounded-0">
+                                    <select name="mechanic_id" id="mechanic_id" class="form-control form-control rounded-0" >
                                         <option value="" disabled <?= !isset($mechanic_id) ? "selected" : "" ?>></option>
                                         <option value="" <?= isset($mechanic_id) && in_array($mechanic_id,[null,""]) ? "selected" : "" ?>>Unset</option>
                                         <?php 
                                         $mechanic_qry = $conn->query("SELECT m.*
-                                        , concat(firstname, ' ', coalesce(concat(middlename, ' '),''), lastname) as `name`
-                                        , SUM(IF(t.`status` =1 OR t.`status` =0 , 1, 0)) remaining
+                                            , concat(firstname, ' ', coalesce(concat(middlename, ' '),''), lastname) as `name`
+                                            , SUM(IF(t.`status` =1 OR t.`status` =0 , 1, 0)) remaining
                                                 from `mechanic_list` m
                                                 LEFT JOIN `transaction_list` t ON t.mechanic_id=m.id ". (isset($id)? ' AND t.id<>'.$id:'') ."
                                                 where delete_flag = 0 and m.`status` = 1 ".(isset($mechanic_id) && !is_null($mechanic_id) ? " or m.id = '{$mechanic_id}' " : '')."
                                                 GROUP BY m.id
-                                                order by SUM(IF(t.`status` =1 OR t.`status` =0 , 1, 0)) asc, `name`");
+                                                order by remaining asc, `name`");
                                         
                                                 while($row = $mechanic_qry->fetch_array()):
                                         ?>
@@ -463,6 +481,7 @@ if(isset($_GET['id'])){
         calc_total_amount()
     }
     $(function(){
+        $('[data-mask]').inputmask();
         $('select#client_id').select2({
             placeholder:"Select Client Records",
             width:'100%',

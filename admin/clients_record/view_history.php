@@ -39,10 +39,12 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 				<tbody>
 					<?php
 					$i = 1;
-						$qry = $conn->query("SELECT t.*, concat(firstname, ' ', lastname) mechanic, s.status_desc FROM `transaction_list` t 
+						$qry = $conn->query("SELECT t.*, concat(firstname, ' ', lastname) mechanic, s.status_desc 
+						FROM `transaction_list` t 
 						LEFT JOIN mechanic_list m ON m.id=mechanic_id
 						LEFT JOIN tbl_status s ON s.status_id=t.status
-						where client_id={$id} order by unix_timestamp(t.date_updated) desc ");
+						where client_id={$id} 
+						order by unix_timestamp(t.date_updated) desc ");
 						while($row = $qry->fetch_assoc()):
 					?>
 						<tr>

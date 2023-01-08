@@ -45,12 +45,12 @@
 						// endif;
 						
 						$qry = $conn->query("SELECT t.*, s.status_desc , COALESCE(SUM(p.total_amount), 0) payment, t.amount-COALESCE(SUM(p.total_amount), 0) balance
-						FROM `transaction_list` t 
-						LEFT JOIN payment_list p ON t.id=p.transaction_id
-							LEFT JOIN tbl_status s ON s.status_id=t.status
-						GROUP BY t.id
-						HAVING t.`status` < 2 OR (t.status =2 AND t.amount-COALESCE(SUM(p.total_amount), 0) > 0)
-						order by unix_timestamp(t.date_updated) desc ");
+							FROM `transaction_list` t 
+							LEFT JOIN payment_list p ON t.id=p.transaction_id
+								LEFT JOIN tbl_status s ON s.status_id=t.status
+							GROUP BY t.id
+							HAVING t.`status` < 2 OR (t.status =2 AND balance > 0)
+							order by unix_timestamp(t.date_updated) desc ");
 
 						while($row = $qry->fetch_assoc()):
 							$balance = $row['balance'];

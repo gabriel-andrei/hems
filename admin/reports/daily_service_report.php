@@ -25,7 +25,8 @@ $date = isset($_GET['date']) ? $_GET['date'] : date("Y-m-d"); ?>
                                         <option value="monthly" <?php echo isset($filtertype) && $filtertype=='monthly' ? 'selected' : '' ?>>Monthly</option>
                                         <option value="yearly" <?php echo isset($filtertype) && $filtertype=='yearly' ? 'selected' : '' ?>>Yearly</option>
                                         <option value="best_selling" <?php echo isset($filtertype) && $filtertype=='best_selling' ? 'selected' : '' ?>>Best Selling</option>
-                                        </select>                                
+                                        <option value="clients" <?php echo isset($filtertype) && $filtertype=='clients' ? 'selected' : '' ?>>Clients</option>
+                                    </select>                                
                                     </div>
                                 </div>
                             <div class="col-lg-2 col-md-6 col-sm-12 col-xs-12 date-view">
@@ -88,6 +89,8 @@ $date = isset($_GET['date']) ? $_GET['date'] : date("Y-m-d"); ?>
                 $('.date-label').html('Choose Month/Year');
 			}else if(select == 'yearly' ){
                 $('.date-label').html('Choose Year');
+            }else if(select == 'clients' ){
+                $('.date-label').html('Choose Date');
 			}else{
                 $('.date-label').html('Choose as-of Date');
 			}

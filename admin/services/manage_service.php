@@ -19,7 +19,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 				<OPTGROUP LABEL="">
 					<option value="" >New Service Name</option>
 				</OPTGROUP>
-				<OPTGROUP LABEL="Records">
+				<OPTGROUP LABEL="Existing Services">
 					<?php 
 						$mechanic_qry = $conn->query("SELECT distinct `service`
 							from `service_list` 
@@ -54,12 +54,12 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 			<option value="Heavy" <?php echo isset($cylinder) ? 'selected' : '' ?>>Heavy</option>
 			</select>
 		</div>
-		<!--
+	
 		<div class="form-group">
 			<label for="price" class="control-label">Price</label>
 			<input type="text" name="price" id="price" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($price) ? $price : ''; ?>"  required/>
 		</div>
-		
+			<!--
 		<div class="form-group">
 			<label for="status" class="control-label">Status</label>
 			<select name="status" id="status" class="form-control form-control-sm rounded-0" required>

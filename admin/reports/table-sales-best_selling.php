@@ -10,7 +10,7 @@
 				</colgroup>
 				<thead>
 					<tr>
-						<th class="text-center">#</th>
+						<th class="text-center">Top</th>
 						<th class="text-center">Engine Model</th>
 						<th class="text-center">Product</th>
 						<th class="text-center">Sold</th>
@@ -21,7 +21,7 @@
 				</thead>
 				<tbody>
 					<?php 
-					$sql = "SELECT product_id, name, engine_model, COUNT(DISTINCT product_id) as products, SUM(price) as total FROM (
+					$sql = "SELECT product_id, name, engine_model, SUM(qty) as products, SUM(price) as total FROM (
                         SELECT ts.*, pl.name, pl.engine_model, DATE(tl.date_created) report_date
                             , tl.amount, (SELECT SUM(p.total_amount) payments
                                 FROM payment_list p WHERE p.transaction_id=ts.transaction_id

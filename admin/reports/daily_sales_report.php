@@ -8,7 +8,7 @@ $filtertype = isset($_GET['filtertype'])?$_GET['filtertype'] : '';
 $date = isset($_GET['date']) ? $_GET['date'] : date("Y-m-d"); ?>
 <div class="card card-outline card-primary">
 	<div class="card-header">
-		<h3 class="card-title">Daily Sales Report</h3>
+		<h3 class="card-title">Sales Report</h3>
 	</div>
 	<div class="card-body">
 		<div class="container-fluid mb-3">
@@ -25,6 +25,7 @@ $date = isset($_GET['date']) ? $_GET['date'] : date("Y-m-d"); ?>
                                         <option value="monthly" <?php echo isset($filtertype) && $filtertype=='monthly' ? 'selected' : '' ?>>Monthly</option>
                                         <option value="yearly" <?php echo isset($filtertype) && $filtertype=='yearly' ? 'selected' : '' ?>>Yearly</option>
                                         <option value="best_selling" <?php echo isset($filtertype) && $filtertype=='best_selling' ? 'selected' : '' ?>>Best Selling</option>
+                                        <option value="clients" <?php echo isset($filtertype) && $filtertype=='clients' ? 'selected' : '' ?>>Clients</option>
                                         </select>                                
                                     </div>
                                 </div>
@@ -89,6 +90,8 @@ $date = isset($_GET['date']) ? $_GET['date'] : date("Y-m-d"); ?>
                 $('.date-label').html('Choose Month/Year');
 			}else if(select == 'yearly' ){
                 $('.date-label').html('Choose Year');
+            }else if(select == 'clients' ){
+                $('.date-label').html('Choose Date');
 			}else{
                 $('.date-label').html('Choose as-of Date');
 			}
