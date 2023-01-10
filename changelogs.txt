@@ -1,3 +1,10 @@
+01.10
+> Reports Services
+    - added clients statement report format
+> Reports Sales
+    - added clients statement report format
+
+
 01.07
 > Inventory
     - fixed preload bug when viewing Edit modal after viewing Add Stock modal

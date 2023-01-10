@@ -25,6 +25,7 @@ $date = isset($_GET['date']) ? $_GET['date'] : date("Y-m-d"); ?>
                                         <option value="monthly" <?php echo isset($filtertype) && $filtertype=='monthly' ? 'selected' : '' ?>>Monthly</option>
                                         <option value="yearly" <?php echo isset($filtertype) && $filtertype=='yearly' ? 'selected' : '' ?>>Yearly</option>
                                         <option value="best_selling" <?php echo isset($filtertype) && $filtertype=='best_selling' ? 'selected' : '' ?>>Best Selling</option>
+                                        <option value="clients" <?php echo isset($filtertype) && $filtertype=='clients' ? 'selected' : '' ?>>Clients</option>
                                         </select>                                
                                     </div>
                                 </div>
