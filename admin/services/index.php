@@ -14,7 +14,7 @@
 	<div class="card-body">
         <div class="container-fluid">
 			<div class="row align-items-end mb-2">
-                                        <div class="col-2">
+                                        <div class="col-3">
                                             <div class="form-group mb-0">
                                                 <label for="service_sel" class="control-label">Select Service</label>
                                                 <select name="service_sel" id="service_sel" class="form-control form-control-sm rounded-0" >
