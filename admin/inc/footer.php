@@ -77,6 +77,8 @@
     <script src="<?php echo base_url ?>plugins/chart.js/Chart.min.js"></script>
     <!-- Sparkline -->
     <script src="<?php echo base_url ?>plugins/sparklines/sparkline.js"></script>
+    <!-- Input Mask -->
+    <script src="<?php echo base_url ?>plugins/inputmask/jquery.inputmask.min.js"></script>
     <!-- Select2 -->
     <script src="<?php echo base_url ?>plugins/select2/js/select2.full.min.js"></script>
     <!-- JQVMap -->
@@ -95,6 +97,8 @@
     <script src="<?php echo base_url ?>plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
     <script src="<?php echo base_url ?>plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
     <script src="<?php echo base_url ?>plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="<?php echo base_url ?>plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+    
     <!-- overlayScrollbars -->
     <!-- <script src="<?php echo base_url ?>plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script> -->
     <!-- AdminLTE App -->

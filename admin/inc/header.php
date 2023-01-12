@@ -53,4 +53,9 @@
     </script>
     <script src="<?php echo base_url ?>dist/js/script.js"></script>
     
+<style>
+	.card-success.card-outline {
+		border-top: 3px solid #0E5A3B;
+	}
+</style>
   </head>

@@ -19,7 +19,7 @@
 				</thead>
 				<tbody>
 					<?php 
-					$sql = "SELECT client_id, client_name, COUNT(DISTINCT service_id) AS services, SUM(price) AS total 
+					$sql = "SELECT client_id, client_name, COUNT(*) AS services, SUM(price) AS total 
                         FROM (
                             SELECT ts.*, tl.client_id, tl.client_name, tl.tin_number,sl.service as `service`,tl.date_created 
                             , tl.amount, (SELECT SUM(p.total_amount) payments

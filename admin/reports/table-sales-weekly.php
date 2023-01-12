@@ -19,7 +19,7 @@
 				</thead>
 				<tbody>
 					<?php 
-					$sql = "SELECT report_date,COUNT(DISTINCT product_id) as products, SUM(price) as total FROM (
+					$sql = "SELECT report_date, SUM(qty) as products, SUM(price) as total FROM (
 								SELECT ts.*, DATE(tl.date_created) report_date
 									, tl.amount, (SELECT SUM(p.total_amount) payments
 										FROM payment_list p WHERE p.transaction_id=ts.transaction_id
@@ -43,7 +43,7 @@
 					?>
 						<tr>
 							<td class="text-center"><?php echo $i++; ?></td>
-							<td class="text-center"><?= date('l, M/d/Y', strtotime($row['report_date'])) ?></td>
+							<td class="text-center"><?= date('l, M d, Y', strtotime($row['report_date'])) ?></td>
 							<td class="text-center"><?= $row['products'] ?></td>
 							<td class="text-center"><?= format_num($row_amount,2) ?></td>
 							<td class="text-center"><?= format_num($vat_amount,2) ?></td>

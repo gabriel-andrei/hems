@@ -23,7 +23,7 @@
 				</thead>
 				<tbody>
 					<?php 
-					$sql = "SELECT service_id, service, service_sub, cylinder, COUNT(DISTINCT service_id) as services, SUM(price) as total FROM (
+					$sql = "SELECT service_id, service, service_sub, cylinder, COUNT(*) as services, SUM(price) as total FROM (
                         SELECT ts.*,sl.service as `service`, sl.service_sub, sl.cylinder, DATE(tl.date_created) report_date
                             , tl.amount, (SELECT SUM(p.total_amount) payments
                                 FROM payment_list p WHERE p.transaction_id=ts.transaction_id

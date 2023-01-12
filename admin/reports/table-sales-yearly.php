@@ -20,7 +20,7 @@
 				<tbody>
 					<?php 
 					
-					$sql = "SELECT DATE_FORMAT(report_date, '%M, %Y') as report_date,COUNT(DISTINCT product_id) as products, SUM(price) as total FROM (
+					$sql = "SELECT DATE_FORMAT(report_date, '%M, %Y') as report_date, SUM(qty) as products, SUM(price) as total FROM (
 								SELECT ts.*, DATE(tl.date_created) report_date
 									, tl.amount, (SELECT SUM(p.total_amount) payments
 										FROM payment_list p WHERE p.transaction_id=ts.transaction_id

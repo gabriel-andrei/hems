@@ -3,9 +3,6 @@
 	alert_toast("<?php echo $_settings->flashdata('success') ?>",'success')
 </script>
 <?php endif;?>
-<style>
-	
-</style>
 <div class="card card-outline card-primary">
 	<div class="card-header">
 		<h3 class="card-title">Transaction Payments</h3>
@@ -115,8 +112,10 @@
 				<tbody>
 				<?php 
 					$i = 1;
-						$qry = $conn->query("SELECT p.*, t.code FROM `payment_list` p
-						LEFT JOIN transaction_list t ON t.id=p.transaction_id order by `date_created` desc ");
+						$qry = $conn->query("SELECT p.*, t.code
+						FROM `payment_list` p
+						LEFT JOIN transaction_list t ON t.id=p.transaction_id
+						order by `date_created` desc ");
 						while($row = $qry->fetch_assoc()):
 					?>
 						<tr>

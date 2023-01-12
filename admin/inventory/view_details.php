@@ -1,9 +1,10 @@
 <?php
 require_once('../../config.php');
-
+//  total stocks - damged stocks -  sold stocks = available
 if(isset($_GET['id']) && $_GET['id'] > 0){
     $qry = $conn->query("SELECT *
-	, (coalesce((SELECT SUM(quantity) FROM `inventory_list` where product_id = product_list.id),0) 
+	, (coalesce((SELECT SUM(quantity) FROM `inventory_list` where product_id = product_list.id),0)
+		- coalesce((SELECT SUM(quantity) FROM `inventory_damaged` where product_id = product_list.id),0) 
 		- coalesce((SELECT SUM(tp.qty) FROM `transaction_products` tp inner join `transaction_list` tl on tp.transaction_id = tl.id where tp.product_id = product_list.id and tl.status != 3),0)) as `available`
 	,coalesce((SELECT SUM(tp.qty) FROM `transaction_products` tp inner join `transaction_list` tl on tp.transaction_id = tl.id where tp.product_id = product_list.id and tl.status != 3),0) as `sold` 
 	from `product_list` where id = '{$_GET['id']}' ");

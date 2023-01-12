@@ -19,7 +19,7 @@
 				</thead>
 				<tbody>
 					<?php 
-                    $qry = $conn->query("SELECT client_id, client_name, COUNT(DISTINCT product_id) AS products, SUM(price) AS total 
+                    $qry = $conn->query("SELECT client_id, client_name, SUM(qty) AS products, SUM(price) AS total 
                     FROM (
                         SELECT tp.*, tl.client_id, tl.client_name, tl.tin_number ,pl.name as product,tl.date_created 
                         , tl.amount, (SELECT SUM(p.total_amount) payments

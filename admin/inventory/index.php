@@ -60,12 +60,13 @@
 							order by IF(COALESCE(SUM(i.quantity),0) - COALESCE(SUM(d.quantity),0) > lowstock,1,0) asc
 								, COALESCE(SUM(i.quantity),0) - COALESCE(SUM(d.quantity),0) asc,  p.`name` asc");
 						while($row = $qry->fetch_assoc()):
+							$phasedout = $row['status'] == 0;
 							$lowstock = $row['lowstock'];
 							$available = $row['stocks']-$row['sold'];
 							$lowinstock = $available<$row['lowstock'];
 							$nostocks =  $available == 0;
 					?>
-						<tr class="<?= ($lowinstock || $nostocks)? 'bg-red':'' ?>" >
+						<tr class="<?= (!$phasedout && ($lowinstock || $nostocks))? 'bg-red':'' ?>" >
 							<td class="text-center"><?php echo $i++; ?></td>
 							<td class="text-center"><?php echo $row['engine_model'] ?></td>
 							<td class="text-center"><?php echo $row['name'] ?></td>

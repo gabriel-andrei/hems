@@ -196,7 +196,7 @@ if(isset($_GET['id'])){
                 <hr>
                 <div class="clear-fix mb-3"></div>
                 <div class="d-flex row">
-                        <div class="col-3 offset-7"><h4 class="text-black text-right">Total Payable Amount:</h4></div>
+                        <div class="col-3 offset-7"><h4 class="text-black text-right">Total Amount:</h4></div>
                         <div class="col-2"><h4 class="text-black text-right pr-2"> <b id="amount"><?= isset($amount) ? format_num($amount) : "0.00" ?></b></h4></div>
                 </div>
                 <?php if($payments>0):?>
