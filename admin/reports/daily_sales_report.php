@@ -8,7 +8,7 @@ $filtertype = isset($_GET['filtertype'])?$_GET['filtertype'] : '';
 $date = isset($_GET['date']) ? $_GET['date'] : date("Y-m-d"); ?>
 <div class="card card-outline card-primary">
 	<div class="card-header">
-		<h3 class="card-title">Daily Sales Report</h3>
+		<h3 class="card-title">Sales Report</h3>
 	</div>
 	<div class="card-body">
 		<div class="container-fluid mb-3">

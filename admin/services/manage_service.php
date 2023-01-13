@@ -19,7 +19,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 				<OPTGROUP LABEL="">
 					<option value="" >New Service Name</option>
 				</OPTGROUP>
-				<OPTGROUP LABEL="Existing Records">
+				<OPTGROUP LABEL="Existing Services">
 					<?php 
 						$mechanic_qry = $conn->query("SELECT distinct `service`
 							from `service_list` 

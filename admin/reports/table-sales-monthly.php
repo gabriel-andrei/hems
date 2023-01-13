@@ -1,8 +1,8 @@
             <table class="table table-hover table-striped table-bordered">
 				<colgroup>
 					<col width="5%">
-					<col width="10%">
 					<col width="20%">
+					<col width="10%">
 					<col width="10%">
 					<col width="10%">
 					<col width="10%">
@@ -44,7 +44,7 @@
 					?>
 						<tr>
 							<td class="text-center"><?php echo $i++; ?></td>
-							<td class="text-center"><?= date('M/d/Y', strtotime($row['report_date'])) ?></td>
+							<td class="text-center"><?= date('M d, Y', strtotime($row['report_date'])) ?></td>
 							<td class="text-center"><?= $row['products'] ?></td>
 							<td class="text-center"><?= format_num($row_amount,2) ?></td>
 							<td class="text-center"><?= format_num($vat_amount,2) ?></td>

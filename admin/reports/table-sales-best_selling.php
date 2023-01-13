@@ -10,7 +10,7 @@
 				</colgroup>
 				<thead>
 					<tr>
-						<th class="text-center">#</th>
+						<th class="text-center">Top</th>
 						<th class="text-center">Engine Model</th>
 						<th class="text-center">Product</th>
 						<th class="text-center">Sold</th>

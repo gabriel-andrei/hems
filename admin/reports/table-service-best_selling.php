@@ -11,7 +11,7 @@
 				</colgroup>
 				<thead>
 					<tr>
-						<th class="text-center">#</th>
+						<th class="text-center">Top</th>
 						<th class="text-center">Service</th>
 						<th class="text-center">Category</th>
 						<th class="text-center">Cylinder</th>
