@@ -236,7 +236,11 @@ if(isset($_GET['id'])){
         <div class="col-8 text-center">
             <div style="line-height:1em">
                 <h4 class="text-center"><p>Hatulan Engineering and Machine Shop</p></h4>
-                <h3 class="text-center"><b>Transaction Invoice</b></h3>
+                <?php if($balance > 0): ?>
+                    <h3 class="text-center"><b>Transaction Invoice</b></h3>
+                <?php else: ?>
+                        <h3 class="text-center"><b>Transaction Receipt</b></h3>
+				<?php endif; ?>
             </div>
         </div>
     </div>
