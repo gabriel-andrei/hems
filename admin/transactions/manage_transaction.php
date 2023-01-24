@@ -111,7 +111,7 @@ if(isset($_GET['id'])){
                             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                 <div class="form-group mb-3">
                                     <label for="tin_number" class="control-label">Client Tin Number</label>
-                                    <input type="text" name="tin_number" id="tin_number" class="form-control form-control-sm rounded-0" value="<?= isset($tin_number) ? $tin_number : "" ?>" required="required"  data-inputmask="'mask': ['999-999-999-999']" data-mask>
+                                    <input type="text" name="tin_number" id="tin_number" class="form-control form-control-sm rounded-0" value="<?= isset($tin_number) ? $tin_number : "" ?>" placeholder="(Optional)" data-inputmask="'mask': ['999-999-999-999']" data-mask>
                                 </div>
                             </div>
                         </div>
