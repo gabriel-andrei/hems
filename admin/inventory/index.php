@@ -79,8 +79,11 @@
 				                  </button>
 				                  <div class="dropdown-menu" role="menu">
 									<a class="dropdown-item new_stock" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-plus text-primary"></span> Add Stock</a>
-									<a class="dropdown-item new_damaged" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-trash text-primary"></span> Add Damaged</a>
-				                    <div class="dropdown-divider"></div>
+									<div class="dropdown-divider"></div>
+									<?php if($row['stocks'] != 0): ?>
+										<a class="dropdown-item new_damaged" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-exclamation-circle text-primary"></span> Add Damaged</a>
+										<div class="dropdown-divider"></div>
+									<?php endif; ?>
 				                    <a class="dropdown-item edit_data" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-edit text-primary"></span> Edit</a>
 				                  </div>
 							</td>
