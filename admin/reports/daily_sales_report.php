@@ -91,7 +91,7 @@ $date = isset($_GET['date']) ? $_GET['date'] : date("Y-m-d"); ?>
 			}else if(select == 'yearly' ){
                 $('.date-label').html('Choose Year');
             }else if(select == 'clients' ){
-                $('.date-label').html('Choose Date');
+                $('.date-label').html('Choose as-of Date');
 			}else{
                 $('.date-label').html('Choose as-of Date');
 			}

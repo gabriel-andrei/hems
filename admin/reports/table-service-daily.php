@@ -13,7 +13,7 @@
 				<thead>
 					<tr>
 						<th class="text-center">#</th>
-						<th class="text-center">OR#/JO#</th>
+						<th class="text-center">OR#</th>
 						<!--  <th class="text-center">Tin # of Customer</th> -->
 						<th class="text-center">Customer Name</th>
 						<th class="text-center">Service</th>

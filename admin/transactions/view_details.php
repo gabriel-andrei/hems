@@ -239,7 +239,7 @@ if(isset($_GET['id'])){
                 <?php if($balance > 0): ?>
                     <h3 class="text-center"><b>Transaction Invoice</b></h3>
                 <?php else: ?>
-                        <h3 class="text-center"><b>Proof of Payment</b></h3>
+                        <h3 class="text-center"><b>Transaction Invoice</b></h3>
 				<?php endif; ?>
             </div>
         </div>

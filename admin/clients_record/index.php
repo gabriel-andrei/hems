@@ -22,7 +22,7 @@
 					<col width="20%">
 					<!-- <col width="15%"> -->
 					<col width="5%">
-					<col width="5%">
+					<col width="10%">
 					<col width="5%">
 				</colgroup>
 				<thead>
@@ -33,7 +33,7 @@
 						<!-- <th class="text-center">TIN #</th> -->
 						<th class="text-center">Address</th>
 						<th class="text-center">Transactions</th>
-						<th class="text-center">Latest J.O.</th>
+						<th class="text-center">Latest Transaction</th>
 						<!-- <th class="text-center">Engine Model</th> -->
 						<th class="text-center">History</th>
 					</tr>

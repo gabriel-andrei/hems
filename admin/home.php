@@ -54,7 +54,7 @@
           </div>
           <!-- /.col -->
           <div class="col-12 col-sm-6 col-md-3">
-          <a href="<?php echo base_url ?>admin/?page=transactions" class="nav-link nav-transactions">
+          <a href="<?php echo base_url ?>admin/?page=clients_record" class="nav-link nav-clients_record">
             <div class="info-box">
               <span class="info-box-icon bg-gradient-success elevation-1"><i class="fas fa-file-invoice"></i></span>
 
@@ -62,7 +62,7 @@
                 <span class="info-box-text" style="color:black">Finished Transaction</span>
                 <span class="info-box-number" style="color:black">
                   <?php 
-                    $total = $conn->query("SELECT * FROM transaction_list where `status` = 2 ")->num_rows;
+                    $total = $conn->query("SELECT * FROM transaction_list WHERE status= '2' ")->num_rows;
                     echo format_num($total);
                   ?>
                   <?php ?>

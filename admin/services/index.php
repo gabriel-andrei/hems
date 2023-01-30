@@ -110,7 +110,7 @@
 								<div class="dropdown-menu" role="menu">
 									<a class="dropdown-item edit_data" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-edit text-primary"></span> Edit</a>
 									<div class="dropdown-divider"></div>
-									<a class="dropdown-item update_price" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-dollar-sign text-primary"></span>  Update Price</a>
+									<a class="dropdown-item update_price" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-dollar-sign text-primary"></span> Update Price</a>
 								</div>
 							</td>
 						</tr>

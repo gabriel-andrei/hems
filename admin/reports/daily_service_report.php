@@ -77,7 +77,7 @@ $date = isset($_GET['date']) ? $_GET['date'] : date("Y-m-d"); ?>
 </noscript>
 <script>
 	$(document).ready(function(){
-
+	  
 		$('#filtertype').change(function(e){
 			var select = $('#filtertype').val();
 			$('.date-view').show();
@@ -90,7 +90,7 @@ $date = isset($_GET['date']) ? $_GET['date'] : date("Y-m-d"); ?>
 			}else if(select == 'yearly' ){
                 $('.date-label').html('Choose Year');
             }else if(select == 'clients' ){
-                $('.date-label').html('Choose Date');
+                $('.date-label').html('Choose as-of Date');
 			}else{
                 $('.date-label').html('Choose as-of Date');
 			}
@@ -99,6 +99,8 @@ $date = isset($_GET['date']) ? $_GET['date'] : date("Y-m-d"); ?>
 		$('#filter-form').submit(function(e){
             e.preventDefault()
             location.href = "./?page=reports/daily_service_report&"+$(this).serialize()
+            var select = $('#filtertype').val();
+		
         })
         $('#filtertype').select2({
             placeholder:"Choose Filter",
