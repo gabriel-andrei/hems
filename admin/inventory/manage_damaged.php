@@ -33,7 +33,6 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 			<label for="inventory_id" class="control-label">Select Stock Batch</label>
 			<select name="inventory_id" id="inventory_id" class="form-control form-control-sm rounded-0" required>
 			<option value="" disabled selected></option>
-
 				<?php
 					$service_qry = $conn->query("SELECT  id, stock_date 
 						,  CONCAT(RIGHT(CONCAT('0000', product_id), 4),'-', RIGHT(CONCAT('00000', id), 5)) code
