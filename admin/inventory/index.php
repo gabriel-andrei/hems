@@ -24,7 +24,7 @@
         <div class="container-fluid">
 			<table class="table table-hover table-striped table-bordered" id="list">
 				<colgroup>
-					<col width="5%">
+					<!-- <col width="5%"> -->
 					<col width="10%">
 					<col width="20%">
 					<col width="10%">
@@ -33,7 +33,7 @@
 				</colgroup>
 				<thead>
 					<tr>
-						<th class="text-center">#</th>
+						<th class="text-center" style="display:none">#</th>
 						<th class="text-center">Engine Model</th>
 						<th class="text-center">Product Name</th>
 						<th class="text-center">Available Stock</th>
@@ -67,7 +67,7 @@
 							$nostocks =  $available == 0;
 					?>
 						<tr class="<?= (!$phasedout && ($lowinstock || $nostocks))? 'bg-red':'' ?>" >
-							<td class="text-center"><?php echo $i++; ?></td>
+							<td class="text-center" style="display:none"><?php echo $i++; ?></td>
 							<td class="text-center"><?php echo $row['engine_model'] ?></td>
 							<td class="text-center"><?php echo $row['name'] ?></td>
 							<td class="text-center"><?php echo $available ?></td>
@@ -112,7 +112,7 @@
         });
 		$('.table').dataTable({
 			columnDefs: [
-					{ orderable: false, targets: [4] }
+					{ orderable: false, targets: [3] }
 			],
 			order:[0,'asc']
 		});

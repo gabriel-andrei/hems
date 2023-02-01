@@ -63,10 +63,10 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 					<select name="payment_type" id="payment_type" class="form-control form-control-sm rounded-0" required>
 					<option value="" disabled selected></option>
 						<?php if($amount==$balance): ?>
-						<option value="Downpayment" <?php echo isset($payment_type) ? 'selected' : '' ?>>Downpayment</option>
-						<option value="Full Payment" <?php echo isset($payment_type) ? 'selected' : '' ?>>Full Payment</option>
+							<option value="Downpayment" <?php echo isset($payment_type) ? 'selected' : '' ?>>Downpayment</option>
+							<option value="Full Payment" <?php echo isset($payment_type) ? 'selected' : '' ?>>Full Payment</option>
 						<?php else: ?>
-						<option value="Pay Remaining Balance" <?php echo isset($payment_type) ? 'selected' : '' ?>>Pay Remaining Balance</option>
+							<option value="Pay Remaining Balance" <?php echo isset($payment_type) ? 'selected' : '' ?>>Pay Remaining Balance</option>
 						<?php endif; ?>
 					</select>
 				</select>
@@ -107,8 +107,8 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 			<div class="form-group col-6">
 				<label for="total_amount" class="control-label">Amount Paid</label>
 				<?php if($amount!=$balance): ?>
-				<input type="currency" name="total_amount" id="total_amount" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($price) ? $price : ''; ?>"  readonly/>
-
+					<input type="currency" name="total_amount" id="total_amount" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($price) ? $price : ''; ?>"  readonly/>
+				
 				<?php else: ?>
 				<input type="currency" name="total_amount" id="total_amount" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($price) ? $price : ''; ?>"  required/>
 				<?php endif; ?>
@@ -145,10 +145,14 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
         })
 		$('#payment_type').change(function() {
             var selected = $(this).val();
-			if (selected=='Full Payment' || selected=='Pay Remaining Balance')
+			if (selected=='Full Payment' || selected=='Pay Remaining Balance'){
 				$("#total_amount").val($("#balance").val());
-			else
+				$("#total_amount").prop("readonly",true);
+			}
+			else{
 				$("#total_amount").val($("#balance").val()/2);
+				$("#total_amount").prop("readonly",false);
+			}
 		})
 		$('#payment_bank').select2({
             placeholder:"Select Payor's Bank",
