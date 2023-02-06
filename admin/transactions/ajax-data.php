@@ -31,7 +31,7 @@ if(isset($_POST['type'])){
             FROM `product_list` where engine_model='{$value}' AND delete_flag = 0 and `status` = 1 GROUP BY name HAVING available-used > 0 order by `engine_model`");
         if ($result && $result->num_rows > 0){
             while($row = $result->fetch_assoc()){
-                echo '<option value="'.$row['id'].'" data-price="'.$row['price'].'" >'.$row['name'].' @ ₱'.number_format($row['price'], 2).'</option>';
+                echo '<option value="'.$row['id'].'" data-price="'.$row['price'].'" >'.$row['name'].' @ ₱'.number_format($row['price'], 2).' ('.$row['available'].' items left)</option>';
             }
         }else
         echo '<option value="" ></option>';

@@ -15,18 +15,24 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
         <input type="hidden" name="id" value="<?= isset($id) ? $id : '' ?>">
         <input type="hidden" name="old_status" value="<?= isset($status) ? $status : '' ?>">
         <div class="row">
-            <div class="form-group mb-3 col-6">
+            <div class="form-group mb-3 col-3">
                 <label for="status" class="control-label">Status</label>
                 <select name="status" id="status" class="form-control rounded-0">
-                    <option value="0" <?= isset($status) && $status == 0 ? "selected" : "" ?>>Pending</option>
-                    <option value="1" <?= isset($status) && $status == 1 ? "selected" : "" ?>>On-Progress</option>
-                    <option value="2" <?= isset($status) && $status == 2 ? "selected" : "" ?>>Done</option>
-                    <option value="3" <?= isset($status) && $status == 3 ? "selected" : "" ?>>Cancelled</option>
+                    <?php    
+                        $tp_qry = $conn->query("SELECT * FROM tbl_status");
+                        while($row = $tp_qry->fetch_assoc()): if($row['status_id'] < $status ) continue; ?>
+                        <option value="<?=$row['status_id']?>" <?= $status == $row['status_id'] ? "selected" : "" ?>><?=$row['status_desc']?></option>
+                    <?php endwhile; ?>
                 </select>
             </div>
-            <div class="form-group mb-3 col-6">
+            <div class="form-group mb-3 col-3">
                 <label for="date_effect" class="control-label">Date/Time</label>
                 <input type="datetime-local" name="date_effect" id="date_effect" class="form-control rounded-0" required="required">
+            </div>
+            <div class="form-group mb-3 col-6">
+                <label for="remarks" class="control-label">Remarks</label>
+                <input type="text" name="remarks" id="remarks" class="form-control rounded-0" required="required">
+                <!-- <textarea name="remarks" id="remarks" class="form-control rounded-0" ></textarea> -->
             </div>
         </div>
     </form>
@@ -44,6 +50,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
                                                 <th class="text-center">Previous</th>
                                                 <th class="text-center">Present</th>
                                                 <th class="text-center">Date/Time</th>
+                                                <th class="text-center">Remarks</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -60,7 +67,9 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
                                                 <td class="text-center"><?=$row['old_status_desc']  ?></td>
                                                 <td class="text-center"><?=$row['new_status_desc']  ?></td>
                                                 <td class="text-center"><?=$row['date_effect']  ?></td>
+                                                <td class=""><?=$row['remarks']  ?></td>
                                             </tr>
+                            
                                         <?php endwhile; ?>
                                         </tbody>
                                     </table>

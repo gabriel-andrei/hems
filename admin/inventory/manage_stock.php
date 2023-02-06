@@ -28,9 +28,15 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 			<label for="unit" class="control-label">Unit</label>
 			<input type="text" name="unit" id="unit" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($unit) ? $unit : ''; ?>"  required/>
 		</div>
-		<div class="form-group">
-			<label for="stock_date" class="control-label">Stock-In Date</label>
-			<input type="date" name="stock_date" id="stock_date" class="form-control form-control-sm rounded-0 text-right" value="<?php echo isset($stock_date) ? date("Y-m-d", strtotime($stock_date)) : ""; ?>" max="<?= date("Y-m-d") ?>"  required/>
+		<div class="row">
+			<div class="form-group col-6">
+				<label for="stock_date" class="control-label">Stock-In Date</label>
+				<input type="date" name="stock_date" id="stock_date" class="form-control form-control-sm rounded-0 text-right" value="<?php echo isset($stock_date) ? date("Y-m-d", strtotime($stock_date)) : ""; ?>" max="<?= date("Y-m-d") ?>"  required/>
+			</div>
+			<div class="form-group col-6">
+				<label for="effective_date" class="control-label">Effectivity Date</label>
+				<input type="date" name="effective_date" id="effective_date" class="form-control form-control-sm rounded-0 text-right" value="<?php echo isset($effective_date) ? date("Y-m-d", strtotime($effective_date)) : ""; ?>" required/>
+			</div>
 		</div>
 	</form>
 </div>

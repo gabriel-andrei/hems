@@ -2,12 +2,19 @@
 
 require_once('../../config.php');
 if(isset($_GET['id']) && $_GET['id'] > 0){
-    $qry = $conn->query("SELECT i.* from `product_list` i where id = '{$_GET['id']}' ");
+    $qry = $conn->query("SELECT p.*, COALESCE(SUM(i.quantity),0) - COALESCE(SUM(d.quantity),0) stocks , COALESCE(SUM(t.qty),0) sold 
+	from `product_list` p
+	LEFT JOIN inventory_list i ON p.id=i.product_id
+	LEFT JOIN inventory_damaged d ON d.inventory_id=i.id
+	LEFT JOIN transaction_products t ON p.id=t.product_id 
+	where p.delete_flag = 0 and p.id = '{$_GET['id']}'
+	GROUP BY p.id");
     if($qry->num_rows > 0){
         foreach($qry->fetch_assoc() as $k => $v){
             $$k=$v;
         }
     }
+	$available = $stocks-$sold;
 }
 ?>
 
@@ -23,7 +30,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 		</div>
 		<div class="form-group">
 			<label for="quantity" class="control-label">Quantity</label>
-			<input type="number" min="1" name="quantity" id="quantity" class="form-control form-control-sm rounded-0 text-left" value=""  required/>
+			<input type="number" min="1" name="quantity" id="quantity" class="form-control form-control-sm rounded-0 text-left" value=""  max="<?=$available?>" required/>
 		</div>
 		<div class="form-group">
 			<label for="unit" class="control-label">Unit</label>

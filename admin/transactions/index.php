@@ -103,7 +103,7 @@
 		})
 
 		$('.update_status').click(function(){
-			uni_modal("<i class='fa fa-edit'></i> Update Status","transactions/update_status.php?source='list'&id="+$(this).attr('data-id'))
+			uni_modal("<i class='fa fa-edit'></i> Update Status","transactions/update_status.php?source='list'&id="+$(this).attr('data-id'), 'modal-xl')
 			$('#uni_modal #submit').show();
 		})
 

@@ -503,8 +503,8 @@ Class Master extends DBConnection {
 		extract($_POST);
 		$update = $this->conn->query("UPDATE `transaction_list` set `status` = '{$status}' where id = '{$id}'");
 		if($update){
-			$sql = "INSERT INTO `trans_status_logs` (`trans_id`, `new_status`, `from_status`, `date_effect`, `user_id`, `date_changed`) 
-				VALUES ('{$id}', '{$status}', '{$old_status}', '{$date_effect}', '{$user_id}', CURRENT_TIMESTAMP());";
+			$sql = "INSERT INTO `trans_status_logs` (`trans_id`, `new_status`, `from_status`, `remarks`, `date_effect`, `user_id`, `date_changed`) 
+				VALUES ('{$id}', '{$status}', '{$old_status}', '{$remarks}', '{$date_effect}', '{$user_id}', CURRENT_TIMESTAMP());";
 			$this->conn->query($sql);
 			if($status == 3){ // cancelled; should cancel also the transaction payments
 				$sql = "UPDATE payment_list SET status=0 WHERE transaction_id='{$id}'";
