@@ -1,7 +1,7 @@
 02.06
 > Database
-    - added field for remarks in trans_status_logs table
-    - added field for effective_date in inventory_list table
+    - added field for remarks (VARCHAR(250)) in trans_status_logs table
+    - added field for effective_date (DATE) in inventory_list table
 > Transactions > Manage
     - displays available number of stocks per items in the product dropdown list
 > Transactions > Update Status

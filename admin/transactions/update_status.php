@@ -20,7 +20,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
                 <select name="status" id="status" class="form-control rounded-0">
                     <?php    
                         $tp_qry = $conn->query("SELECT * FROM tbl_status");
-                        while($row = $tp_qry->fetch_assoc()): if($row['status_id'] < $status ) continue; ?>
+                        while($row = $tp_qry->fetch_assoc()): if($row['status_id'] <= $status ) continue; ?>
                         <option value="<?=$row['status_id']?>" <?= $status == $row['status_id'] ? "selected" : "" ?>><?=$row['status_desc']?></option>
                     <?php endwhile; ?>
                 </select>
