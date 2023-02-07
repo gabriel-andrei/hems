@@ -42,6 +42,8 @@
 
      <!-- jQuery -->
     <script src="<?php echo base_url ?>plugins/jquery/jquery.min.js"></script>
+     <!-- jQuery Validate -->
+    <script src="<?php echo base_url ?>plugins/jquery-validation/jquery.validate.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
     <script src="<?php echo base_url ?>plugins/jquery-ui/jquery-ui.min.js"></script>
     <!-- SweetAlert2 -->

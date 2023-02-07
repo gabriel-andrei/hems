@@ -1,3 +1,9 @@
+02.07
+> Transaction>Manage
+    - limits the product quantity according to available stocks
+> Inventory>Damaged
+    - limits the quantity according to available stocks
+
 02.06
 > Database
     - added field for remarks (VARCHAR(250)) in trans_status_logs table

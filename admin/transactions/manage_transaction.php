@@ -309,9 +309,17 @@ if(isset($_GET['id'])){
                                         <?php 
                                             $product_total = 0;
                                             if(isset($id)):
-                                            $tp_qry = $conn->query("SELECT tp.*, p.name as `product`, engine_model FROM `transaction_products` tp inner join `product_list` p on tp.product_id = p.id where tp.`transaction_id` = '{$id}' ");
+                                            $tp_qry = $conn->query("SELECT tp.*, p.name as `product`, engine_model 
+                                            , coalesce((SELECT COALESCE(SUM(i.quantity),0)- COALESCE(SUM(d.quantity),0) FROM `inventory_list` i LEFT JOIN `inventory_damaged` d ON d.product_id=i.product_id AND i.id=d.inventory_id where i.product_id = p.id),0) available
+                                            , coalesce((SELECT SUM(tpp.qty) FROM `transaction_products` tpp 
+                                                            inner join `transaction_list` tl on tpp.transaction_id = tl.id 
+                                                            where tpp.product_id = p.id and tl.status != 3 AND tpp.`transaction_id` <> '{$id}' ),0) used
+                                            FROM `transaction_products` tp 
+                                            inner join `product_list` p on tp.product_id = p.id 
+                                            where tp.`transaction_id` = '{$id}' ");
                                             while($row = $tp_qry->fetch_assoc()):
                                                 $product_total += ($row['price'] * $row['qty']);
+                                                $product_stocks = ($row['available']-$row['used']);
                                         ?>
                                             <tr>
                                                 <td class="text-center"><?=$row['engine_model']  ?></td>
@@ -320,7 +328,7 @@ if(isset($_GET['id'])){
                                                     <input class="product_sub_price" type="hidden" name="product_price[]" value="<?= $row['price'] ?>">
                                                     <span class="product_name"><?= $row['product'] ?></span>
                                                 </td>
-                                                <td class="text-center"><input type="number" min="1" class="form-control form-control-sm rounded-0 text-center" name="product_qty[]" value="<?= $row['qty'] ?>" <?= ($payments == 0)? '':'readonly'?> ></td>
+                                                <td class="text-center"><input type="number" min="1" class="form-control form-control-sm rounded-0 text-center" name="product_qty[]" value="<?= $row['qty'] ?>" max="<?= $product_stocks ?>" <?= ($payments == 0)? '':'readonly'?> ></td>
                                                 
                                                 <td class="text-center product_price"><?= format_num($row['price']) ?></td>
                                                 <td class="text-center">
@@ -634,6 +642,7 @@ if(isset($_GET['id'])){
             var engineModelName = $('#engine_model_sel option[value="'+id2+'"]').text()
 
             var price = $('#product_sel option[value="'+id+'"]').attr('data-price')
+            var available = $('#product_sel option[value="'+id+'"]').attr('data-available')
             var tr = $($('noscript#product-clone').html()).clone()
             tr.find('input[name="product_id[]"]').val(id)
             tr.find('input[name="product_price[]"]').val(price)
@@ -642,6 +651,8 @@ if(isset($_GET['id'])){
 
             tr.find('.product_price').text(parseFloat(price).toLocaleString())
             tr.find('.product_total').text(parseFloat(price).toLocaleString())
+
+            tr.find('input[name="product_qty[]"]').attr('max', available)
             $('#product-list tbody').append(tr)
             calc_product()
             tr.find('.rem-product').click(function(){
