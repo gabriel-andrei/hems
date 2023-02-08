@@ -96,21 +96,21 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 			</div>
 			<div class="form-group col-6">
 				<label for="cheque_number" class="control-label">Cheque Number</label><br>
-				<input type="text" name="cheque_number" id="cheque_number" class="form-control form-control-sm rounded-0 text-left" value="" />
+				<input type="text" oninput="numbersOnly(this)" name="cheque_number" id="cheque_number" class="form-control form-control-sm rounded-0 text-left" value="" />
 			</div>
 		</div>
 		<div class="row">
 			<div class="form-group col-6">
 				<label for="ornumber" class="control-label">OR Number</label><br>
-					<input type="text" name="ornumber" id="ornumber" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($ornumber) ? $ornumber : ''; ?>" placeholder="(Optional)"/>
+					<input type="text" oninput="numbersOnly(this)" name="ornumber" id="ornumber" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($ornumber) ? $ornumber : ''; ?>" placeholder="(Optional)"/>
 			</div>	
 			<div class="form-group col-6">
 				<label for="total_amount" class="control-label">Amount Paid</label>
 				<?php if($amount!=$balance): ?>
-					<input type="currency" name="total_amount" id="total_amount" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($price) ? $price : ''; ?>"  readonly/>
+					<input type="currency" oninput="numbersOnly(this)" name="total_amount" id="total_amount" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($price) ? $price : ''; ?>"  readonly/>
 				
 				<?php else: ?>
-				<input type="currency" name="total_amount" id="total_amount" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($price) ? $price : ''; ?>"  required/>
+				<input type="currency" oninput="numbersOnly(this)" name="total_amount" id="total_amount" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($price) ? $price : ''; ?>"  required/>
 				<?php endif; ?>
 
 			</div>
@@ -118,6 +118,20 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 		
 	</form>
 </div>
+<script type="text/javascript">
+	function lettersOnly(input){
+			var regex = /[^a-z, ]/gi;
+			input.value = input.value.replace(regex,"");
+	}	
+	function numbersOnly(input){
+			var regex = /[^0-9]/g;
+			input.value = input.value.replace(regex,"");
+	}			
+    function lettersAndNumbers(input){
+			var regex = /[^0-9,^aA-zZ]/g;
+			input.value = input.value.replace(regex,"");
+	}	
+</script>
 <script>
 
 	$(function(){

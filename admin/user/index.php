@@ -96,11 +96,11 @@
 		});
 
 		$('.edit_user').click(function(){
-			uni_modal("<i class='fa fa-edit'></i> Transaction Details","user/edit_user.php?source='list'&id="+$(this).attr('data-id'), 'modal-xl')
+			uni_modal("<i class='fa fa-edit'></i> Edit User","user/edit_user.php?source='list'&id="+$(this).attr('data-id'), 'modal-xl')
 			$('#uni_modal #submit').hide();
 		})
 		$('.manage_user').click(function(){
-			uni_modal("<i class='fa fa-edit'></i> Transaction Details","user/manage_user.php", 'modal-xl')
+			uni_modal("<i class='fa fa-edit'></i> Create User","user/manage_user.php", 'modal-xl')
 			$('#uni_modal #submit').hide();
 		})
 		$('.dataTable td,.dataTable th').addClass('py-1 px-2 align-middle')

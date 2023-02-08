@@ -35,12 +35,12 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 		</div>
 		<div class="form-group group-service">
 			<label for="percentage" class="control-label">Specify Service Name</label>
-			<input type="service" min="0" name="service" id="service" 
+			<input type="service" min="0" oninput="lettersOnly(this)" name="service" id="service" 
 				class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($service) ? $service : ''; ?>"  required/>
 		</div>
 		<div class="form-group">
 			<label for="service_sub" class="control-label">Service Sub Category</label>
-			<textarea type="text" name="service_sub" id="service_sub" class="form-control form-control-sm rounded-0" required><?php echo isset($service_sub) ? $service_sub : ''; ?></textarea>
+			<textarea type="text" oninput="lettersOnly(this)" name="service_sub" id="service_sub" class="form-control form-control-sm rounded-0" required><?php echo isset($service_sub) ? $service_sub : ''; ?></textarea>
 		</div>
 		<div class="form-group">
 			<label for="cylinder" class="control-label">Cylinder</label>
@@ -57,7 +57,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 	
 		<div class="form-group">
 			<label for="price" class="control-label">Price</label>
-			<input type="text" name="price" id="price" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($price) ? $price : ''; ?>"  required/>
+			<input type="text" oninput="numbersOnly(this)" name="price" id="price" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($price) ? $price : ''; ?>"  required/>
 		</div>
 			<!--
 		<div class="form-group">
@@ -107,6 +107,20 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 </div>
 	</form>
 </div>
+<script type="text/javascript">
+	function lettersOnly(input){
+			var regex = /[^a-z, ]/gi;
+			input.value = input.value.replace(regex,"");
+	}	
+	function numbersOnly(input){
+			var regex = /[^0-9]/g;
+			input.value = input.value.replace(regex,"");
+	}			
+    function lettersAndNumbers(input){
+			var regex = /[^0-9,^aA-zZ]/g;
+			input.value = input.value.replace(regex,"");
+	}	
+</script>
 <script>
 		<?php if(isset($service)):?>
 			$('.group-service').hide();

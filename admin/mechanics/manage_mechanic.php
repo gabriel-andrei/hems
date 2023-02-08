@@ -15,15 +15,15 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 		<input type="hidden" name ="id" value="<?php echo isset($id) ? $id : '' ?>">
 		<div class="form-group">
 			<label for="firstname" class="control-label">First Name</label>
-			<input type="text" name="firstname" id="firstname" class="form-control form-control-sm rounded-0" value="<?php echo isset($firstname) ? $firstname : ''; ?>"  required/>
+			<input type="text" oninput="lettersOnly(this)" name="firstname" id="firstname" class="form-control form-control-sm rounded-0" value="<?php echo isset($firstname) ? $firstname : ''; ?>"  required/>
 		</div>
 		<div class="form-group">
 			<label for="middlename" class="control-label">Middle Name</label>
-			<input type="text" name="middlename" id="middlename" class="form-control form-control-sm rounded-0" value="<?php echo isset($middlename) ? $middlename : ''; ?>"  placeholder="(Optional)"/>
+			<input type="text" oninput="lettersOnly(this)" name="middlename" id="middlename" class="form-control form-control-sm rounded-0" value="<?php echo isset($middlename) ? $middlename : ''; ?>"  placeholder="(Optional)"/>
 		</div>
 		<div class="form-group">
 			<label for="lastname" class="control-label">Last Name</label>
-			<input type="text" name="lastname" id="lastname" class="form-control form-control-sm rounded-0" value="<?php echo isset($lastname) ? $lastname : ''; ?>"  required/>
+			<input type="text" oninput="lettersOnly(this)" name="lastname" id="lastname" class="form-control form-control-sm rounded-0" value="<?php echo isset($lastname) ? $lastname : ''; ?>"  required/>
 		</div>
 		<!--
 		<div class="form-group">
@@ -36,6 +36,20 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 		-->
 	</form>
 </div>
+<script type="text/javascript">
+	function lettersOnly(input){
+			var regex = /[^a-z ]/gi;
+			input.value = input.value.replace(regex,"");
+	}	
+	function numbersOnly(input){
+			var regex = /[^0-9]/g;
+			input.value = input.value.replace(regex,"");
+	}			
+    function lettersAndNumbers(input){
+			var regex = /[^0-9,^aA-zZ]/g;
+			input.value = input.value.replace(regex,"");
+	}	
+</script>
 <script>
 	$(document).ready(function(){
 		$('#mechanic-form').submit(function(e){

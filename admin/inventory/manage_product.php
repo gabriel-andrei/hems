@@ -20,13 +20,14 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 		object-fit:scale-down;
 		object-position:center center;
 	}
+
 </style>
 <div class="container-fluid">
 	<form action="" id="product-form">
 		<input type="hidden" name ="id" value="<?php echo isset($id) ? $id : '' ?>">
 		<div class="form-group">
 			<label for="name" class="control-label">Name</label>
-			<input type="text" name="name" id="name" class="form-control form-control-sm rounded-0" value="<?php echo isset($name) ? $name : ''; ?>"  required/>
+			<input type="text" oninput="lettersOnly(this)" name="name" id="name" class="form-control form-control-sm rounded-0" value="<?php echo isset($name) ? $name : ''; ?>"  required/>
 		</div>
 		<div class="row">
 			<div class="form-group col-12">
@@ -49,7 +50,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 		</div>
 		<div class="form-group">
 			<label for="base_price" class="control-label">Base Price</label>
-			<input type="number" min="1" name="base_price" id="base_price" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($base_price) ? $base_price : ''; ?>"  required/>
+			<input type="number" min="1" max="9999999" oninput="numbersOnly(this)" name="base_price" id="base_price" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($base_price) ? $base_price : ''; ?>"  required/>
 		</div>
 		<div class="row">
 			<div class="form-group col-6">
@@ -64,7 +65,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 			</div>
 			<div class="form-group col-6 group-percentage">
 				<label for="percentage" class="control-label">Specify Percentage</label>
-				<input type="number" min="0" name="percentage" id="percentage" <?=isset($base_price) && $base_price>0 ? '': 'disabled="disabled"' ?> 
+				<input type="number" min="0" max="100" oninput="numbersOnly(this)" name="percentage" id="percentage" <?=isset($base_price) && $base_price>0 ? '': 'disabled="disabled"' ?> 
 					class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($percentage) ? $percentage : ''; ?>"  required/>
 			</div>
 		</div>
@@ -75,19 +76,41 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 		<div class="row">
 			<div class="form-group col-6">
 				<label for="unit" class="control-label">Unit</label>
-				<input type="text" name="unit" id="unit" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($unit) ? $unit : ''; ?>"  required/>
+                <select name="unit" id="unit" class="form-control form-control-sm rounded-0 text-left" required>
+					<option value="" disabled selected></option>
+                    <option value="pieces" <?php echo isset($unit) ? 'selected' : '' ?>>pieces</option>
+                    <option value="liters" <?php echo isset($unit) ? 'selected' : '' ?>>liters</option>
+                    <option value="boxes" <?php echo isset($unit) ? 'selected' : '' ?>>boxes</option>
+					<option value="custom" <?php echo isset($unit) ? 'selected' : '' ?>>Custom</option>
+                </select>
 			</div>
-			<div class="form-group col-6">
-				<label for="lowstock" class="control-label">Low Stock (Lowest Limit Value)</label>
-				<input type="number" min="1" name="lowstock" id="lowstock" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($lowstock) ? $lowstock : ''; ?>"  required/>
+			<div class="form-group col-6 group-unit">
+				<label for="custom_unit" class="control-label">Specify Unit</label>
+				<input type="text" oninput="lettersOnly(this)" name="unit" id="custom_unit" disabled="disabled" 
+					class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($unit) ? $unit : ''; ?>"  required/>
 			</div>
+			
 		</div>
-		
+		<div class="form-group">
+				<label for="lowstock" class="control-label">Low Stock (Lowest Limit Value)</label>
+				<input type="number" min="1" max="1000" oninput="numbersOnly(this)" name="lowstock" id="lowstock" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($lowstock) ? $lowstock : ''; ?>"  required/>
+			</div>
 	</form>
 </div>
+<script type="text/javascript">
+	function lettersOnly(input){
+			var regex = /[^a-z, ]/gi;
+			input.value = input.value.replace(regex,"");
+	}	
+	function numbersOnly(input){
+			var regex = /[^0-9]/g;
+			input.value = input.value.replace(regex,"");
+	}			
+</script>
 <script>
 	
 	$(document).ready(function(){
+		$('[data-mask]').inputmask();
 
 		$("input[data-bootstrap-switch]").each(function(){
 			$(this).bootstrapSwitch();
@@ -102,7 +125,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 			var price = base + amount;
 			$('#price').val(price);
 		}
-
+		
 		$('#product-form #base_price').change(function(e){
 			var base = $('#base_price').val();
 			if(base == 0 ){
@@ -117,6 +140,18 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 
 		$('#product-form #percentage').change(function(e){
             computePrice();
+		});
+
+		$('#unit').change(function(e){
+			var select = $('#unit').val();
+			if(select == 'custom' ){
+				// $('.group-percentage').show();
+				$('#custom_unit').prop('disabled', false);
+			}else{
+				// $('.group-percentage').hide();
+				$('#custom_unit').prop('disabled', true);
+				$('#unit').val(select);
+			}
 		});
 
 		$('#product-form #select_percentage').change(function(e){

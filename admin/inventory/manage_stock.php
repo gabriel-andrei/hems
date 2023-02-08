@@ -22,11 +22,11 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 		</div>
 		<div class="form-group">
 			<label for="quantity" class="control-label">Quantity</label>
-			<input type="number" min="1" name="quantity" id="quantity" class="form-control form-control-sm rounded-0 text-left" value=""  required/>
+			<input type="number" min="1" max="100" oninput="numbersOnly(this)" min="1" name="quantity" id="quantity" class="form-control form-control-sm rounded-0 text-left" value=""  required/>
 		</div>
 		<div class="form-group">
 			<label for="unit" class="control-label">Unit</label>
-			<input type="text" name="unit" id="unit" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($unit) ? $unit : ''; ?>"  required/>
+			<input type="text" name="unit" id="unit" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($unit) ? $unit : ''; ?>"  readonly/>
 		</div>
 		<div class="row">
 			<div class="form-group col-6">
@@ -40,7 +40,16 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 		</div>
 	</form>
 </div>
-
+<script type="text/javascript">
+	function lettersOnly(input){
+			var regex = /[^a-z, ]/gi;
+			input.value = input.value.replace(regex,"");
+	}	
+	function numbersOnly(input){
+			var regex = /[^0-9]/g;
+			input.value = input.value.replace(regex,"");
+	}			
+</script>
 <script>
 	$(document).ready(function(){
 		$('#inventory-form').submit(function(e){

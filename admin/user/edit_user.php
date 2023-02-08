@@ -19,11 +19,11 @@ foreach($user->fetch_array() as $k =>$v){
 				<input type="hidden" name="id" value="<?php echo $_settings->userdata('id') ?>">
 				<div class="form-group">
 					<label for="name">First Name</label>
-					<input type="text" name="firstname" id="firstname" class="form-control" value="<?php echo isset($meta['firstname']) ? $meta['firstname']: '' ?>" required>
+					<input type="text" oninput="lettersOnly(this)" name="firstname" id="firstname" class="form-control" value="<?php echo isset($meta['firstname']) ? $meta['firstname']: '' ?>" required>
 				</div>
 				<div class="form-group">
 					<label for="name">Last Name</label>
-					<input type="text" name="lastname" id="lastname" class="form-control" value="<?php echo isset($meta['lastname']) ? $meta['lastname']: '' ?>" required>
+					<input type="text" oninput="lettersOnly(this)" name="lastname" id="lastname" class="form-control" value="<?php echo isset($meta['lastname']) ? $meta['lastname']: '' ?>" required>
 				</div>
 				<div class="form-group">
 					<label for="username">Username</label>
@@ -63,6 +63,20 @@ foreach($user->fetch_array() as $k =>$v){
 		border-radius: 100% 100%;
 	}
 </style>
+<script type="text/javascript">
+	function lettersOnly(input){
+			var regex = /[^a-z ]/gi;
+			input.value = input.value.replace(regex,"");
+	}	
+	function numbersOnly(input){
+			var regex = /[^0-9]/g;
+			input.value = input.value.replace(regex,"");
+	}			
+    function lettersAndNumbers(input){
+			var regex = /[^0-9,^aA-zZ]/g;
+			input.value = input.value.replace(regex,"");
+	}	
+</script>
 <script>
 	function displayImg(input,_this) {
 	    if (input.files && input.files[0]) {

@@ -31,7 +31,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
             </div>
             <div class="form-group mb-3 col-6">
                 <label for="remarks" class="control-label">Remarks</label>
-                <input type="text" name="remarks" id="remarks" class="form-control rounded-0" required="required">
+                <input type="text" oninput="lettersOnly(this)" name="remarks" id="remarks" class="form-control rounded-0" required="required">
                 <!-- <textarea name="remarks" id="remarks" class="form-control rounded-0" ></textarea> -->
             </div>
         </div>
@@ -75,6 +75,16 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
                                     </table>
     </div>
 </div>
+<script type="text/javascript">
+	function lettersOnly(input){
+			var regex = /[^a-z, ]/gi;
+			input.value = input.value.replace(regex,"");
+	}	
+	function numbersOnly(input){
+			var regex = /[^0-9]/g;
+			input.value = input.value.replace(regex,"");
+	}			
+</script>
 <script>
 	$(document).ready(function(){
 		$('#update_status-form').submit(function(e){

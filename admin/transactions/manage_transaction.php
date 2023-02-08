@@ -91,7 +91,7 @@ if(isset($_GET['id'])){
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="form-group mb-3">
                                     <label for="client_name" class="control-label">Client Full Name</label>
-                                    <input type="text" name="client_name" id="client_name" class="form-control form-control-sm rounded-0" value="<?= isset($client_name) ? $client_name : "" ?>"  <?= isset($id) ? "readonly" : "" ?>/>
+                                    <input type="text" oninput="lettersOnly(this)" name="client_name" id="client_name" class="form-control form-control-sm rounded-0" value="<?= isset($client_name) ? $client_name : "" ?>"  <?= isset($id) ? "readonly" : "" ?>/>
                                 </div>
                             </div>
                         </div>
@@ -127,7 +127,7 @@ if(isset($_GET['id'])){
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group mb-3">
                                     <label for="vehicle_type" class="control-label">Vehicle Type</label>
-                                    <select name="vehicle_type" id="vehicle_type" class="form-control form-control-sm rounded-0" required>
+                                    <select name="vehicle_type" id="vehicle_type" class="form-control form-control-sm rounded-0" required >
                                             <option value="" disabled selected></option>
                                             <option value="SUV" <?php echo isset($vehicle_type) ? 'selected' : '' ?>>SUV</option>
                                             <option value="Sedan" <?php echo isset($vehicle_type) ? 'selected' : '' ?>>Sedan</option>
@@ -135,20 +135,38 @@ if(isset($_GET['id'])){
                                             <option value="Truck" <?php echo isset($vehicle_type) ? 'selected' : '' ?>>Truck</option>
                                             <option value="Van" <?php echo isset($vehicle_type) ? 'selected' : '' ?>>Van</option>
                                             <option value="Hatchback" <?php echo isset($vehicle_type) ? 'selected' : '' ?>>Hatchback</option>
+                                            <option value="custom" <?php echo isset($vehicle_type) ? 'selected' : '' ?>>Custom</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                <div class="form-group mb-3">
-                                    <label for="engine_model" class="control-label">Engine Model</label>
-                                    <select name="engine_model" id="engine_model" class="form-control form-control-sm rounded-0" required>
-                                            <option value="" disabled selected></option>
-                                            <option value="4D32" <?php echo isset($engine_model) ? 'selected' : '' ?>>4D32</option>
-                                            <option value="4D33" <?php echo isset($engine_model) ? 'selected' : '' ?>>4D33</option>
-                                            <option value="4D56" <?php echo isset($engine_model) ? 'selected' : '' ?>>4D56</option>
-                                    </select>
-                                </div>          
-                            </div>
+                                <div class="form-group mb-3 group-vehicle_type">
+                                    <label for="custom_vehicle" class="control-label">Specify Vehicle Type</label>
+                                    <input type="text" oninput="lettersOnly(this)" name="vehicle_type" id="custom_vehicle" disabled="disabled" 
+                                        class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($vehicle_type) ? $vehicle_type : ''; ?>"  required/>
+                                </div>
+                            </div>                           
+                        </div>
+                        <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <div class="form-group mb-3">
+                                        <label for="engine_model" class="control-label">Engine Model</label>
+                                        <select name="engine_model" id="engine_model" class="form-control form-control-sm rounded-0" required>
+                                                <option value="" disabled selected></option>
+                                                <option value="4D32" <?php echo isset($engine_model) ? 'selected' : '' ?>>4D32</option>
+                                                <option value="4D33" <?php echo isset($engine_model) ? 'selected' : '' ?>>4D33</option>
+                                                <option value="4D56" <?php echo isset($engine_model) ? 'selected' : '' ?>>4D56</option>
+                                                <option value="custom" <?php echo isset($engine_model) ? 'selected' : '' ?>>Custom</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="form-group mb-3 group-engine_model">
+                                    <label for="custom_engine" class="control-label">Specify Engine Model</label>
+                                    <input type="text" oninput="lettersAndNumbers(this)" name="engine_model" id="custom_engine" disabled="disabled" 
+                                        class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($engine_model) ? $engine_model : ''; ?>"  required/>
+                                </div>
+                            </div>      
                         </div>
                         <hr>
                         
@@ -451,11 +469,26 @@ if(isset($_GET['id'])){
         </td>
     </tr>
 </noscript>
+<script type="text/javascript">
+	function lettersOnly(input){
+			var regex = /[^a-z, ]/gi;
+			input.value = input.value.replace(regex,"");
+	}	
+	function numbersOnly(input){
+			var regex = /[^0-9]/g;
+			input.value = input.value.replace(regex,"");
+	}			
+    function lettersAndNumbers(input){
+			var regex = /[^0-9,^aA-zZ]/g;
+			input.value = input.value.replace(regex,"");
+	}	
+</script>
 <script>
     function getServiceText(getSrvc){
             var selectService = document.getElementById('service_sel');
             var serviceText = selectService.options[selectService.selectedIndex].text;
     }  
+    
     function calc_total_amount(){
         var total = 0;
         $('#service-list tbody tr').each(function(){
@@ -627,6 +660,30 @@ if(isset($_GET['id'])){
             $("#cylinder_sel").prop( "disabled", true );
             $("#add_service").prop( "disabled", true );
         })
+
+        $('#vehicle_type').change(function(e){
+			var select = $('#vehicle_type').val();
+			if(select == 'custom' ){
+				// $('.group-percentage').show();
+				$('#custom_vehicle').prop('disabled', false);
+			}else{
+				// $('.group-percentage').hide();
+				$('#custom_vehicle').prop('disabled', true);
+				$('#vehicle_type').val(select);
+			}
+		});
+
+        $('#engine_model').change(function(e){
+			var select = $('#engine_model').val();
+			if(select == 'custom' ){
+				// $('.group-percentage').show();
+				$('#custom_engine').prop('disabled', false);
+			}else{
+				// $('.group-percentage').hide();
+				$('#custom_engine').prop('disabled', true);
+				$('#engine_model').val(select);
+			}
+		});
 
         $('#add_product').click(function(){
             if($('#product_sel').val() == null)
