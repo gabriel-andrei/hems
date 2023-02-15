@@ -64,21 +64,11 @@
                         </p>
                       </a>
                     </li>
-                    
-                    <li class="nav-header" style="font-size: 16px">Reports</li>
                     <li class="nav-item dropdown">
                       <a href="<?php echo base_url ?>admin/?page=reports/daily_sales_report&filtertype=daily" class="nav-link nav-reports_daily_sales_report">
-                        <i class="nav-icon far fa-circle"></i>
+                        <i class="nav-icon far fa-file"></i>
                         <p style="font-size: 16px">
-                          Sales Report
-                        </p>
-                      </a>
-                    </li>
-                    <li class="nav-item dropdown">
-                      <a href="<?php echo base_url ?>admin/?page=reports/daily_service_report&filtertype=daily" class="nav-link nav-reports_daily_service_report">
-                        <i class="nav-icon far fa-circle"></i>
-                        <p style="font-size: 16px">
-                          Service Report
+                          Reports
                         </p>
                       </a>
                     </li>
