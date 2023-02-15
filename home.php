@@ -170,18 +170,16 @@
                 <span class="info-box-text" style="color:black">Low Stock Items</span>
                 <span class="info-box-number" style="color:black">
                   <?php 
-                  	$lowinstock = $available<$row['lowstock'];
-                    $total = $conn->query("SELECT p.*, COALESCE(SUM(i.quantity),0) - COALESCE(SUM(d.quantity),0) stocks , COALESCE(SUM(t.qty),0) sold 
-                    from `product_list` p
-                    LEFT JOIN inventory_list i ON p.id=i.product_id
-								    LEFT JOIN inventory_damaged d ON d.inventory_id=i.id
-                    LEFT JOIN transaction_products t ON p.id=t.product_id 
-                    where p.delete_flag = 0 
-                    GROUP BY p.id HAVING stocks < stocks-sold OR stocks <= 0 OR stocks <= lowstock
-                    ")->num_rows;
-                    echo format_num($total);
-                  ?>
-                  <?php ?>
+                      $total = $conn->query("SELECT p.*, COALESCE(SUM(i.quantity),0) - COALESCE(SUM(d.quantity),0) stocks , COALESCE(SUM(t.qty),0) sold 
+                      from `product_list` p
+                      LEFT JOIN inventory_list i ON p.id=i.product_id
+                      LEFT JOIN inventory_damaged d ON d.inventory_id=i.id
+                      LEFT JOIN transaction_products t ON p.id=t.product_id 
+                      where p.delete_flag = 0 
+                    GROUP BY p.id HAVING (stocks-sold) <= 0 OR (stocks-sold) <= lowstock 
+                      ")->num_rows;
+                      echo format_num($total);
+                    ?>
                 </span>
               </div>
               <!-- /.info-box-content -->

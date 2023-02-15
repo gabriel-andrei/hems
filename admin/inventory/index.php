@@ -33,7 +33,7 @@
 				</colgroup>
 				<thead>
 					<tr>
-						<th class="text-center" style="display:none">#</th>
+						<th class="text-center"  style="display:none">#</th>
 						<th class="text-center">Engine Model</th>
 						<th class="text-center">Product Name</th>
 						<th class="text-center">Available Stock</th>
@@ -50,15 +50,15 @@
 						// 	from `product_list` 
 						// 	where delete_flag = 0 
 						// 	order by `name` asc ");
-						$qry = $conn->query("SELECT p.*, COALESCE(SUM(i.quantity),0) - COALESCE(SUM(d.quantity),0) stocks , COALESCE(SUM(t.qty),0) sold 
-							from `product_list` p
-							LEFT JOIN inventory_list i ON p.id=i.product_id
-							LEFT JOIN inventory_damaged d ON d.inventory_id=i.id
-							LEFT JOIN transaction_products t ON p.id=t.product_id 
-							where p.delete_flag = 0 
-							GROUP BY p.id
-							order by IF(COALESCE(SUM(i.quantity),0) - COALESCE(SUM(d.quantity),0) > lowstock,1,0) asc
-								, COALESCE(SUM(i.quantity),0) - COALESCE(SUM(d.quantity),0) asc,  p.`name` asc");
+						$qry = $conn->query("SELECT a.*, IF((stocks-sold) <= 0 OR (stocks-sold) <= lowstock, 1,0) is_low  FROM (
+								SELECT p.*, COALESCE(SUM(i.quantity),0) - COALESCE(SUM(d.quantity),0) stocks , COALESCE(SUM(t.qty),0) sold 
+								from `product_list` p
+								LEFT JOIN inventory_list i ON p.id=i.product_id
+								LEFT JOIN inventory_damaged d ON d.inventory_id=i.id
+								LEFT JOIN transaction_products t ON p.id=t.product_id 
+								where p.delete_flag = 0 
+								GROUP BY p.id) a
+							ORDER BY is_low desc");
 						while($row = $qry->fetch_assoc()):
 							$phasedout = $row['status'] == 0;
 							$lowstock = $row['lowstock'];

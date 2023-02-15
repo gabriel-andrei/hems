@@ -127,7 +127,7 @@ if(isset($_GET['id'])){
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group mb-3">
                                     <label for="vehicle_type" class="control-label">Vehicle Type</label>
-                                    <select name="vehicle_type" id="vehicle_type" class="form-control form-control-sm rounded-0" required >
+                                    <select name="vehicle_type" id="vehicle_type" class="form-control form-control-sm rounded-0" required <?= isset($id) ? "disabled" : "" ?> >
                                             <option value="" disabled selected></option>
                                             <option value="SUV" <?php echo isset($vehicle_type) ? 'selected' : '' ?>>SUV</option>
                                             <option value="Sedan" <?php echo isset($vehicle_type) ? 'selected' : '' ?>>Sedan</option>
@@ -143,7 +143,7 @@ if(isset($_GET['id'])){
                                 <div class="form-group mb-3 group-vehicle_type">
                                     <label for="custom_vehicle" class="control-label">Specify Vehicle Type</label>
                                     <input type="text" oninput="lettersOnly(this)" name="vehicle_type" id="custom_vehicle" disabled="disabled" 
-                                        class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($vehicle_type) ? $vehicle_type : ''; ?>"  required/>
+                                        class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($vehicle_type) ? $vehicle_type : ''; ?>"  required   <?= isset($id) ? "readonly" : "" ?> />
                                 </div>
                             </div>                           
                         </div>
@@ -151,7 +151,7 @@ if(isset($_GET['id'])){
                                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                     <div class="form-group mb-3">
                                         <label for="engine_model" class="control-label">Engine Model</label>
-                                        <select name="engine_model" id="engine_model" class="form-control form-control-sm rounded-0" required>
+                                        <select name="engine_model" id="engine_model" class="form-control form-control-sm rounded-0" required   <?= isset($id) ? "disabled" : "" ?> >
                                                 <option value="" disabled selected></option>
                                                 <option value="4D32" <?php echo isset($engine_model) ? 'selected' : '' ?>>4D32</option>
                                                 <option value="4D33" <?php echo isset($engine_model) ? 'selected' : '' ?>>4D33</option>
@@ -164,7 +164,7 @@ if(isset($_GET['id'])){
                                 <div class="form-group mb-3 group-engine_model">
                                     <label for="custom_engine" class="control-label">Specify Engine Model</label>
                                     <input type="text" oninput="lettersAndNumbers(this)" name="engine_model" id="custom_engine" disabled="disabled" 
-                                        class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($engine_model) ? $engine_model : ''; ?>"  required/>
+                                        class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($engine_model) ? $engine_model : ''; ?>"  required  <?= isset($id) ? "readonly" : "" ?>/>
                                 </div>
                             </div>      
                         </div>
