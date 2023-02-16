@@ -8,7 +8,7 @@ $filtertype = isset($_GET['filtertype'])?$_GET['filtertype'] : '';
 $date = isset($_GET['date']) ? $_GET['date'] : date("Y-m-d"); ?>
 <div class="card card-outline card-primary">
 	<div class="card-header">
-		<h3 class="card-title">Sales Report</h3>
+		<h3 class="card-title">Income Reports</h3>
 	</div>
 	<div class="card-body">
 		<div class="container-fluid mb-3">
@@ -16,6 +16,16 @@ $date = isset($_GET['date']) ? $_GET['date'] : date("Y-m-d"); ?>
                 <div class="container-fluid">
                     <form action="" id="filter-form">
                         <div class="row align-items-end">
+                            <div class="col-lg-2 col-md-6 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label for="filter" class="control-label">Reports</label>
+                                    <select name="filtertype" id="filtertype" class="form-control form-control-sm rounded-0" required>
+                                        <option value="all" <?php echo !isset($report) ? 'selected' : '' ?>>All</option>
+                                        <option value="sales" <?php echo !isset($report) ? 'selected' : '' ?>>Sales</option>
+                                        <option value="service" <?php echo !isset($report) ? 'selected' : '' ?>>Service</option>    
+                                    </select>
+                                </div>
+                            </div>
                             <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label for="filter" class="control-label">Filter by</label>
