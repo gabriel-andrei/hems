@@ -31,12 +31,23 @@
                         FROM `transaction_services` ts 
                         inner join transaction_list tl on ts.transaction_id = tl.id 
                         inner join service_list sl on ts.service_id = sl.id 
-                        where tl.status != 3 and date(tl.date_created) <= '{$date}' 
+                        where tl.status != 3 and 
+                        ";
+                    if($filterperiod == 'daily'){
+                        $sql .= "date(tl.date_created) = '{$date}' ";
+                    }else if($filterperiod == 'weekly'){
+                        $sql .= "date(tl.date_created) BETWEEN '{$date}' AND DATE_ADD('{$date}', INTERVAL 6 DAY) ";
+                    }else if($filterperiod == 'monthly'){
+                        $sql .= "MONTH(tl.date_created) = MONTH('{$date}') AND  YEAR(tl.date_created) = YEAR('{$date}')";
+                    }else if($filterperiod == 'yearly'){
+                        $sql .= "YEAR(tl.date_created) = YEAR('{$date}')";
+                    }
+                    $sql .= "
                         HAVING amount=payments
                         ) a
                     GROUP BY service_id
                     order by services desc 
-                    LIMIT 10";
+                    ";
                     $qry = $conn->query($sql);
                     while($row = $qry->fetch_assoc()):
                         $row_amount = $row['total'] ;

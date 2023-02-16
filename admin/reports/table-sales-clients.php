@@ -19,7 +19,7 @@
 				</thead>
 				<tbody>
 					<?php 
-                    $qry = $conn->query("SELECT client_id, client_name, SUM(qty) AS products, SUM(price) AS total 
+                    $sql = "SELECT client_id, client_name, SUM(qty) AS products, SUM(price) AS total 
                     FROM (
                         SELECT tp.*, tl.client_id, tl.client_name, tl.tin_number ,pl.name as product,tl.date_created 
                         , tl.amount, (SELECT SUM(p.total_amount) payments
@@ -28,11 +28,23 @@
                         FROM `transaction_products` tp 
                         inner join transaction_list tl on tp.transaction_id = tl.id 
                         inner join product_list pl on tp.product_id = pl.id 
-                        where tl.status != 3 and date(tl.date_created) <= '{$date}' 
+                        where tl.status != 3 and 
+                        ";
+                    if($filterperiod == 'daily'){
+                        $sql .= "date(tl.date_created) = '{$date}' ";
+                    }else if($filterperiod == 'weekly'){
+                        $sql .= "date(tl.date_created) BETWEEN '{$date}' AND DATE_ADD('{$date}', INTERVAL 6 DAY) ";
+                    }else if($filterperiod == 'monthly'){
+                        $sql .= "MONTH(tl.date_created) = MONTH('{$date}') AND  YEAR(tl.date_created) = YEAR('{$date}')";
+                    }else if($filterperiod == 'yearly'){
+                        $sql .= "YEAR(tl.date_created) = YEAR('{$date}')";
+                    }
+                    $sql .= "
                         HAVING amount=payments
                     ) a
                     GROUP BY client_id
-                    order by products desc");
+                    order by products desc";
+                    $qry = $conn->query($sql);
                     while($row = $qry->fetch_assoc()):
                         $row_amount = $row['total'] ;
                         $vat_amount = ($row_amount/1.12) * 0.12;

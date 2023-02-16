@@ -4,7 +4,9 @@
 </script>
 <?php endif;?>
 <?php 
+$filterreport = isset($_GET['filterreport'])?$_GET['filterreport'] : 'all';
 $filtertype = isset($_GET['filtertype'])?$_GET['filtertype'] : '';
+$filterperiod = isset($_GET['filterperiod'])?$_GET['filterperiod'] : '';
 $date = isset($_GET['date']) ? $_GET['date'] : date("Y-m-d"); ?>
 <div class="card card-outline card-primary">
 	<div class="card-header">
@@ -18,24 +20,37 @@ $date = isset($_GET['date']) ? $_GET['date'] : date("Y-m-d"); ?>
                         <div class="row align-items-end">
                             <div class="col-lg-2 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
-                                    <label for="filter" class="control-label">Reports</label>
-                                    <select name="filtertype" id="filtertype" class="form-control form-control-sm rounded-0" required>
-                                        <option value="all" <?php echo !isset($report) ? 'selected' : '' ?>>All</option>
-                                        <option value="sales" <?php echo !isset($report) ? 'selected' : '' ?>>Sales</option>
-                                        <option value="service" <?php echo !isset($report) ? 'selected' : '' ?>>Service</option>    
+                                    <label for="filterreport" class="control-label">Reports</label>
+                                    <select name="filterreport" id="filterreport" class="form-control form-control-sm rounded-0" required>
+                                        <option value="all" <?php echo isset($filterreport) && $filterreport=='all' ?  'selected' : '' ?>>All (Transactions)</option>
+                                        <option value="sales" <?php echo isset($filterreport) && $filterreport=='sales' ? 'selected' : '' ?>>Sales</option>
+                                        <option value="service" <?php echo isset($filterreport) && $filterreport=='service' ? 'selected' : '' ?>>Service</option>    
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                            
+                            <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label for="filter" class="control-label">Filter by</label>
                                     <select name="filtertype" id="filtertype" class="form-control form-control-sm rounded-0" required>
-                                        <option value="daily" <?php echo !isset($filtertype) ? 'selected' : '' ?>>Daily</option>
-                                        <option value="weekly" <?php echo isset($filtertype) && $filtertype=='weekly' ? 'selected' : '' ?>>Weekly</option>
-                                        <option value="monthly" <?php echo isset($filtertype) && $filtertype=='monthly' ? 'selected' : '' ?>>Monthly</option>
-                                        <option value="yearly" <?php echo isset($filtertype) && $filtertype=='yearly' ? 'selected' : '' ?>>Yearly</option>
-                                        <option value="best_selling" <?php echo isset($filtertype) && $filtertype=='best_selling' ? 'selected' : '' ?>>Best Selling</option>
+                                        <option value="all" <?php echo !isset($filtertype) ? 'selected' : '' ?>>All</option>
+                                        <option id='opt-bs' value="best_selling" <?php echo isset($filtertype) && $filtertype=='best_selling'? 'selected' : '' ?>>Best Selling</option>
                                         <option value="clients" <?php echo isset($filtertype) && $filtertype=='clients' ? 'selected' : '' ?>>Clients</option>
+                                        <option id='opt-mc' value="machinist" <?php echo isset($filtertype) && $filtertype=='machinist' ? 'selected' : '' ?>>Machinist</option>
+                                        <option id='opt-vt' value="vehicle" <?php echo isset($filtertype) && $filtertype=='vehicle' ? 'selected' : '' ?>>Vehicle Type</option>
+                                        <option id='opt-st' value="status" <?php echo isset($filtertype) && $filtertype=='status' ? 'selected' : '' ?>>Transaction Status</option>
+                                        <option id='opt-en' value="engine" <?php echo isset($filtertype) && $filtertype=='engine' ? 'selected' : '' ?>>Engine Model</option>
+                                        </select>                                
+                                    </div>
+                                </div>
+                            <div class="col-lg-1 col-md-6 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label for="filter" class="control-label">Filter Period</label>
+                                    <select name="filterperiod" id="filterperiod" class="form-control form-control-sm rounded-0" required>
+                                        <option value="daily" <?php echo !isset($filterperiod) ? 'selected' : '' ?>>Daily</option>
+                                        <option value="weekly" <?php echo isset($filterperiod) && $filterperiod=='weekly' ? 'selected' : '' ?>>Weekly</option>
+                                        <option value="monthly" <?php echo isset($filterperiod) && $filterperiod=='monthly' ? 'selected' : '' ?>>Monthly</option>
+                                        <option value="yearly" <?php echo isset($filterperiod) && $filterperiod=='yearly' ? 'selected' : '' ?>>Yearly</option>
                                         </select>                                
                                     </div>
                                 </div>
@@ -62,9 +77,23 @@ $date = isset($_GET['date']) ? $_GET['date'] : date("Y-m-d"); ?>
             
             $total=$total_amount=$total_vat=$total_count = 0;
             $i = 1;
+            $file_name = '';
+            if($filtertype == 'all'){
+                if($filtertype == 'all'){
+                    $filename = $filterreport.'-'.$filterperiod;
+                }else{
+                    $filename = $filtertype.'-'.$filterperiod;
+                }
+            }else{
+                $filename = $filterreport.'-'.$filtertype;
+            }
+            if (file_exists (base_app.'admin/reports/table-'.$filename.'.php')){
+                require_once('table-'.$filename.'.php');
+            }else{
+                echo '<h4 class="text-center">Sorry, the report you have selected is currently unavailable!</h4>';
+            }
 
-            require_once('table-sales-'.$filtertype.'.php');
-            
+
             ?>
 		</div>
 	</div>
@@ -88,9 +117,27 @@ $date = isset($_GET['date']) ? $_GET['date'] : date("Y-m-d"); ?>
 </noscript>
 <script>
 	$(document).ready(function(){
+		$('#filterreport').change(function(e){
+			var select = $('#filterreport').val();
+
+            $('#opt-bs').removeAttr('disabled');
+            $('#opt-st').removeAttr('disabled');
+            $('#opt-mc').removeAttr('disabled');
+            $("#filtertype").select2("val", "0");
+
+			if(select == 'all' ){
+                $('#opt-bs').attr('disabled', 'disabled');
+			}else if(select == 'sales' ){
+                $('#opt-mc').attr('disabled', 'disabled');
+                $('#opt-st').attr('disabled', 'disabled');
+			}else if(select == 'service' ){
+                $('#opt-en').attr('disabled', 'disabled');
+                $('#opt-st').attr('disabled', 'disabled');
+			}
+		});
         
-		$('#filtertype').change(function(e){
-			var select = $('#filtertype').val();
+		$('#filterperiod').change(function(e){
+			var select = $('#filterperiod').val();
 			$('.date-view').show();
 			if(select == 'daily' ){
                 $('.date-label').html('Choose Date');
@@ -100,28 +147,27 @@ $date = isset($_GET['date']) ? $_GET['date'] : date("Y-m-d"); ?>
                 $('.date-label').html('Choose Month/Year');
 			}else if(select == 'yearly' ){
                 $('.date-label').html('Choose Year');
-            }else if(select == 'clients' ){
-                $('.date-label').html('Choose as-of Date');
-			}else{
+            }else{
                 $('.date-label').html('Choose as-of Date');
 			}
 		});
         
+
 		$('#filter-form').submit(function(e){
             e.preventDefault()
-            location.href = "./?page=reports/daily_service_report&"+$(this).serialize()
+            location.href = "./?page=reports/daily_sales_report&"+$(this).serialize()
+        })
+        $('#filterreport').select2({
+            placeholder:"Choose Filter",
+            width:'100%',
+            containerCssClass:'form-control form-control-sm rounded-0'
         })
         $('#filtertype').select2({
             placeholder:"Choose Filter",
             width:'100%',
             containerCssClass:'form-control form-control-sm rounded-0'
         })
-
-		$('#filter-form').submit(function(e){
-            e.preventDefault()
-            location.href = "./?page=reports/daily_sales_report&"+$(this).serialize()
-        })
-        $('#filtertype').select2({
+        $('#filterperiod').select2({
             placeholder:"Choose Filter",
             width:'100%',
             containerCssClass:'form-control form-control-sm rounded-0'
