@@ -12,7 +12,7 @@
         <div class="container-fluid">
 			<table class="table table-hover table-striped table-bordered">
 				<colgroup>
-					<col width="5%">
+					<!-- <col width="5%"> -->
 					<col width="20%">
 					<col width="30%">
 					<col width="10%">
@@ -22,7 +22,7 @@
 				</colgroup>
 				<thead>
 					<tr>
-						<th class="text-center">#</th>
+						<th class="text-center" style="display:none">#</th>
 						<th class="text-center">Invoice Number</th>
 						<th class="text-center">Client Name</th>
 						<th class="text-center">Amount</th>
@@ -43,7 +43,7 @@
 							$balance = $row['balance'];
 					?>
 						<tr>
-							<td class="text-center"><?php echo $i++; ?></td>
+							<td class="text-center" style="display:none"><?php echo $i++; ?></td>
 							<td class="text-center"><p class="m-0 truncate-1"><?= $row['code'] ?></p></td>
 							<td class="text-center"><p class="m-0 truncate-1"><?= $row['client_name'] ?></p></td>
 							<td class="text-center"><?= number_format($row['amount'],2) ?></td>
@@ -90,7 +90,7 @@
         <div class="container-fluid" id="printout">
 			<table class="table table-hover table-striped table-bordered">
 				<colgroup>
-					<col width="5%">
+					<!-- <col width="5%"> -->
 					<col width="20%">
 					<col width="20%">
 					<col width="10%">
@@ -100,7 +100,7 @@
 				</colgroup>
 				<thead>
 					<tr>
-						<th class="text-center">#</th>
+						<th class="text-center" style="display:none">#</th>
 						<th class="text-center">Invoice Number</th>
 						<th class="text-center">Date</th>
 						<th class="text-center">OR Number</th>
@@ -119,7 +119,7 @@
 						while($row = $qry->fetch_assoc()):
 					?>
 						<tr>
-							<td class="text-center"><?php echo $i++; ?></td>
+							<td class="text-center" style="display:none"><?php echo $i++; ?></td>
 							<td class="text-center"><p class="m-0 truncate-1"><?= $row['code'] ?></p></td>
 							<td class="text-center"><?php echo $row['date_created'] ?></td>
 							<td class="text-center"><?php echo $row['ornumber'] ?></td>

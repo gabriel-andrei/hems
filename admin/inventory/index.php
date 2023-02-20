@@ -104,7 +104,7 @@
 			$('#uni_modal #submit').hide();
 		});
 		$('.edit_data').click(function(){
-			uni_modal("<i class='fa fa-edit'></i> Update Product Details","inventory/manage_product.php?id="+$(this).attr('data-id'))
+			uni_modal("<i class='fa fa-edit'></i> Update Product Details","inventory/edit_product.php?id="+$(this).attr('data-id'))
 		});
         $('.new_damaged').click(function(){
 			uni_modal("<i class='fa fa-plus-square'></i> Add New Damaged","inventory/manage_damaged.php?id="+$(this).attr('data-id'))

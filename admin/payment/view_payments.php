@@ -15,7 +15,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
         <div class="container-fluid">
 			<table class="table table-hover table-striped table-bordered mb-0">
 				<colgroup>
-					<col width="5%">
+					<!-- <col width="5%"> -->
 					<col width="10%">
 					<col width="10%">
 					<col width="10%">
@@ -25,7 +25,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 				</colgroup>
 				<thead>
 					<tr>
-						<th class="text-center">#</th>
+						<th class="text-center" style="display:none">#</th>
 						<th class="text-center">Date</th>
 						<th class="text-center">OR Number</th>
 						<th class="text-center">Payment</th>
@@ -43,7 +43,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 						while($row = $qry->fetch_assoc()):
 					?>
 						<tr>
-							<td class="text-center"><?php echo $i++; ?></td>
+							<td class="text-center" style="display:none"><?php echo $i++; ?></td>
 							<td class="text-center"><?php echo $row['date_created'] ?></td>
 							<td class="text-center"><?php echo $row['ornumber'] ?></td>
 							<td class="text-center"><?php echo $row['total_amount'] ?></td>

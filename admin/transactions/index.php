@@ -15,7 +15,7 @@
         <div class="container-fluid">
 			<table class="table table-hover table-striped table-bordered">
 				<colgroup>
-					<col width="5%">
+					<!-- <col width="5%"> -->
 					<col width="20%">
 					<col width="10%">
 					<col width="10%">
@@ -23,7 +23,7 @@
 				</colgroup>
 				<thead>
 					<tr>
-						<th class="text-center">#</th>
+						<th class="text-center" style="display:none">#</th>
 						<th class="text-center">Transaction Number</th>
 						<th class="text-center">Status</th>
 						<th class="text-center">Balance</th>
@@ -57,7 +57,7 @@
 							$payments = $row['payment'];
 					?>
 						<tr>
-							<td class="text-center"><?php echo $i++; ?></td>
+							<td class="text-center" style="display:none"><?php echo $i++; ?></td>
 							<td class="text-center"><p class="m-0 truncate-1"><?= $row['code'] ?></p></td>
 							<td class="text-center"><p class="m-0 truncate-1"><?= $row['status_desc'] ?></p></td>
 							<td class="text-center"><?= ($balance==0? 'Fully Paid' : number_format($balance,2)) ?></td>

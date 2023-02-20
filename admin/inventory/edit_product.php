@@ -86,6 +86,11 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 			<input type="number" min="1" name="price" id="price" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($price) ? $price : ''; ?>"  required readonly/>
 		</div>
 
+		<div class="form-group">
+			<label for="effective_date" class="control-label">Effectivity Date</label>
+			<input type="date" name="effective_date" id="effective_date" class="form-control form-control-sm rounded-0 text-right" value="<?php echo isset($effective_date) ? date("Y-m-d", strtotime($effective_date)) : ""; ?>" required/>
+		</div>
+		
 		<div class="row">
 			<div class="form-group col-12">
 				<label for="unit" class="control-label">Unit</label>
@@ -111,6 +116,9 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 			</div>
 	</form>
 </div>
+
+
+
 <script type="text/javascript">
 	function lettersOnly(input){
 			var regex = /[^a-z, ]/gi;
@@ -119,19 +127,11 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 	function numbersOnly(input){
 			var regex = /[^0-9]/g;
 			input.value = input.value.replace(regex,"");
-	}	
-	function lettersAndNumbers(input){
-			var regex = /[^0-9,^aA-zZ]/g;
-			input.value = input.value.replace(regex,"");
-	}		
+	}			
 </script>
 <script>
-
+	
 	$(document).ready(function(){
-		$("#custom_engine_id").attr( "class", 'collapse' );
-		$("#specify_percentage_id").attr( "class", 'collapse' );
-		$("#specify_unit_id").attr( "class", 'collapse' );
-
 		$('[data-mask]').inputmask();
 
 		$("input[data-bootstrap-switch]").each(function(){

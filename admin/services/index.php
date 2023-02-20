@@ -55,20 +55,20 @@
                                     </div>
 			<table class="table table-hover table-striped table-bordered" id="list">
 				<colgroup>
-					<col width="5%">
+					    <!-- <col width="5%"> -->
 						<?php if (!isset($_GET['service'])): ?>
 						<col width="15%">
 						<?php endif; ?>
 						<?php if (!isset($_GET['sub']) || (isset($_GET['sub']) && $_GET['sub']=='Show All')): ?>
 						<col width="15%">
-						<?php endif; ?>
+						<?php endif; ?> 
 					<col width="10%">
 					<col width="10%">
 					<col width="5%">
 				</colgroup>
 				<thead>
 					<tr>
-						<th class="text-center">#</th>
+						<th class="text-center" style="display:none">#</th>
 						<?php if (!isset($_GET['service'])): ?>
 						<th class="text-center">Service</th>
 						<?php endif; ?>
@@ -94,7 +94,7 @@
 						while($row = $qry->fetch_assoc()):
 					?>
 						<tr>
-							<td class="text-center"><?php echo $i++; ?></td>
+							<td class="text-center" style="display:none"><?php echo $i++; ?></td>
 							<?php if (!isset($_GET['service'])): ?>
 							<td class="text-center"><?php echo $row['service'] ?></td>
 							<?php endif; ?>

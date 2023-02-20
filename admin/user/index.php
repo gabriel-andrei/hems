@@ -22,7 +22,7 @@
         <div class="container-fluid">
 			<table class="table table-hover table-striped table-bordered" id="list">
 				<colgroup>
-					<col width="5%">
+					<!-- <col width="5%"> -->
 					<!-- <col width="15%"> -->
 					<!-- <col width="15%"> -->
 					<col width="25%">
@@ -32,7 +32,7 @@
 				</colgroup>
 				<thead>
 					<tr>
-						<th class="text-center">#</th>
+						<th class="text-center" style="display:none">#</th>
 						<!--<th class="text-center">Date</th> -->
 						<!-- <th class="text-center">Avatar</th> -->
 						<th class="text-center">Name</th>
@@ -48,7 +48,7 @@
 						while($row = $qry->fetch_assoc()):
 					?>
 						<tr>
-							<td class="text-center"><?php echo $i++; ?></td>
+							<td class="text-center" style="display:none"><?php echo $i++; ?></td>
 							<!-- <td class="text-center"><?php echo date("Y-m-d H:i",strtotime($row['date_updated'])) ?></td> -->
 							<!-- <td class="text-center">
                                 <img src="<?= validate_image($row['avatar']) ?>" alt="" class="img-thumbnail rounded-circle user-avatar">

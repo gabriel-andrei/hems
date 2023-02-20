@@ -14,14 +14,14 @@
         <div class="container-fluid">
 			<table class="table table-hover table-striped table-bordered">
 				<colgroup>
-					<col width="5%">
+					<!-- <col width="5%"> -->
 					<col width="30%">
 					<!-- <col width="15%"> -->
 					<col width="5%">
 				</colgroup>
 				<thead>
 					<tr>
-						<th class="text-center">#</th>
+						<th class="text-center" style="display:none">#</th>
 						<th class="text-center">Name</th>
 						<!-- <th class="text-center">Status</th> -->
 						<th class="text-center">Action</th>
@@ -34,7 +34,7 @@
 						while($row = $qry->fetch_assoc()):
 					?>
 						<tr>
-							<td class="text-center py-1 px-2 align-middle"><?php echo $i++; ?></td>
+							<td class="text-center py-1 px-2 align-middle" style="display:none"><?php echo $i++; ?></td>
 							<td class="text-center py-1 px-2 align-middle"><?php echo $row['name'] ?></td>
 							<!-- <td class="text-center py-1 px-2 align-middle">
                                 <?php if($row['status'] == 1): ?>
