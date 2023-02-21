@@ -1,3 +1,5 @@
+<!-- update_price.php -->
+
 <?php 
 require_once('../../config.php');
 if(isset($_GET['id']) && $_GET['id'] > 0){

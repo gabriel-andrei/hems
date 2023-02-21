@@ -1,3 +1,5 @@
+<!-- ajax-data.php -->
+
 <?php
 require_once('../../config.php');
 if(isset($_POST['type'])){

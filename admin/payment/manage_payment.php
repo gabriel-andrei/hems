@@ -1,3 +1,4 @@
+<!-- manage_payment.php -->
 <?php
 
 require_once('../../config.php');

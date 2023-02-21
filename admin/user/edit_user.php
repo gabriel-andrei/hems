@@ -1,3 +1,5 @@
+<!-- edit_user.php -->
+
 <?php 
 require_once('../../config.php');
 $user = $conn->query("SELECT * FROM users where id ='".$_settings->userdata('id')."'");

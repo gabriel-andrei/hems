@@ -1,3 +1,6 @@
+
+<!-- history_details.php -->
+
 <?php 
 require_once('../../config.php');
 if(isset($_GET['id'])){

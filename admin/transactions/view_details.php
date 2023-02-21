@@ -1,3 +1,5 @@
+<!-- view_details.php -->
+
 <?php 
 if(isset($_SERVER['HTTP_X_REQUESTED_WITH']))
     require_once('../../config.php');

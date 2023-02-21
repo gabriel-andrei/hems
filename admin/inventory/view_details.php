@@ -1,3 +1,4 @@
+<!-- view_details.php -->
 <?php
 require_once('../../config.php');
 //  total stocks - damged stocks -  sold stocks = available

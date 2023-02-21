@@ -1,3 +1,5 @@
+<!-- manage_transaction.php -->
+
 <?php 
 if(isset($_GET['id'])){
     $qry = $conn->query("SELECT t.* , COALESCE(SUM(p.total_amount), 0) payments

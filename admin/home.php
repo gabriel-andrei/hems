@@ -1,3 +1,6 @@
+<!-- home -->
+<!-- home.php -->
+
 <div class="card card-outline card-primary">
 <div class="card-header">
 		<h3 class="card-title">Dashboard</h3>

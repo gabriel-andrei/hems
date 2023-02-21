@@ -1,3 +1,4 @@
+<!-- pay_now.php -->
 <?php
 
 require_once('../../config.php');

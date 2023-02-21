@@ -1,3 +1,4 @@
+<!-- view_payments.php -->
 <?php 
 
 require_once('../../config.php');

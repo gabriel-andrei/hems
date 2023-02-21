@@ -1,3 +1,5 @@
+<!-- manage_user.php -->
+
 <?php 
 require_once('../../config.php');
 if(isset($_GET['id'])){

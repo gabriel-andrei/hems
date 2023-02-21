@@ -1,3 +1,5 @@
+<!-- edit_product.php -->
+
 <?php
 
 require_once('../../config.php');

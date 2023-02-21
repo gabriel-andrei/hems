@@ -1,3 +1,4 @@
+<!-- manage_stock.php -->
 <?php
 
 require_once('../../config.php');
