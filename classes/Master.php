@@ -419,7 +419,7 @@ Class Master extends DBConnection {
 					$resp['msg'] .= " Client record successfully created.";
 				}
 			}
-			if(isset($_POST['chk_update_client_exclude']) && $chk_update_client_exclude){
+			if(empty($id) && isset($_POST['chk_update_client_exclude']) && $chk_update_client_exclude){
 				$sql = "UPDATE `clients_record` SET client_name='{$client_name}', address='{$address}'
 					, contact='{$contact}', email='{$email}', tin_number='{$tin_number}', engine_model='{$engine_model}' where id = '{$client_id}'  ";
 				$this->conn->query($sql);
@@ -450,6 +450,8 @@ Class Master extends DBConnection {
 						return json_encode($resp);
 					}
 				}
+			}else{
+				$this->conn->query("DELETE FROM `transaction_services` where transaction_id = '{$tid}'");
 			}
 			if(isset($product_id)){
 				$data = "";
@@ -477,6 +479,8 @@ Class Master extends DBConnection {
 						return json_encode($resp);
 					}
 				}
+			}else{
+				$this->conn->query("DELETE FROM `transaction_products` where transaction_id = '{$tid}'");
 			}
 		}else{
 			$resp['status'] = 'failed';
