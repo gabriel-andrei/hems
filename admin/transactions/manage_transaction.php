@@ -733,6 +733,7 @@ if(isset($_GET['id'])){
             document.getElementById('product_sel').disabled = true
         })
         $('#product-list, #service-list').find('td, th').addClass('px-2 py-1 align-middle')
+        
         $('#transaction-form').submit(function(e){
 			e.preventDefault();
             var _this = $(this)
@@ -755,9 +756,9 @@ if(isset($_GET['id'])){
 				success:function(resp){
 					if(typeof resp =='object' && resp.status == 'success'){
 						location.href = "./?page=transactions/view_details&id="+resp.tid
-					}else if(resp.status == 'failed' && !!resp.msg){
+					}else if(resp.status == 'failed' && !!resp.err){
                         var el = $('<div>')
-                            el.addClass("alert alert-danger err-msg").text(resp.msg)
+                            el.addClass("alert alert-danger err-msg").text(resp.err)
                             _this.prepend(el)
                             el.show('slow')
                             $("html, body,.modal").scrollTop(0);

@@ -382,12 +382,20 @@ Class Master extends DBConnection {
 					$data .= " `{$k}`='{$v}' ";
 			}
 		}
+
+
 		if(empty($id)){
 			$sql = "INSERT INTO `transaction_list` set {$data} ";
 		}else{
 			$sql = "UPDATE `transaction_list` set {$data} where id = '{$id}' ";
 		}
 
+		if(!isset($service_id) && !isset($service_id)){
+			$resp['status'] = 'failed';
+			$resp['err'] = "No service/product included in the transaction.";
+			return json_encode($resp);
+		}
+		
 		$save = $this->conn->query($sql);
 		if($save){
 			$tid = !empty($id) ? $id : $this->conn->insert_id;
