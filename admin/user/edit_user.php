@@ -1,7 +1,7 @@
 <!-- edit_user.php -->
 
 <?php 
-require_once('../../config.php');
+require_once('../config.php');
 $user = $conn->query("SELECT * FROM users where id ='".$_settings->userdata('id')."'");
 foreach($user->fetch_array() as $k =>$v){
 	$meta[$k] = $v;
