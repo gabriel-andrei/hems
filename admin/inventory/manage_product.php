@@ -35,9 +35,9 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 				<label for="engine_model" class="control-label">Engine Model</label>
 				<select name="engine_model" id="engine_model" class="form-control form-control-sm rounded-0" required>
 					<option value="" disabled selected></option>
-					<option value="4D56" <?php echo isset($engine_model) ? 'selected' : '' ?>>4D56</option>
-					<option value="4D33" <?php echo isset($engine_model) ? 'selected' : '' ?>>4D33</option>
-					<option value="4D32" <?php echo isset($engine_model) ? 'selected' : '' ?>>4D32</option>
+					<option value="4D56" <?php echo isset($engine_model)  && $engine_model=='4D56' ? 'selected' : '' ?>>4D56</option>
+					<option value="4D33" <?php echo isset($engine_model)  && $engine_model=='4D33' ? 'selected' : '' ?>>4D33</option>
+					<option value="4D32" <?php echo isset($engine_model)  && $engine_model=='4D32' ? 'selected' : '' ?>>4D32</option>
 					<option value="custom" <?php echo isset($engine_model) ? 'selected' : '' ?>>Custom</option>
 					</select>
 				</select>
@@ -67,10 +67,10 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 				<label for="select_percentage" class="control-label">Profit Percentage</label>
 				<select id="select_percentage" <?=isset($base_price) && $base_price>0 ? '': 'disabled="disabled"' ?> class="form-control form-control-sm rounded-0" required>
 				<option value="" disabled selected></option>
-				<?php for($i=5; $i<71; $i+=5): ?>
+				<?php $iscustom = true; for($i=5; $i<71; $i+=5): if(isset($percentage) && $percentage==$i ) $iscustom=false; ?>
 					<option value="<?= $i?>" <?php echo isset($percentage) && $percentage==$i ? 'selected' : '' ?>><?= $i?>%</option>
 				<?php endfor;?>
-				<option value="custom" <?php echo isset($percentage) && $percentage%5 > 0 ? 'selected' : '' ?>>Custom</option>
+				<option value="custom" <?php echo $iscustom > 0 ? 'selected' : '' ?>>Custom</option>
 				</select>
 		</div>
 
@@ -92,10 +92,10 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 				<label for="unit" class="control-label">Unit</label>
                 <select name="unit" id="unit" class="form-control form-control-sm rounded-0 text-left" required>
 					<option value="" disabled selected></option>
-                    <option value="pieces" <?php echo isset($unit) ? 'selected' : '' ?>>pieces</option>
-                    <option value="liters" <?php echo isset($unit) ? 'selected' : '' ?>>liters</option>
-                    <option value="boxes" <?php echo isset($unit) ? 'selected' : '' ?>>boxes</option>
-					<option value="custom" <?php echo isset($unit) ? 'selected' : '' ?>>Custom</option>
+                    <option value="pieces" <?php echo isset($unit) && $unit=='pieces' ? 'selected' : '' ?>>pieces</option>
+                    <option value="liters" <?php echo isset($unit)  && $unit=='liters' ? 'selected' : '' ?>>liters</option>
+                    <option value="boxes" <?php echo isset($unit)  && $unit=='boxes' ? 'selected' : '' ?>>boxes</option>
+					<option value="custom" <?php echo isset($unit)  && $unit=='custom' ? 'selected' : '' ?>>Custom</option>
                 </select>
 			</div>
 		</div>
@@ -130,8 +130,17 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 
 	$(document).ready(function(){
 		$("#custom_engine_id").attr( "class", 'collapse' );
-		$("#specify_percentage_id").attr( "class", 'collapse' );
+		<?php if(!$iscustom): ?>
+			$("#specify_percentage_id").attr( "class", 'collapse' );
+		<?php endif; ?>
 		$("#specify_unit_id").attr( "class", 'collapse' );
+
+		
+		<?php if(isset($id)): ?>
+			$("#product-form #base_price").prop( "readonly", true );
+			$("#product-form #select_percentage").prop( "disabled", true );
+			$("#product-form #percentage").prop( "disabled", true );
+		<?php endif; ?>
 
 		$('[data-mask]').inputmask();
 
@@ -165,6 +174,24 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
             computePrice();
 		});
 
+		$('#product-form #select_percentage').change(function(e){
+			var select = $('#select_percentage').val();
+			if(select == 'custom' ){
+				// $('.group-percentage').show();
+				$('#percentage').prop('readonly', false);
+				$('#percentage').val(<?=isset($percentage) ? $percentage : ''?>);
+				$("#specify_percentage_id").attr( "class", 'row' );
+
+			}else{
+				// $('.group-percentage').hide();
+				$('#percentage').prop('readonly', true);
+				$('#percentage').val(select);
+				$("#specify_percentage_id").attr( "class", 'collapse' );
+
+			}
+			computePrice();
+		});
+
 		$('#engine_model').change(function(e){
 			var select = $('#engine_model').val();
 			if(select == 'custom' ){
@@ -195,29 +222,6 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 
 			}
 		});
-
-		$('#product-form #select_percentage').change(function(e){
-			var select = $('#select_percentage').val();
-			if(select == 'custom' ){
-				// $('.group-percentage').show();
-				$('#percentage').prop('disabled', false);
-				$('#percentage').val(<?=isset($percentage) ? $percentage : ''?>);
-				$("#specify_percentage_id").attr( "class", 'row' );
-
-			}else{
-				// $('.group-percentage').hide();
-				$('#percentage').prop('disabled', true);
-				$('#percentage').val(select);
-				$("#specify_percentage_id").attr( "class", 'collapse' );
-
-			}
-            computePrice();
-		});
-		// <?php if(isset($percentage) && $percentage%5 > 0):?>
-		// 	$('.group-percentage').show();
-		// <?php else:?>
-		// 	$('.group-percentage').hide();
-		// <?php endif;?>
 
         $('#engine_model').select2({
             placeholder:"Select Engine Model",

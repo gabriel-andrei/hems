@@ -25,7 +25,7 @@
 	</div>
 	<div class="card-body">
         <div class="container-fluid">
-			<table class="table table-hover table-striped table-bordered" id="list">
+			<table class="table table-hover table-striped table-bordered table-responsive" id="list">
 				<colgroup>
 					<!-- <col width="5%"> -->
 					<col width="10%">
@@ -88,6 +88,8 @@
 										<div class="dropdown-divider"></div>
 									<?php endif; ?>
 				                    <a class="dropdown-item edit_data" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-edit text-primary"></span> Edit</a>
+										<div class="dropdown-divider"></div>
+									<a class="dropdown-item update_price" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-dollar-sign text-primary"></span> Update Price</a>
 				                  </div>
 							</td>
 						</tr>
@@ -99,6 +101,8 @@
 </div>
 <script>
 	$(document).ready(function(){
+
+		
 		$('#create_new').click(function(){
 			uni_modal("<i class='fa fa-plus'></i> Add New Product","inventory/manage_product.php")
 		});
@@ -107,12 +111,16 @@
 			$('#uni_modal #submit').hide();
 		});
 		$('.edit_data').click(function(){
-			uni_modal("<i class='fa fa-edit'></i> Update Product Details","inventory/edit_product.php?id="+$(this).attr('data-id'))
+			uni_modal("<i class='fa fa-edit'></i> Update Product Details","inventory/manage_product.php?id="+$(this).attr('data-id'))
 		});
         $('.new_damaged').click(function(){
 			uni_modal("<i class='fa fa-plus-square'></i> Add New Damaged","inventory/manage_damaged.php?id="+$(this).attr('data-id'))
 			$('#uni_modal #submit').show();
         });
+		$('.update_price').click(function(){
+			uni_modal("<i class='fa fa-dollar-sign'></i> Update Price","inventory/update_price.php?source='list'&id="+$(this).attr('data-id'))
+			$('#uni_modal #submit').show();
+		});
 		$('.table').dataTable({
 			columnDefs: [
 					{ orderable: false, targets: [3] }

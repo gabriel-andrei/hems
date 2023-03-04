@@ -20,6 +20,60 @@
             end_loader()  
 
   }
+  window.check_notifs = function(){
+        start_loader()
+        $.ajax({
+            url:_base_url_+"classes/Master.php?f=price_update_notif",
+            error:err=>{
+                console.log()
+                alert("An error occured")
+            },
+            success:function(jsonresp){
+                if(jsonresp){
+                  var resp = JSON.parse(jsonresp);
+                  if(resp.msg> 0){
+                    var data = JSON.parse(resp.notifs);
+                    $(document).Toasts('create', {
+                        class: 'bg-default',
+                        body: '<button class="btn btn-primary" onclick="hide_toasts()">Hide all notifs</button>',
+                        title: 'Manage Notifications',
+                        icon: 'fas fa-bell fa-lg',
+                        delay: 2000, fade: true,
+                      });
+                    data.forEach(function(obj) { 
+                      $(document).Toasts('create', {
+                        class: 'bg-primary',
+                        body: obj.message,
+                        title: obj.name,
+                        subtitle: obj.engine,
+                        icon: 'fas fa-bell fa-lg',
+                        delay: 2000,fade: true,
+                      })
+                    });
+                  }
+                }
+                end_loader()
+            }
+        })
+    }
+  check_notifs();
+  
+  window.hide_toasts = function(){
+    $.ajax({
+            url:_base_url_+"classes/Master.php?f=hide_price_notif",
+            error:err=>{
+                console.log()
+                alert("An error occured")
+            },
+            success:function(resp){
+                if(resp){
+                  end_loader();
+                  window.location.reload();
+                }
+            }
+        })
+  }
+  
     window.uni_modal = function($title = '' , $url='',$size=""){
         start_loader()
         $.ajax({

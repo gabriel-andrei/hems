@@ -551,6 +551,83 @@ Class Master extends DBConnection {
 			$this->settings->set_flashdata('success', 'Service\'s price has been updated successfully.');
 		return json_encode($resp);
 	}
+
+	function update_price_product(){
+		extract($_POST);
+		$datenow = date("Y-m-d h:i");
+		$diff = strtotime($date_effect) - strtotime($datenow);
+		$isapplied = $diff<=0? '1':'0';
+		
+		$sql = "INSERT INTO `product_price_logs` (`prod_id`, `new_price`, `new_base_price`, `new_percentage`, `from_price`, `from_base_price`, `from_percentage`, `date_effect`, `is_applied`, `user_id`, `date_changed`) 
+			VALUES ('{$id}', '{$price}', '{$base_price}', '{$percentage}', '{$old_price}', '{$old_base_price}', '{$old_percentage}', '{$date_effect}', '{$isapplied}', '{$user_id}', CURRENT_TIMESTAMP());";
+		$update = $this->conn->query($sql);
+		$logs_id = $this->conn->insert_id;
+		if($update){
+			$result = $this->conn->query("SELECT MAX(date_effect) latest FROM product_price_logs WHERE prod_id='{$id}' AND date_effect<'{$date_effect}' AND is_applied=0");
+			$row = $result->fetch_assoc();
+			if($row){
+				$this->conn->query("UPDATE product_price_logs SET is_applied=1 WHERE prod_id='{$id}' AND date_effect<='{$date_effect}' AND is_applied=0");
+			}
+
+			if($diff<=0){
+				$update = $this->conn->query("UPDATE `product_list` set `price` = '{$price}', `base_price` = '{$base_price}', `percentage` = '{$percentage}'where id = '{$id}'");
+				if($update) $this->conn->query("REPLACE INTO `product_price_notifs` (`product_id`,`logs_id`, `from_price`, `new_price`, `date_effect`, `is_hidden`, `date_created`) VALUES ('{$id}', '{$logs_id}', '{$old_price}', '{$price}', '{$date_effect}', 0, CURRENT_TIMESTAMP());");
+			}
+			$resp['status'] = 'success';
+		}else{
+			$resp['status'] = 'failed';
+			$resp['msg'] = "Product's price has failed to update.";
+		}
+		if($resp['status'] == 'success')
+			$this->settings->set_flashdata('success', 'Product\'s price has been updated successfully.');
+		return json_encode($resp);
+	}
+
+	function price_update_notif(){
+		$sql = "SELECT l.*
+			FROM product_price_logs l LEFT JOIN product_list p ON p.id=l.prod_id
+			WHERE date_effect <= CURRENT_TIMESTAMP() AND is_applied=0 order by prod_id, date_effect";
+		$result = $this->conn->query($sql);
+		while($row = $result->fetch_assoc()){
+			$update = $this->conn->query("UPDATE `product_list` set `price` = '{$row['new_price']}', `base_price` = '{$row['new_base_price']}', `percentage` = '{$row['new_percentage']}'where id = '{$row['prod_id']}'");
+			if($update) {
+				$this->conn->query("REPLACE INTO `product_price_notifs` (`product_id`,`logs_id`, `from_price`, `new_price`, `date_effect`, `is_hidden`, `date_created`) VALUES ('{$row['prod_id']}', '{$row['id']}', '{$row['from_price']}', '{$row['new_price']}', '{$row['date_effect']}', 0, CURRENT_TIMESTAMP());");
+			    $this->conn->query("UPDATE product_price_logs SET is_applied=1 WHERE id='{$row['id']}'");
+			}
+		}
+
+		$sql = "SELECT l.*, p.name, p.engine_model
+			FROM product_price_notifs  l LEFT JOIN product_list p ON p.id=l.product_id
+			WHERE is_hidden=0;";
+		$result = $this->conn->query($sql);
+		$json = array();
+		while($row = $result->fetch_assoc()){
+			$json[] = [
+				'name'=>  $row['name'],
+				'engine'=>  $row['engine_model'],
+				'product_id'=>  $row['product_id'],
+				'logs_id'=>  $row['logs_id'],
+				'message' => "This product has price changes from <strong>{$row['from_price']}</strong> to <strong>{$row['new_price']}</strong> as of {$row['date_effect']}."
+			];
+		}
+		$resp['status'] = 'success';
+		$resp['msg'] = count($json);
+		$resp['notifs'] = json_encode($json);
+		return json_encode($resp);
+	}
+
+	function hide_price_notif(){
+		$sql = "SELECT l.*
+			FROM product_price_notifs  l
+			WHERE is_hidden=0;";
+		$result = $this->conn->query($sql);
+		while($row = $result->fetch_assoc()){
+			$this->conn->query("UPDATE product_price_notifs SET is_hidden=1 WHERE product_id='{$row['product_id']}' and logs_id='{$row['logs_id']}'");
+		}
+		$resp['status'] = 'success';
+		$this->settings->set_flashdata('info', 'Price update notifications hidden successfully.');
+		return json_encode($resp);
+	}
 }
 
 $Master = new Master();
@@ -598,6 +675,15 @@ switch ($action) {
 	break;
 	case 'update_price':
 		echo $Master->update_price();
+	break;
+	case 'update_price_product':
+		echo $Master->update_price_product();
+	break;
+	case 'price_update_notif':
+		echo $Master->price_update_notif();
+	break;
+	case 'hide_price_notif':
+		echo $Master->hide_price_notif();
 	break;
 	case 'save_damaged':
 		echo $Master->save_damaged();
