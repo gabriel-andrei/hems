@@ -34,7 +34,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
                         <?php $iscustom = true; for($i=5; $i<71; $i+=5): if(isset($percentage) && $percentage==$i ) $iscustom=false; ?>
                             <option value="<?= $i?>" <?php echo isset($percentage) && $percentage==$i ? 'selected' : '' ?>><?= $i?>%</option>
                         <?php endfor;?>
-                        <option value="custom" <?php echo $iscustom > 0 ? 'selected' : '' ?>>Custom</option>
+                        <option value="custom" <?php echo isset($percentage) && $percentage=='custom' ? 'selected' : ''  ?>>Custom</option>
                         </select>
                 </div>
 
@@ -111,9 +111,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 </script>
 <script>
 	$(document).ready(function(){
-		<?php if(!$iscustom): ?>
 			$("#specify_percentage_id").attr( "class", 'collapse' );
-		<?php endif; ?>
 
 		function computePrice(){
 			var base = $('#base_price').val() * 1;

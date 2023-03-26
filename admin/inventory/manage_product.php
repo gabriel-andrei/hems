@@ -63,21 +63,24 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 			<input type="number" min="1" max="9999999" oninput="numbersOnly(this)" name="base_price" id="base_price" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($base_price) ? $base_price : ''; ?>"  required/>
 		</div>
 
-		<div class="form-group">
+		<div class="form-group" id="select_percentage_id">
 				<label for="select_percentage" class="control-label">Profit Percentage</label>
-				<select id="select_percentage" <?=isset($base_price) && $base_price>0 ? '': 'disabled="disabled"' ?> class="form-control form-control-sm rounded-0" required>
-				<option value="" disabled selected></option>
-				<?php $iscustom = true; for($i=5; $i<71; $i+=5): if(isset($percentage) && $percentage==$i ) $iscustom=false; ?>
-					<option value="<?= $i?>" <?php echo isset($percentage) && $percentage==$i ? 'selected' : '' ?>><?= $i?>%</option>
-				<?php endfor;?>
-				<option value="custom" <?php echo $iscustom > 0 ? 'selected' : '' ?>>Custom</option>
+				<select id="select_percentage" <?=isset($base_price) && $base_price > 0 ? '': 'disabled="disabled"' ?> class="form-control form-control-sm rounded-0" required>
+					<option value="" disabled selected></option>
+					<option value="5" <?php echo isset($percentage) && $percentage=='5' ? 'selected' : '' ?>>5%</option>
+
+					<?php $iscustom = true; for($i=10; $i<71; $i+=5): if(isset($percentage) && $percentage==$i ) $iscustom=false; ?>
+						<option value="<?= $i?>" <?php echo isset($percentage) && $percentage==$i ? 'selected' : '' ?>><?= $i?>%</option>
+					<?php endfor;?>
+					<option value="custom" <?php echo isset($percentage) && $percentage=='custom' ? 'selected' : ''  ?>>Custom</option>
+
 				</select>
 		</div>
 
 		<div class="row" id="specify_percentage_id">
 			<div class="form-group col-12">
 					<label for="percentage" class="control-label">Specify Percentage</label>
-					<input type="number" min="0" max="100" oninput="numbersOnly(this)" name="percentage" id="percentage" <?=isset($base_price) && $base_price>0 ? '': 'disabled="disabled"' ?> 
+					<input type="number" min="0" max="100" oninput="numbersOnly(this)" name="percentage" id="percentage" <?=isset($base_price) && $base_price > 0 ? '': '' ?> 
 					class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($percentage) ? $percentage : ''; ?>"  required/>
 			</div>
 		</div>
@@ -130,20 +133,17 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 
 	$(document).ready(function(){
 		$("#custom_engine_id").attr( "class", 'collapse' );
-		<?php if(!$iscustom): ?>
-			$("#specify_percentage_id").attr( "class", 'collapse' );
-		<?php endif; ?>
 		$("#specify_unit_id").attr( "class", 'collapse' );
+		$("#specify_percentage_id").attr( "class", 'collapse' );
 
-		
 		<?php if(isset($id)): ?>
 			$("#product-form #base_price").prop( "readonly", true );
 			$("#product-form #select_percentage").prop( "disabled", true );
 			$("#product-form #percentage").prop( "disabled", true );
 		<?php endif; ?>
-
+		
 		$('[data-mask]').inputmask();
-
+		
 		$("input[data-bootstrap-switch]").each(function(){
 			$(this).bootstrapSwitch();
 		})
@@ -163,9 +163,11 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 			if(base == 0 ){
 				// $('#percentage').prop('disabled', true);
 				$('#select_percentage').prop('disabled', true);
+				$('#select_percentage_id').val('');
 			}else{
 				// $('#percentage').prop('disabled', false);
 				$('#select_percentage').prop('disabled', false);
+
 			}
             computePrice();
 		});

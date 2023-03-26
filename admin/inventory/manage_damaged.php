@@ -31,7 +31,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 		</div>
 		<div class="form-group">
 			<label for="quantity" class="control-label">Quantity</label>
-			<input type="number" oninput="numbersOnly(this)" min="1" name="quantity" id="quantity" class="form-control form-control-sm rounded-0 text-left" value=""  max="<?=$available?>" required/>
+			<input type="number" oninput="numbersOnly(this)" min="1" max="<?=$available?>" name="quantity" id="quantity" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($quantity) ? $quantity : ''; ?>"   required/>
 		</div>
 		<div class="form-group">
 			<label for="unit" class="control-label">Unit</label>
