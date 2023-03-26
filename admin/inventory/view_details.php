@@ -62,8 +62,8 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 				<colgroup>
 					<col width="20%">
 					<col width="20%">
+					<!-- <col width="20%"> -->
 					<col width="20%">
-					<col width="10%">
 					<col width="10%">
 					<col width="10%">
 				</colgroup>
@@ -71,7 +71,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 					<tr>
 						<th class="text-center">Batch Code</th>
 						<th class="text-center">Stock-In Date</th>
-						<th class="text-center">Effectivity Date</th>
+						<!-- <th class="text-center">Effectivity Date</th> -->
                         <th class="text-center">Quantity</th>
                         <th class="text-center">Damaged</th>
 						<th class="text-center">Unit</th>
@@ -91,7 +91,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
                             <tr>
                                 <td class="text-center"><?= ($row['code']) ?></td>
                                 <td class="text-center"><?= date("M d, Y", strtotime($row['stock_date'])) ?></td>
-                                <td class="text-center"><?= date("M d, Y", strtotime($row['effective_date'])) ?></td>
+                                <!-- <td class="text-center"><?= date("M d, Y", strtotime($row['effective_date'])) ?></td> -->
                                 <td class="text-center"><?= format_num($row['quantity']) ?></td>
                                 <td class="text-center"><?= format_num($row['damaged']) ?></td>
                                 <td class="text-center"><?= ($row['unit']) ?></td>

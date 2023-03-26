@@ -108,10 +108,10 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 			<div class="form-group col-6">
 				<label for="total_amount" class="control-label">Amount Paid</label>
 				<?php if($amount!=$balance): ?>
-					<input type="currency" oninput="numbersOnly(this)" name="total_amount" id="total_amount" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($price) ? $price : ''; ?>"  readonly/>
+					<input type="number" oninput="numbersOnly(this)" name="total_amount" id="total_amount" class="form-control form-control-sm rounded-0 text-left" max="<?=$amount?>" value="<?php echo isset($price) ? $price : ''; ?>"  readonly/>
 				
 				<?php else: ?>
-				<input type="currency" oninput="numbersOnly(this)" name="total_amount" id="total_amount" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($price) ? $price : ''; ?>"  required/>
+				<input type="number" oninput="numbersOnly(this)" name="total_amount" id="total_amount" class="form-control form-control-sm rounded-0 text-left" max="<?=$amount?>" value="<?php echo isset($price) ? $price : ''; ?>"  required/>
 				<?php endif; ?>
 
 			</div>

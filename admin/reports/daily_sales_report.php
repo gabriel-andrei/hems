@@ -7,7 +7,11 @@
 $filterreport = isset($_GET['filterreport'])?$_GET['filterreport'] : 'all';
 $filtertype = isset($_GET['filtertype'])?$_GET['filtertype'] : '';
 $filterperiod = isset($_GET['filterperiod'])?$_GET['filterperiod'] : '';
-$date = isset($_GET['date']) ? $_GET['date'] : date("Y-m-d"); ?>
+$date = isset($_GET['date']) ? $_GET['date'] : date("Y-m-d");
+$user_name = isset($_GET['name']) ? $_GET['name'] : '';
+
+?>
+
 <div class="card card-outline card-primary">
 	<div class="card-header">
 		<h3 class="card-title">Income Reports</h3>
@@ -106,7 +110,7 @@ $date = isset($_GET['date']) ? $_GET['date'] : date("Y-m-d"); ?>
                     <b>Prepared by:</b>
                 </div>
                 <div class="col-4 text-center">
-                    <b>_________________________________________</b>
+                    <b> <? echo $user_name ?></b>
                     <div class="">
                         <b class="w-100">Secretary In-Charge</b>
                     </div>
