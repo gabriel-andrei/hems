@@ -110,7 +110,7 @@ $user_name = isset($_GET['name']) ? $_GET['name'] : '';
                     <b>Prepared by:</b>
                 </div>
                 <div class="col-4 text-center">
-                    <b> <? echo $user_name ?></b>
+                    <b> ________________________________</b>
                     <div class="">
                         <b class="w-100">Secretary In-Charge</b>
                     </div>

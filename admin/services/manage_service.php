@@ -35,14 +35,14 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 				</OPTGROUP>
 			</select>
 		</div>
-		<div class="form-group group-service">
+		<div class="form-group group-service" id="select_service_id">
 			<label for="percentage" class="control-label">Specify Service Name</label>
 			<input type="service" min="0" oninput="lettersOnly(this)" name="service" id="service" 
 				class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($service) ? $service : ''; ?>"  required/>
 		</div>
 		<div class="form-group">
 			<label for="service_sub" class="control-label">Service Sub Category</label>
-			<textarea type="text" oninput="lettersOnly(this)" name="service_sub" id="service_sub" class="form-control form-control-sm rounded-0" required><?php echo isset($service_sub) ? $service_sub : ''; ?></textarea>
+			<textarea type="text" oninput="lettersAndNumbers(this)" name="service_sub" id="service_sub" class="form-control form-control-sm rounded-0" required><?php echo isset($service_sub) ? $service_sub : ''; ?></textarea>
 		</div>
 		<div class="form-group">
 			<label for="cylinder" class="control-label">Cylinder</label>
@@ -119,7 +119,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 			input.value = input.value.replace(regex,"");
 	}			
     function lettersAndNumbers(input){
-			var regex = /[^0-9,^aA-zZ]/g;
+			var regex = /[^0-9,^aA-zZ ]/g;
 			input.value = input.value.replace(regex,"");
 	}	
 </script>
