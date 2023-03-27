@@ -14,7 +14,7 @@ $user_name = isset($_GET['name']) ? $_GET['name'] : '';
 
 <div class="card card-outline card-primary">
 	<div class="card-header">
-		<h3 class="card-title">Income Reports</h3>
+		<h3 class="card-title">Reports</h3>
 	</div>
 	<div class="card-body">
 		<div class="container-fluid mb-3">

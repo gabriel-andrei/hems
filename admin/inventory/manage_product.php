@@ -38,18 +38,17 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 					<option value="4D56" <?php echo isset($engine_model)  && $engine_model=='4D56' ? 'selected' : '' ?>>4D56</option>
 					<option value="4D33" <?php echo isset($engine_model)  && $engine_model=='4D33' ? 'selected' : '' ?>>4D33</option>
 					<option value="4D32" <?php echo isset($engine_model)  && $engine_model=='4D32' ? 'selected' : '' ?>>4D32</option>
-					<option value="custom" <?php echo isset($engine_model) ? 'selected' : '' ?>>Custom</option>
-					</select>
+					<option value="custom" <?php echo isset($engine_model) && $engine_model=='custom' ? 'selected' : '' ?>>Custom</option>
 				</select>
 			</div>
-			
+		</div>
 			<!-- <div class="form-group col-6">
 				<label for="" class="control-label">&nbsp;</label>
 				<br/>
 				<input type="checkbox"name="status" id="status" class="form-check-input form-control form-control-sm rounded-0 w-100" data-on="Yes" data-off="No" data-bootstrap-switch value="status" <?php echo isset($status) && $status == 1 ? 'checked' : ''; ?>  />
 				<label for="status" class="form-check-label ml-1">Availability</label>
 			</div> -->
-		</div>
+		
 		<div class="row" id="custom_engine_id">
 			<div class="form-group col-12">
 					<label for="custom_engine" class="control-label">Specify Engine Model</label>
@@ -227,6 +226,11 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 
         $('#engine_model').select2({
             placeholder:"Select Engine Model",
+            width:'100%',
+            containerCssClass:'form-control form-control-sm rounded-0'
+        });
+		$('#unit').select2({
+            placeholder:"Select Unit",
             width:'100%',
             containerCssClass:'form-control form-control-sm rounded-0'
         });

@@ -44,7 +44,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 			<label for="service_sub" class="control-label">Service Sub Category</label>
 			<textarea type="text" oninput="lettersAndNumbers(this)" name="service_sub" id="service_sub" class="form-control form-control-sm rounded-0" required><?php echo isset($service_sub) ? $service_sub : ''; ?></textarea>
 		</div>
-		<div class="form-group">
+		<div class="form-group" id="cylinder_id">
 			<label for="cylinder" class="control-label">Cylinder</label>
 			<select name="cylinder" id="cylinder" class="form-control form-control-sm rounded-0" required>
 			<option value="1 Cylinder" <?php echo isset($cylinder) ? 'selected' : '' ?>>1 Cylinder</option>
@@ -54,9 +54,19 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 			<option value="4 Big" <?php echo isset($cylinder) ? 'selected' : '' ?>>4 Big</option>
 			<option value="6 Cylinder" <?php echo isset($cylinder) ? 'selected' : '' ?>>6 Cylinder</option>
 			<option value="Heavy" <?php echo isset($cylinder) ? 'selected' : '' ?>>Heavy</option>
+			<option value="custom" <?php echo isset($cylinder) ? 'selected' : ''  ?>>Custom</option>
+
 			</select>
 		</div>
-	
+
+		<div class="row" id="select_cylinder_id">
+			<div class="form-group col-12">
+					<label for="cylinder" class="control-label">Specify Cylinder</label>
+					<input type="text" oninput="lettersAndNumbers(this)" name="cylinder" id="cylinder" 
+					class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($cylinder) ? $cylinder : ''; ?>"  required/>
+			</div>
+		</div>
+
 		<div class="form-group">
 			<label for="price" class="control-label">Price</label>
 			<input type="text" oninput="numbersOnly(this)" name="price" id="price" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($price) ? $price : ''; ?>"  required/>
@@ -129,7 +139,22 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 		<?php else:?>
 			$('.group-service').show();
 		<?php endif;?>
-		
+
+		$("#select_cylinder_id").attr( "class", 'collapse' );
+
+		$('#cylinder_id').change(function(e){
+			var select = $('#cylinder').val();
+			if(select == 'custom' ){
+				// $('.group-percentage').show();
+				$("#select_cylinder_id").attr( "class", 'row' );
+
+			}else{
+				// $('.group-percentage').hide();
+			
+				$("#select_cylinder_id").attr( "class", 'collapse' );
+			}
+		});
+
 		$('#service-form #select_service').change(function(e){
 			var select = $('#select_service').val();
 			if(select == '' ){
