@@ -94,7 +94,7 @@ $user_name = isset($_GET['name']) ? $_GET['name'] : '';
             if (file_exists (base_app.'admin/reports/table-'.$filename.'.php')){
                 require_once('table-'.$filename.'.php');
             }else{
-                echo '<h4 class="text-center">Sorry, the report you have selected is currently unavailable!</h4>';
+                echo '<h4 class="text-center">Sorry, the report you have selected is unavailable!</h4>';
             }
 
 
@@ -164,6 +164,18 @@ $user_name = isset($_GET['name']) ? $_GET['name'] : '';
 		$('#filter-form').submit(function(e){
             e.preventDefault()
             location.href = "./?page=reports/daily_sales_report&"+$(this).serialize()
+
+            if(select == 'all' ){
+                $('#opt-bs').attr('disabled', 'disabled');
+			}else if(select == 'sales' ){
+                $('#opt-mc').attr('disabled', 'disabled');
+                $('#opt-st').attr('disabled', 'disabled');
+                $('#opt-bs').removeAttr('disabled');
+			}else if(select == 'service' ){
+                $('#opt-en').attr('disabled', 'disabled');
+                $('#opt-st').attr('disabled', 'disabled');
+                $('#opt-bs').removeAttr('disabled');
+			}
         })
         $('#filterreport').select2({
             placeholder:"Choose Filter",

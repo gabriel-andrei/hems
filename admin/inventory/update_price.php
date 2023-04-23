@@ -54,7 +54,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 
             <div class="form-group mb-3 col-6">
                 <label for="date_effect" class="control-label">Effectivity Date</label>
-                <input type="datetime-local" name="date_effect" id="date_effect" class="form-control form-control-sm rounded-0 text-left" required="required">
+                <input type="date" name="date_effect" id="date_effect" class="form-control form-control-sm rounded-0 text-left" required="required">
             </div>
         </div>
     </form>

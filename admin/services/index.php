@@ -143,11 +143,11 @@
 		$('#create_new').click(function(){
 			uni_modal("<i class='text-center'></i> Add New Service","services/manage_service.php")
 		})
+		$('.edit_data').click(function(){
+			uni_modal("<i class=''></i> Update Service Details","services/edit_service.php?id="+$(this).attr('data-id'))
+		})
 		$('.view_data').click(function(){
 			uni_modal("<i class=''></i> Service Details","services/view_service.php?id="+$(this).attr('data-id'))
-		})
-		$('.edit_data').click(function(){
-			uni_modal("<i class=''></i> Update Service Details","services/manage_service.php?id="+$(this).attr('data-id'))
 		})
 		$('.table').dataTable({
 			columnDefs: [
