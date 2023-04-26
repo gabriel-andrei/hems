@@ -30,18 +30,7 @@
 					GROUP BY DATE(date_created)
 					order by 1 asc 					
 					";
-					/*
-					$sql = "SELECT tl.code, tl.client_name, tl.tin_number,tl.date_created 
-					, tl.amount, (SELECT SUM(p.total_amount) payments
-								FROM payment_list p WHERE p.transaction_id=tl.id
-								GROUP BY p.transaction_id) as payments
-					FROM  transaction_list tl 
-					where tl.status != 3 and date(tl.date_created) BETWEEN '{$date}' AND DATE_ADD('{$date}', INTERVAL 6 DAY)
-					HAVING amount=payments
-					 order BY unix_timestamp(date_created), code asc
-					";
-
-					*/
+					echo $sql;
 					$qry = $conn->query($sql);
                     while($row = $qry->fetch_assoc()):
                         $row_amount = $row['amount'] ;
