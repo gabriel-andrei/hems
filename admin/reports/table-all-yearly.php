@@ -22,41 +22,30 @@
 				</thead>
 				<tbody>
 					<?php 
-                    // $qry = $conn->query("SELECT -- tp.*, 
-					// 	tp.price, tp.qty,
-					// 	tl.code, tl.client_name, tl.tin_number ,pl.name as product,tl.date_created 
-                    //     , tl.amount, (SELECT SUM(p.total_amount) payments
-					// 				FROM payment_list p WHERE p.transaction_id=tp.transaction_id
-					// 				GROUP BY p.transaction_id) as payments
-                    //     FROM `transaction_products` tp 
-                    //     inner join transaction_list tl on tp.transaction_id = tl.id 
-                    //     inner join product_list pl on tp.product_id = pl.id 
-                    //     where tl.status != 3 and date(tl.date_created) = '{$date}' 
-                    //     HAVING amount=payments
-					// 	UNION
-					// 	SELECT -- ts.*, 
-					// 	ts.price, 1 qty,
-					// 	tl.code, tl.client_name, tl.tin_number,sl.service as `service`,tl.date_created 
-                    //             , tl.amount, (SELECT SUM(p.total_amount) payments
-                    //                 FROM payment_list p WHERE p.transaction_id=ts.transaction_id
-                    //                 GROUP BY p.transaction_id) as payments
-                    //         FROM `transaction_services` ts 
-                    //         inner join transaction_list tl on ts.transaction_id = tl.id 
-                    //         inner join service_list sl on ts.service_id = sl.id 
-                    //         where tl.status != 3 and date(tl.date_created) = '{$date}' 
-                    //         HAVING amount=payments
- 					// 	order BY unix_timestamp(date_created), code asc 
-					// 	");
-					$sql = "SELECT tl.code, tl.client_name, tl.tin_number,tl.date_created 
-					, tl.amount, (SELECT SUM(p.total_amount) payments
+                  /*	  
+					$sql = "SELECT tl.code, tl.date_created, 
+					DATE(tl.date_created) report_date,  tl.amount,(SELECT SUM(p.total_amount) payments
 								FROM payment_list p WHERE p.transaction_id=tl.id
 								GROUP BY p.transaction_id) as payments
 					FROM  transaction_list tl 
 					where tl.status != 3 and YEAR(tl.date_created) = YEAR('{$date}')
 					HAVING amount=payments
-					 order BY unix_timestamp(date_created), code asc 
+					
+					order by 1 asc ";
+				*/
+					$sql = "SELECT DATE(date_created) report_date, amount
+					FROM (SELECT tl.date_created, tl.amount, (SELECT SUM(p.total_amount) payments
+								FROM payment_list p WHERE p.transaction_id=tl.id
+								GROUP BY p.transaction_id) as payments
+						FROM  transaction_list tl 
+						where tl.status != 3 and YEAR(tl.date_created) = YEAR('{$date}')
+						HAVING amount=payments
+						) a
+					
+					order by 1 asc 
 					";
 
+					
 					$qry = $conn->query($sql);
 					while($row = $qry->fetch_assoc()):
 						$row_amount = $row['amount'] ;
@@ -68,7 +57,7 @@
 					?>
 						<tr>
 							<td class="text-center"><?php echo $i++; ?></td>
-							<td class="text-center"><?= date('M d, Y', strtotime($row['date_created'])) ?></td>
+							<td class="text-center"><?= date('M, Y', strtotime($row['report_date'])) ?></td>							
 							<td class="text-center"><?= format_num($row_amount,2) ?></td>
 							<td class="text-center"><?= format_num($vat_amount,2) ?></td>
 							<td class="text-center"><?= format_num($sales_amount,2) ?></td>

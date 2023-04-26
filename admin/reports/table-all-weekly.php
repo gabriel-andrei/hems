@@ -54,7 +54,7 @@
 					FROM  transaction_list tl 
 					where tl.status != 3 and date(tl.date_created) BETWEEN '{$date}' AND DATE_ADD('{$date}', INTERVAL 6 DAY)
 					HAVING amount=payments
-					 order BY unix_timestamp(date_created), code asc 
+					 order BY unix_timestamp(date_created), code asc
 					";
 
 					$qry = $conn->query($sql);

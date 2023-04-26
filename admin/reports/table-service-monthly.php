@@ -32,6 +32,7 @@
 								) a
 							GROUP BY report_date
 							order by report_date asc ";
+							
 					$qry = $conn->query($sql);
                     while($row = $qry->fetch_assoc()):
                         $row_amount = $row['total'] ;
