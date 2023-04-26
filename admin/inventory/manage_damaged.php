@@ -3,20 +3,21 @@
 
 require_once('../../config.php');
 if(isset($_GET['id']) && $_GET['id'] > 0){
-    $qry = $conn->query("SELECT p.*, COALESCE(SUM(i.quantity),0) - COALESCE(SUM(d.quantity),0) stocks , COALESCE(SUM(t.qty),0) sold 
+    $qry = $conn->query("SELECT p.*, COALESCE(SUM(i.quantity),0) - COALESCE(SUM(d.quantity),0) stocks , COALESCE(SUM(t.qty),0) sold , COALESCE(SUM(d.quantity),0) damaged
 	from `product_list` p
 	LEFT JOIN inventory_list i ON p.id=i.product_id
 	LEFT JOIN inventory_damaged d ON d.inventory_id=i.id
 	LEFT JOIN transaction_products t ON p.id=t.product_id 
 	where p.delete_flag = 0 and p.id = '{$_GET['id']}'
 	GROUP BY p.id");
+	
     if($qry->num_rows > 0){
         foreach($qry->fetch_assoc() as $k => $v){
             $$k=$v;
         }
     }
-	$available = $stocks-$sold;
 }
+
 ?>
 
 <div class="container-fluid">
@@ -31,8 +32,12 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 		</div>
 		<div class="form-group">
 			<label for="quantity" class="control-label">Quantity</label>
-			<input type="number" oninput="numbersOnly(this)" min="1" name="quantity" id="quantity" class="form-control form-control-sm rounded-0 text-left" value=""  max="<?=$available?>" required/>
+			<input type="number" oninput="numbersOnly(this)" min="1" name="quantity" id="quantity" class="form-control form-control-sm rounded-0 text-left" value="" max="<?php echo $available = $stocks-$damaged-$sold; ?>" required/>
 		</div>
+		<?php echo $available = $stocks-$damaged-$sold; ?><br>
+		<?php echo "Stocks: ". $stocks; ?><br>
+		<?php echo "Damaged: ". $damaged; ?><br>
+		<?php echo "Sold: ". $sold; ?><br>
 		<div class="form-group">
 			<label for="unit" class="control-label">Unit</label>
 			<input type="text" oninput="lettersOnly(this)" name="unit" id="unit" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($unit) ? $unit : ''; ?>"  required/>

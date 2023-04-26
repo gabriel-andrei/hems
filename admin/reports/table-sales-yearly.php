@@ -20,7 +20,7 @@
 				<tbody>
 					<?php 
 					
-					$sql = "SELECT DATE_FORMAT(report_date, '%M, %Y') as report_date, SUM(qty) as products, SUM(price) as total FROM (
+					$sql = "SELECT DATE_FORMAT(report_date, '%M, %Y') as report_date, SUM(qty) as products, SUM(price * qty) as total FROM (
 								SELECT ts.*, DATE(tl.date_created) report_date
 									, tl.amount, (SELECT SUM(p.total_amount) payments
 										FROM payment_list p WHERE p.transaction_id=ts.transaction_id
@@ -28,11 +28,12 @@
 								FROM `transaction_products` ts 
 								inner join transaction_list tl on ts.transaction_id = tl.id 
 								where tl.status != 3 and YEAR(tl.date_created) = YEAR('{$date}')
+								GROUP BY tl.code
 								HAVING amount=payments
 								) a
-							GROUP BY MONTH(report_date)
+							GROUP BY YEAR(report_date)
 							order by 1 asc ";
-							
+
 					$qry = $conn->query($sql);
                     while($row = $qry->fetch_assoc()):
                         $row_amount = $row['total'] ;
@@ -45,7 +46,7 @@
 					?>
 						<tr>
 							<td class="text-center"><?php echo $i++; ?></td>
-							<td class="text-center"><?= $row['report_date'] ?></td>
+							<td class="text-center"><?= date('Y', strtotime($row['report_date'])) ?></td>							
 							<td class="text-center"><?= $row['products'] ?></td>
 							<td class="text-center"><?= format_num($row_amount,2) ?></td>
 							<td class="text-center"><?= format_num($vat_amount,2) ?></td>

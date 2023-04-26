@@ -30,8 +30,10 @@
 								where tl.status != 3 and YEAR(tl.date_created) = YEAR('{$date}')
 								HAVING amount=payments
 								) a
-							GROUP BY MONTH(report_date)
+							GROUP BY YEAR(report_date)
 							order by 1 asc ";
+
+
 					$qry = $conn->query($sql);
                     while($row = $qry->fetch_assoc()):
                         $row_amount = $row['total'] ;
@@ -44,7 +46,7 @@
 					?>
 						<tr>
 							<td class="text-center"><?php echo $i++; ?></td>
-							<td class="text-center"><?= $row['report_date'] ?></td>
+							<td class="text-center"><?= date('Y', strtotime($row['report_date'])) ?></td>							
 							<td class="text-center"><?= $row['services'] ?></td>
 							<td class="text-center"><?= format_num($row_amount,2) ?></td>
 							<td class="text-center"><?= format_num($vat_amount,2) ?></td>

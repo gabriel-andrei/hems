@@ -25,12 +25,14 @@
 								GROUP BY p.transaction_id) as payments
 					FROM  transaction_list tl 
 					where tl.status != 3 and MONTH(tl.date_created) = MONTH('{$date}') AND  YEAR(tl.date_created) = YEAR('{$date}')
-					HAVING amount=payments
+					GROUP BY tl.code
+					HAVING amount=payments 
 					) a
+							
 					GROUP BY DATE(date_created)
 					order by 1 asc 					
 					";
-					echo $sql;
+					
 					$qry = $conn->query($sql);
                     while($row = $qry->fetch_assoc()):
                         $row_amount = $row['amount'] ;

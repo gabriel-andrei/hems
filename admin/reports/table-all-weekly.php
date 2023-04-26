@@ -96,7 +96,7 @@
                         <h4 class="text-center mb-0"><img style="height:1in;width:100%!important;object-position:center center" src="<?= validate_image('/dist/img/print-header.png') ?>" alt="" class="w-100"></h4>
                         <h3 class="text-center mb-0"><b>WEEKLY SALES REPORT</b></h3>
                         <div class="text-center"></div>
-                        <h4 class="text-center mb-0">for <b><u><?= date("F d, Y", strtotime($date)) ?></u></b></h4>
+                        <h4 class="text-center mb-0">for <b><u><?= date("F d, Y", strtotime($date)) ?></u></b> to <b><u><?= date("l, M d, Y", strtotime("+6 day", strtotime($date))) ?></u></b></h4>
                     </div>
                 </div>
             </div>

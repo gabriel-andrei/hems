@@ -39,13 +39,14 @@
 								GROUP BY p.transaction_id) as payments
 						FROM  transaction_list tl 
 						where tl.status != 3 and YEAR(tl.date_created) = YEAR('{$date}')
+						GROUP BY tl.code
 						HAVING amount=payments
 						) a
 					
 						GROUP BY YEAR(date_created)
 						order by 1 asc 
 					";
-
+					
 					
 					$qry = $conn->query($sql);
 					while($row = $qry->fetch_assoc()):
@@ -84,7 +85,7 @@
                         <h4 class="text-center mb-0"><img style="height:1in;width:100%!important;object-position:center center" src="<?= validate_image('/dist/img/print-header.png') ?>" alt="" class="w-100"></h4>
                         <h3 class="text-center mb-0"><b>YEARLY INCOME REPORT</b></h3>
                         <div class="text-center"></div>
-                        <h4 class="text-center mb-0">for the year of <b><u><?= date("Y",strtotime($date)) ?></u></b></h4>
+                        <h4 class="text-center mb-0">as of <b><u><?= date("Y",strtotime($date)) ?></u></b></h4>
                     </div>
                 </div>
             </div>

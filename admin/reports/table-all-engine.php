@@ -80,9 +80,22 @@
                 <div class="col-8 text-center">
                     <div style="line-height:1em">
                         <h4 class="text-center mb-0"><img style="height:1in;width:100%!important;object-position:center center" src="<?= validate_image('/dist/img/print-header.png') ?>" alt="" class="w-100"></h4>
-                        <h3 class="text-center mb-0"><b>CLIENTS STATEMENT OF ACCOUNT REPORT</b></h3>
+                        <h3 class="text-center mb-0"><b>ENGINE MODEL REPORT</b></h3>
                         <div class="text-center"></div>
-                        <h4 class="text-center mb-0">as of <b><u><?= date("F d, Y", strtotime($date)) ?></u></b></h4>
+                        <h4 class="text-center mb-0">for <b><u><?= date("F d, Y", strtotime($date)) ?></u></b></h4>
+
+                        <!-- 
+                        <? $filterperiod = 'fp'; ?>
+                        <script>
+                        if(fp = 'daily' ){
+                            <h4 class="text-center mb-0">as of <b><u><?= date("F d, Y", strtotime($date)) ?></u></b></h4>
+                        }else if($filterperiod = 'weekly'){
+                            <h4 class="text-center mb-0">for <b><u><?= date("F d, Y", strtotime($date)) ?></u></b></h4>
+
+                        }
+                        
+                        </script>
+                    -->
                     </div>
                 </div>
             </div>
