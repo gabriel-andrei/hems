@@ -32,6 +32,7 @@
 								) a
 							GROUP BY MONTH(report_date)
 							order by 1 asc ";
+							
 					$qry = $conn->query($sql);
                     while($row = $qry->fetch_assoc()):
                         $row_amount = $row['total'] ;

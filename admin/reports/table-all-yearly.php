@@ -42,6 +42,7 @@
 						HAVING amount=payments
 						) a
 					
+					GROUP BY YEAR(date_created)
 					order by 1 asc 
 					";
 
@@ -57,7 +58,7 @@
 					?>
 						<tr>
 							<td class="text-center"><?php echo $i++; ?></td>
-							<td class="text-center"><?= date('M, Y', strtotime($row['report_date'])) ?></td>							
+							<td class="text-center"><?= date('Y', strtotime($row['report_date'])) ?></td>							
 							<td class="text-center"><?= format_num($row_amount,2) ?></td>
 							<td class="text-center"><?= format_num($vat_amount,2) ?></td>
 							<td class="text-center"><?= format_num($sales_amount,2) ?></td>
