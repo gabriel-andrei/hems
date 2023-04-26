@@ -66,14 +66,14 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
                                             <col width="30%">
                                             <col width="15%">
                                             <col width="15%">
-                                            <col width="15%">
+                                            <!-- <col width="15%"> -->
                                         </colgroup>
                                         <thead>
                                             <tr class="bg-light-blue">
-                                                <th class="text-center">Date Effect</th>
+                                                <th class="text-center">Effectivity Date</th>
                                                 <th class="text-center">Old</th>
                                                 <th class="text-center">New</th>
-                                                <th class="text-center">Status</th>
+                                                <!-- <th class="text-center">Status</th> -->
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -88,7 +88,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
                                                 <td class="text-center"><?=$row['date_effect']  ?></td>
                                                 <td class="text-center"><?=$row['from_price']  ?></td>
                                                 <td class="text-center"><?=$row['new_price']  ?></td>
-                                                <td class="text-center"><?=$row['is_applied']==0?'Pending':'Applied'  ?></td>
+                                                <!-- <td class="text-center"><?=$row['is_applied'] == 0? 'Pending':'Applied'  ?></td> -->
                                             </tr>
                                         <?php endwhile; ?>
                                         </tbody>
