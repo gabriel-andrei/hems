@@ -33,8 +33,8 @@
 					
 					order by 1 asc ";
 				*/
-					$sql = "SELECT DATE(date_created) report_date, amount
-					FROM (SELECT tl.date_created, tl.amount, (SELECT SUM(p.total_amount) payments
+					$sql = "SELECT DATE(date_created) report_date, SUM(amount) as amount
+					FROM (SELECT tl.date_created, tl.amount, (SELECT SUM(amount) as amount
 								FROM payment_list p WHERE p.transaction_id=tl.id
 								GROUP BY p.transaction_id) as payments
 						FROM  transaction_list tl 
@@ -42,8 +42,8 @@
 						HAVING amount=payments
 						) a
 					
-					GROUP BY YEAR(date_created)
-					order by 1 asc 
+						GROUP BY YEAR(date_created)
+						order by 1 asc 
 					";
 
 					

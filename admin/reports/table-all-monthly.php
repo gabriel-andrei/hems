@@ -17,18 +17,19 @@
 				</thead>
 				<tbody>
 					<?php 
-					$sql = "SELECT DATE(date_created) date_created, amount
+					$sql = "SELECT DATE(date_created) date_created, SUM(amount) as amount
 					FROM (
 					SELECT tl.code, tl.client_name, tl.tin_number, tl.date_created 
-						, tl.amount, (SELECT SUM(p.total_amount) payments
+						, tl.amount, (SELECT SUM(amount) as amount
 								FROM payment_list p WHERE p.transaction_id=tl.id
 								GROUP BY p.transaction_id) as payments
 					FROM  transaction_list tl 
 					where tl.status != 3 and MONTH(tl.date_created) = MONTH('{$date}') AND  YEAR(tl.date_created) = YEAR('{$date}')
 					HAVING amount=payments
 					) a
-					group by DATE(date_created)
-					order by 1 asc 					";
+					GROUP BY DATE(date_created)
+					order by 1 asc 					
+					";
 					/*
 					$sql = "SELECT tl.code, tl.client_name, tl.tin_number,tl.date_created 
 					, tl.amount, (SELECT SUM(p.total_amount) payments
