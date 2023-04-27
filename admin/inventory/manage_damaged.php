@@ -34,10 +34,10 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 			<label for="quantity" class="control-label">Quantity</label>
 			<input type="number" max="<?php echo $available = $stocks-$damaged-$sold; ?>" oninput="numbersOnly(this)" min="1" name="quantity" id="quantity" class="form-control form-control-sm rounded-0 text-left" value="" max="<?php echo $available = $stocks-$damaged-$sold; ?>" required/>
 		</div>
-		<?php echo $available = $stocks-$damaged-$sold; ?><br> 
+		<!-- <?php echo $available = $stocks-$damaged-$sold; ?><br> 
 		<?php echo "Stocks: ". $stocks; ?><br>
 		<?php echo "Damaged: ". $damaged; ?><br>
-		<?php echo "Sold: ". $sold; ?><br>
+		<?php echo "Sold: ". $sold; ?><br> -->
 		
 		<div class="form-group">
 			<label for="unit" class="control-label">Unit</label>
