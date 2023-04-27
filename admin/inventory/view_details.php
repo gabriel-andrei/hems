@@ -39,11 +39,13 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
                     <div class="col-3 py-1 px-2 border border-blue text-center bg-light-blue mb-0"><b>Product Name</b></div>
                     <div class="col-3 py-1 px-2 border border-blue text-center bg-light-blue mb-0"><b>Base Price</b></div>
                     <div class="col-3 py-1 px-2 border border-blue text-center bg-light-blue mb-0"><b>Selling Price</b></div>
+					<!-- <div class="col-3 py-1 px-2 border border-blue text-center bg-light-blue mb-0"><b>Sold</b></div> -->
 					<div class="col-3 py-1 px-2 border border-blue text-center bg-light-blue mb-0"><b>Available Stock</b></div>
 
 					<div class="col-3 py-1 px-2 border text-center mb-0"><?= isset($name) ? $name : '' ?></div>
                     <div class="col-3 py-1 px-2 border text-center mb-0"><?= isset($base_price) ? $base_price : '' ?></div>
                     <div class="col-3 py-1 px-2 border text-center mb-0"><?= isset($price) ? $price : '' ?></div>
+					<!-- <div class="col-3 py-1 px-2 border text-center mb-0"><?= isset($sold) ? $sold : '' ?></div> -->
                     <div class="col-3 py-1 px-2 border text-center mb-0"><?= isset($available) ? $available : '' ?></div>
             </div>
         </div>
