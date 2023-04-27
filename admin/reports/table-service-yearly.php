@@ -28,11 +28,11 @@
 								FROM `transaction_services` ts 
 								inner join transaction_list tl on ts.transaction_id = tl.id 
 								where tl.status != 3
+								GROUP BY tl.code
 								HAVING amount=payments
 								) a
 							GROUP BY YEAR(report_date)
 							order by 1 asc ";
-
 
 					$qry = $conn->query($sql);
                     while($row = $qry->fetch_assoc()):

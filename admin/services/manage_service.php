@@ -37,7 +37,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 		</div>
 		<div class="form-group group-service" id="select_service_id">
 			<label for="percentage" class="control-label">Specify Service Name</label>
-			<input type="service" min="0" oninput="lettersOnly(this)" name="service" id="service" 
+			<input type="service" oninput="lettersOnly(this)" name="service" id="service" 
 				class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($service) ? $service : ''; ?>"  required/>
 		</div>
 		<div class="form-group">
