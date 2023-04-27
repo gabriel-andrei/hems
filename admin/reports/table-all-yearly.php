@@ -38,7 +38,7 @@
 								FROM payment_list p WHERE p.transaction_id=tl.id
 								GROUP BY p.transaction_id) as payments
 						FROM  transaction_list tl 
-						where tl.status != 3 and YEAR(tl.date_created) = YEAR('{$date}')
+						where tl.status != 3
 						GROUP BY tl.code
 						HAVING amount=payments
 						) a

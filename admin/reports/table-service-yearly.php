@@ -27,7 +27,7 @@
 										GROUP BY p.transaction_id) as payments
 								FROM `transaction_services` ts 
 								inner join transaction_list tl on ts.transaction_id = tl.id 
-								where tl.status != 3 and YEAR(tl.date_created) = YEAR('{$date}')
+								where tl.status != 3
 								HAVING amount=payments
 								) a
 							GROUP BY YEAR(report_date)
