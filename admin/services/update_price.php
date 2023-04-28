@@ -1,4 +1,3 @@
-<!-- update_price.php -->
 
 <?php 
 require_once('../../config.php');
@@ -16,8 +15,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
         <input type="hidden" name="user_id" value="<?= $_settings->userdata('id') ?>">
         <input type="hidden" name="id" value="<?= isset($id) ? $id : '' ?>">
         <input type="hidden" name="old_price" value="<?= isset($price) ? $price : '' ?>">
-        <input type="hidden" name="old_base_price" value="<?= isset($base_price) ? $base_price : '' ?>">
-        <input type="hidden" name="old_percentage" value="<?= isset($percentage) ? $percentage : '' ?>">
+
         <div class="row">
             <div class="form-group mb-3 col-6">
                 <label for="price" class="control-label">Price</label>
@@ -103,38 +101,40 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 		$('#update_price-form').submit(function(e){
 			e.preventDefault();
             var _this = $(this)
-			 $('.err-msg').remove();
-			start_loader();
-			$.ajax({
-				url:_base_url_+"classes/Master.php?f=update_price_service",
-				data: new FormData($(this)[0]),
-                cache: false,
-                contentType: false,
-                processData: false,
-                method: 'POST',
-                type: 'POST',
-                dataType: 'json',
-				error:err=>{
-					console.log(err)
-					alert_toast("An error occured",'error');
-					end_loader();
-				},
-				success:function(resp){
-					if(typeof resp =='object' && resp.status == 'success'){
-						location.reload()
-					}else if(resp.status == 'failed' && !!resp.msg){
-                        var el = $('<div>')
-                            el.addClass("alert alert-danger err-msg").text(resp.msg)
-                            _this.prepend(el)
-                            el.show('slow')
-                            $("html, body, .modal").scrollTop(0);
-                            end_loader()
-                    }else{
-						alert_toast("An error occured",'error');
-						end_loader();
-					}
-				}
-			})
+            if(_this.validate().form()) {
+                $('.err-msg').remove();
+                start_loader();
+                $.ajax({
+                    url:_base_url_+"classes/Master.php?f=update_price_service",
+                    data: new FormData($(this)[0]),
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    method: 'POST',
+                    type: 'POST',
+                    dataType: 'json',
+                    error:err=>{
+                        console.log(err)
+                        alert_toast("An error occured",'error');
+                        end_loader();
+                    },
+                    success:function(resp){
+                        if(typeof resp =='object' && resp.status == 'success'){
+                            location.reload()
+                        }else if(resp.status == 'failed' && !!resp.msg){
+                            var el = $('<div>')
+                                el.addClass("alert alert-danger err-msg").text(resp.msg)
+                                _this.prepend(el)
+                                el.show('slow')
+                                $("html, body, .modal").scrollTop(0);
+                                end_loader()
+                        }else{
+                            alert_toast("An error occured",'error');
+                            end_loader();
+                        }
+                    }
+                })
+            }
 		})
 
 	})

@@ -553,14 +553,13 @@ Class Master extends DBConnection {
 	}
 	function update_price_service(){
 		extract($_POST);
-		$datenow = date("Y-m-d h:i");
+		$datenow = date("Y-m-d");
 		$diff = strtotime($date_effect) - strtotime($datenow);
 		$isapplied = $diff<=0? '1':'0';
 		
-		$sql = "INSERT INTO `service_price_logs` (`serv_id`, `new_price`, ``from_price`, `date_effect`, `is_applied`, `user_id`, `date_changed`) 
+		$sql = "INSERT INTO `service_price_logs` (`serv_id`, `new_price`, `from_price`, `date_effect`, `is_applied`, `user_id`, `date_changed`) 
 			VALUES ('{$id}', '{$price}', '{$old_price}', '{$date_effect}', '{$isapplied}', '{$user_id}', CURRENT_TIMESTAMP());";
 		$update = $this->conn->query($sql);
-		$logs_id = $this->conn->insert_id;
 		if($update){
 			$result = $this->conn->query("SELECT MAX(date_effect) latest FROM service_price_logs WHERE serv_id='{$id}' AND date_effect<'{$date_effect}' AND is_applied=0");
 			$row = $result->fetch_assoc();
