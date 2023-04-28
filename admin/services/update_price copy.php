@@ -16,8 +16,6 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
         <input type="hidden" name="user_id" value="<?= $_settings->userdata('id') ?>">
         <input type="hidden" name="id" value="<?= isset($id) ? $id : '' ?>">
         <input type="hidden" name="old_price" value="<?= isset($price) ? $price : '' ?>">
-        <input type="hidden" name="old_base_price" value="<?= isset($base_price) ? $base_price : '' ?>">
-        <input type="hidden" name="old_percentage" value="<?= isset($percentage) ? $percentage : '' ?>">
         <div class="row">
             <div class="form-group mb-3 col-6">
                 <label for="price" class="control-label">Price</label>
@@ -99,8 +97,10 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 <script>
 	$(document).ready(function(){
         console.log(maxDate);
+
 	    
 		$('#update_price-form').submit(function(e){
+            
 			e.preventDefault();
             var _this = $(this)
 			 $('.err-msg').remove();
@@ -130,7 +130,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
                             $("html, body, .modal").scrollTop(0);
                             end_loader()
                     }else{
-						alert_toast("An error occured",'error');
+						alert_toast("An error occured",'error', document.write($sql));
 						end_loader();
 					}
 				}
