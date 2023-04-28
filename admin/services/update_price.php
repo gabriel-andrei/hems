@@ -22,7 +22,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
                 <input type="text" oninput="numbersOnly(this)" name="price" id="price" class="form-control form-control-sm rounded-0 text-left" value="<?php echo isset($price) ? $price : ''; ?>"  required/>
             </div>
             <div class="form-group mb-3 col-6">
-                <label for="date_effect" class="control-label">Date/Time</label>
+                <label for="date_effect" class="control-label">Effectivity Date</label>
                 <input type="date" name="date_effect" id="date_effect" class="form-control form-control-sm rounded-0 text-left" required="required">
             </div>
         </div>
@@ -38,7 +38,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
                                         </colgroup>
                                         <thead>
                                             <tr class="bg-light-blue">
-                                                <th class="text-center">Date/Time</th>
+                                                <th class="text-center">Effectivity Date</th>
                                                 <th class="text-center">Old</th>
                                                 <th class="text-center">New</th>
                                             </tr>
@@ -91,20 +91,22 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
             var maxDate = year + "-" + month + "-" + tdate;
             document.getElementById("date_effect").setAttribute("min", maxDate);
 
-            
 </script>
-
 
 
 <script>
 	$(document).ready(function(){
+        console.log(maxDate);
+
+	    
 		$('#update_price-form').submit(function(e){
+            
 			e.preventDefault();
             var _this = $(this)
 			 $('.err-msg').remove();
 			start_loader();
 			$.ajax({
-				url:_base_url_+"classes/Master.php?f=update_price",
+				url:_base_url_+"classes/Master.php?f=update_price_service",
 				data: new FormData($(this)[0]),
                 cache: false,
                 contentType: false,
@@ -128,7 +130,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
                             $("html, body, .modal").scrollTop(0);
                             end_loader()
                     }else{
-						alert_toast("An error occured",'error');
+						alert_toast("An error occured",'error', document.write($sql));
 						end_loader();
 					}
 				}

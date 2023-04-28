@@ -551,6 +551,38 @@ Class Master extends DBConnection {
 			$this->settings->set_flashdata('success', 'Service\'s price has been updated successfully.');
 		return json_encode($resp);
 	}
+	
+	function update_price_service(){
+		extract($_POST);
+		$datenow = date("Y-m-d");
+		$diff = strtotime($date_effect) - strtotime($datenow);
+		$isapplied = $diff<=0? '1':'0';
+		
+		$sql = "INSERT INTO `service_price_logs` (`serv_id`, `new_price`, `from_price`, `date_effect`, `is_applied`, `user_id`, `date_changed`) 
+			VALUES ('{$id}', '{$price}', '{$old_price}', '{$date_effect}', '{$isapplied}', '{$user_id}', CURRENT_TIMESTAMP());";
+		$update = $this->conn->query($sql);
+		/*$logs_id = $this->conn->insert_id;*/
+		if($update){
+			$result = $this->conn->query("SELECT MAX(date_effect) latest FROM service_price_logs WHERE serv_id='{$id}' AND date_effect<'{$date_effect}' AND is_applied=0");
+			$row = $result->fetch_assoc();
+			if($row){
+				$this->conn->query("UPDATE service_price_logs SET is_applied=1 WHERE serv_id='{$id}' AND date_effect<='{$date_effect}' AND is_applied=0");
+			}
+
+			if($diff<=0){
+				$update = $this->conn->query("UPDATE `service_list` set `price` = '{$price}', where id = '{$id}'");
+			}
+			$resp['status'] = 'success';
+
+		}else{
+			$resp['status'] = 'failed';
+			$resp['msg'] = "Service price has failed to update.";
+		}
+		if($resp['status'] == 'success')
+			$this->settings->set_flashdata('success', 'Service price has been updated successfully.');
+		return json_encode($resp);
+		
+	}
 
 	function update_price_product(){
 		extract($_POST);
