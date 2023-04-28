@@ -21,7 +21,7 @@
 				</thead>
 				<tbody>
 					<?php 
-					$sql = "SELECT product_id, name, engine_model, SUM(qty) as products, SUM(price) as total FROM (
+					$sql = "SELECT product_id, name, engine_model, SUM(qty) as products, SUM(qty*price) as total FROM (
                         SELECT ts.*, pl.name, pl.engine_model, DATE(tl.date_created) report_date
                             , tl.amount, (SELECT SUM(p.total_amount) payments
                                 FROM payment_list p WHERE p.transaction_id=ts.transaction_id
@@ -29,7 +29,7 @@
                         FROM `transaction_products` ts 
                         inner join transaction_list tl on ts.transaction_id = tl.id 
                         inner join product_list pl on ts.product_id = pl.id 
-                        where tl.status != 3 and 
+                        where tl.status != 3 and
                         ";
                     if($filterperiod == 'daily'){
                         $sql .= "date(tl.date_created) = '{$date}' ";
@@ -41,22 +41,25 @@
                         $sql .= "YEAR(tl.date_created) = YEAR('{$date}')";
                     }
                     $sql .= "
+                
                         HAVING amount=payments
                         ) a
                     GROUP BY product_id
                     order by products desc 
                     ";
-
+                    /* echo $sql; */
                     $qry = $conn->query($sql);
                     while($row = $qry->fetch_assoc()):
-                        $row_amount = $row['total'] ;
+                        $row_amount = $row['total'];
                         $vat_amount = ($row_amount/1.12) * 0.12;
                         $sales_amount =  $row_amount -  $vat_amount ;
                         $total += $sales_amount;
                         $total_amount += $row_amount;
                         $total_vat += $vat_amount;
 						$total_count += $row['products'] ;
+
 					?>
+                    
 						<tr>
 							<td class="text-center"><?php echo $i++; ?></td>
 							<td class="text-center"><?= $row['engine_model'] ?></td>
@@ -66,7 +69,9 @@
 							<td class="text-center"><?= format_num($vat_amount,2) ?></td>
 							<td class="text-center"><?= format_num($sales_amount,2) ?></td>
 						</tr>
+                        
 					<?php endwhile; ?>
+                    
 				</tbody>
                 <tfoot>
                     <th class="py-1 text-right" colspan="3">Grand Totals</th>

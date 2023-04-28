@@ -121,12 +121,14 @@ $user_name = isset($_GET['name']) ? $_GET['name'] : '';
 </noscript>
 <script>
 	$(document).ready(function(){
+
         $('#opt-bs').attr('disabled', 'disabled');
 
 		$('#filterreport').change(function(e){
+            e.preventDefault()
+
 			var select = $('#filterreport').val();
             $('#opt-bs').removeAttr('disabled');
-
             $('#opt-st').removeAttr('disabled');
             $('#opt-mc').removeAttr('disabled');
             $("#filtertype").select2("val", "0");
