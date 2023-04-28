@@ -61,7 +61,7 @@
 								LEFT JOIN (SELECT product_id, SUM(quantity) damaged FROM inventory_damaged GROUP BY product_id) d ON d.product_id=p.id
 								LEFT JOIN (SELECT product_id, SUM(qty) sold FROM transaction_products GROUP BY product_id) t ON t.product_id=p.id 
 								
-									where p.delete_flag = 0 /*and  tl.status != 3*/
+								where p.delete_flag = 0
 								GROUP BY p.id) a
 								
 							ORDER BY is_low desc");

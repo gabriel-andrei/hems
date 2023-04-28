@@ -23,7 +23,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
             </div>
             <div class="form-group mb-3 col-6">
                 <label for="date_effect" class="control-label">Date/Time</label>
-                <input type="datetime-local" name="date_effect" id="date_effect" class="form-control form-control-sm rounded-0 text-left" required="required">
+                <input type="date" name="date_effect" id="date_effect" class="form-control form-control-sm rounded-0 text-left" required="required">
             </div>
         </div>
     </form>
@@ -75,6 +75,27 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 			input.value = input.value.replace(regex,"");
 	}	
 </script>
+
+
+<script>
+            var todayDate = new Date();
+            var month = todayDate.getMonth() + 1;
+            var year = todayDate.getUTCFullYear() - 0;
+            var tdate = todayDate.getDate();
+            if (month < 10) {
+                month = "0" + month
+            }
+            if (tdate < 10) {
+                tdate = "0" + tdate;
+            }
+            var maxDate = year + "-" + month + "-" + tdate;
+            document.getElementById("date_effect").setAttribute("min", maxDate);
+
+            
+</script>
+
+
+
 <script>
 	$(document).ready(function(){
 		$('#update_price-form').submit(function(e){

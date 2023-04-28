@@ -109,9 +109,29 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 			input.value = input.value.replace(regex,"");
 	}	
 </script>
+
+<script>
+            var todayDate = new Date();
+            var month = todayDate.getMonth() + 1;
+            var year = todayDate.getUTCFullYear() - 0;
+            var tdate = todayDate.getDate();
+            if (month < 10) {
+                month = "0" + month
+            }
+            if (tdate < 10) {
+                tdate = "0" + tdate;
+            }
+            var maxDate = year + "-" + month + "-" + tdate;
+            document.getElementById("date_effect").setAttribute("min", maxDate);
+
+            
+</script>
+
 <script>
 	$(document).ready(function(){
-			$("#specify_percentage_id").attr( "class", 'collapse' );
+        
+    console.log(maxDate);
+		$("#specify_percentage_id").attr( "class", 'collapse' );
 
 		function computePrice(){
 			var base = $('#base_price').val() * 1;
@@ -151,8 +171,9 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 			}
             computePrice();
 		});
+        /*$('#date_effect').datepicker({minDate: 0});*/
 
-
+            
 
 		$('#update_price-form').submit(function(e){
 			e.preventDefault();
